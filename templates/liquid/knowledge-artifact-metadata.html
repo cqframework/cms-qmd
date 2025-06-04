@@ -1,0 +1,45 @@
+{%include section-header.html header='Knowledge Artifact Metadata' %}
+{%include default.html header='Name (machine-readable)' content=Resource.name %}
+{%include default.html header='Title (human-readable)' content=Resource.title %}
+{%include default.html header='Subtitle' content=Resource.subtitle %}
+{%include default.html header='Status' content=Resource.status %}
+{%include default.html header='Experimental' content=Resource.experimental %}
+{%include default.html header='Description' content=Resource.description %}
+{%include default.html header='Purpose' content=Resource.purpose %}
+{%include default.html header='Clinical Usage' content=Resource.usage %}
+{%include default.html header='Approval Date' content=Resource.approvalDate %}
+{%include period.html header='Effective Period' period=Resource.effectivePeriod %}
+{%include default-list.html header='Use Context' content=Resource.useContext %}
+{%include default-list.html header='Topic' content=Resource.topic %}
+{% if Resource.is(Measure) %}
+{%include default-list.html header='Measure Developer' content=Resource.author %}
+{%include default-list.html header='Measure Editor' content=Resource.editor %}
+{%include default-list.html header='Measure Reviewer' content=Resource.reviewer %}
+{%include default-list.html header='Measure Endorser' content=Resource.endorser %}
+{%include default.html header='Measure Steward' content=Resource.publisher %}
+{% endif %}
+{% if Resource.is(Library) %}
+{%include default-list.html header='Library Developer' content=Resource.author %}
+{%include default-list.html header='Library Editor' content=Resource.editor %}
+{%include default-list.html header='Library Reviewer' content=Resource.reviewer %}
+{%include default-list.html header='Library Endorser' content=Resource.endorser %}
+{%include default.html header='Library Steward' content=Resource.publisher %}
+{% endif %}
+{% if Resource.is(PlanDefinition) %}
+{%include default-list.html header='PlanDefinition Developer' content=Resource.author %}
+{%include default-list.html header='PlanDefinition Editor' content=Resource.editor %}
+{%include default-list.html header='PlanDefinition Reviewer' content=Resource.reviewer %}
+{%include default-list.html header='PlanDefinition Endorser' content=Resource.endorser %}
+{%include default.html header='PlanDefinition Steward' content=Resource.publisher %}
+{% endif %}
+{% if Resource.is(ActivityDefinition) %}
+{%include default-list.html header='ActivityDefinition Developer' content=Resource.author %}
+{%include default-list.html header='ActivityDefinition Editor' content=Resource.editor %}
+{%include default-list.html header='ActivityDefinition Reviewer' content=Resource.reviewer %}
+{%include default-list.html header='ActivityDefinition Endorser' content=Resource.endorser %}
+{%include default.html header='ActivityDefinition Steward' content=Resource.publisher %}
+{% endif %}
+{%include default-list.html header='Steward Contact Details' content=Resource.contact %}
+{%include default.html header='Copyright' content=Resource.copyright %}
+{%include related-artifact.html relatedArtifact=Resource.relatedArtifact %}
+{%include knowledge-artifact-metadata-extensions.html resource=Resource %}

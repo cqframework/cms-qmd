@@ -1,0 +1,13 @@
+{
+  "name": "cms.fhir.qmd",
+  "version": "0.1.0",
+  "title": "CMS FHIR Quality Measure Development IG",
+  "canonical": "http://hl7.org/fhir/us/qmd",
+  "url": "http://hl7.org/fhir/us/qmd",
+  "status": "draft",
+  "date": "2025-06-23",
+  "fhirVersion": ["5.0.0"],
+  "description": "A FHIR Implementation Guide for CMS Quality Measure Development processes.",
+  "publisher": "Centers for Medicare & Medicaid Services (CMS)",
+  "license": "CC0-1.0"
+}

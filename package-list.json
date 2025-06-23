@@ -1,13 +1,13 @@
 {
- "package-id" : "hl7.fhir.uv.mycontentig",
- "title" : "Your User Friendly Name for MyContentIG Here",
- "canonical" : "http://hl7.org/fhir/uv/mycontentig",
- "introduction" : "The introduction that should appear in the FHIR IG registry",
- "list" : [{
-  "version" : "current",
-  "desc" : "Continuous Integration Build (latest in version control)",
-  "path" : "http://build.fhir.org/ig/cqframework/mycontentig",
-  "status" : "ci-build",
-  "current" : true
- }]
+  "package-id" : "cms.fhir.qmd",
+  "title" : "CMS FHIR Quality Measure Development IG",
+  "canonical" : "http://hl7.org/fhir/us/qmd",
+  "introduction" : "An Implementation Guide for CMS Quality Measure Development using FHIR.",
+  "list" : [{
+    "version" : "current",
+    "desc" : "Continuous Integration Build (latest in version control)",
+    "path" : "http://build.fhir.org/ig/cqframework/qmd",
+    "status" : "ci-build",
+    "current" : true
+  }]
 }

@@ -1,0 +1,15 @@
+{
+    "package-id": "cms.fhir.qmd",
+    "version": "0.1.0",
+    "path": "http://hl7.org/fhir/us/qmd/0.1.0",
+    "mode": "working",
+    "status": "draft",
+    "sequence": "Releases",
+    "desc": "Initial development draft",
+    "descmd": "Initial **draft** release of CMS QMD IG",
+    "first": true,
+    "title": "CMS FHIR Quality Measure Development IG",
+    "ci-build": "http://build.fhir.org/ig/cqframework/qmd",
+    "category": "Clinical",
+    "introduction": "An Implementation Guide for CMS Quality Measure Development using FHIR."
+}

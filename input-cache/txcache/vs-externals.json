@@ -1,4 +1,6 @@
 {
-  "http://hl7.org/fhir/ValueSet/knowledge-representation-level" : null,
-  "http://loinc.org/vs/LL358-3" : null
+  "http://loinc.org/vs/LL358-3" : {
+    "server" : "http://tx.fhir.org/r4",
+    "filename" : "vs-6f6cb498-704e-49a2-9600-225feb6da54f.json"
+  }
 }

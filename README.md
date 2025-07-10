@@ -4,24 +4,47 @@ This IG is intended to provide guidance and conformances used in the development
 CI Build for master branch:  
 
 Page 1
+
 Summary
+
 This IG is built upon the FHIR Quality Measure Implementation Guide (QM IG) and provides CMS specific guidance to be used in the developmental of CMS FHIR-based measures. It is intended to support technical applications and authors.
 
+
 Page 2
+
 CMS Library Guidance
-1.	This page will provide guidance for library usage in CMS FHIR-base measures 
+
+This page will provide guidance for library usage in CMS FHIR-base measures 
+
+
 Page 3
+
 CMS Measure Guidance
-1.	This page will provide CMS FHIR-based measure guidance
+
+This page will provide CMS FHIR-based measure guidance
+
+
 Page 4
+
 CMS Manifest Guidance
-1.	This page will provide guidance on CMS manifest usage
+
+This page will provide guidance on CMS manifest usage
+
+
 Page 5
+
 Artifacts
-1.	CMS Measure Profile
+
+CMS Measure Profile
+
+
 Page 6
+
 Example
-1.	This page will provide examples
+
+This page will provide examples
+
 
 Page 7
+
 Changes

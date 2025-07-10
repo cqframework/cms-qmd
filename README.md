@@ -9,19 +9,23 @@ This IG is built upon the FHIR Quality Measure Implementation Guide (QM IG) and 
 
 Page 2
 CMS Library Guidance
-1.	This page will provide guidance for library usage in CMS FHIR-base measures 
+This page will provide guidance for library usage in CMS FHIR-base measures 
+
 Page 3
 CMS Measure Guidance
-1.	This page will provide CMS FHIR-based measure guidance
+This page will provide CMS FHIR-based measure guidance
+
 Page 4
 CMS Manifest Guidance
-1.	This page will provide guidance on CMS manifest usage
+This page will provide guidance on CMS manifest usage
+
 Page 5
 Artifacts
-1.	CMS Measure Profile
+CMS Measure Profile
+
 Page 6
 Example
-1.	This page will provide examples
+This page will provide examples
 
 Page 7
 Changes

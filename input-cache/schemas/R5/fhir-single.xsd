@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Sun, May 18, 2025 15:14+0000 for FHIR v6.0.0-ballot2 
+  Generated on Thu, Jun 26, 2025 16:31+0000 for FHIR v6.0.0-ballot2 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="6.0.0-ballot2">
   <!-- Note: When using this schema with some tools, it may also be necessary to declare xmlns:xml="http://www.w3.org/XML/1998/namespace", however this causes performance issues with other tools and thus is not in the base schemas. -->
@@ -32569,7 +32569,7 @@ RegisteredName | UserFriendlyName | PatientReportedName.</xs:documentation>
           </xs:element>
           <xs:element name="procedure" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The procedure(s) that are reported on in the DiagnosticReport.</xs:documentation>
+              <xs:documentation xml:lang="en">The performed procedure(s) that are reported on in the DiagnosticReport.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="performer" minOccurs="0" maxOccurs="unbounded" type="Reference">

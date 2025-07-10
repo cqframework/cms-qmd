@@ -1,6 +1,0 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../input-cache/schemas/R5/fhir-single.xsd">
-  <h3>CMS Measure Guidance</h3>
-  <p>
-    This page will provide CMS FHIR-based measure guidance
-  </p>
-</div>

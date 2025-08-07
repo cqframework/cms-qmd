@@ -6,10 +6,10 @@
     "status": "draft",
     "sequence": "Releases",
     "desc": "Initial development draft",
-    "descmd": "Initial **draft** release of CMS QMD IG",
+    "descmd": "Initial draft release of CMS QMD IG",
     "first": true,
     "title": "CMS FHIR Quality Measure Development IG",
-    "ci-build": "http://build.fhir.org/ig/cqframework/qmd",
+    "ci-build": "http://build.fhir.org/ig/cqframework/cms-qmd",
     "category": "Clinical",
     "introduction": "An Implementation Guide for CMS Quality Measure Development using FHIR."
 }

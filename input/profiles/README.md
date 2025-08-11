@@ -1,0 +1,1 @@
+Default profiles and extensions directory, include StructureDefinition resources as XML or JSON files in this directory.

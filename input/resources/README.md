@@ -1,0 +1,1 @@
+Default resources path, include resource content as JSON or XML files in this directory

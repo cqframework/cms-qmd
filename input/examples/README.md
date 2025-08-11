@@ -1,0 +1,1 @@
+Default examples directory, include example resource content as XML or JSON files in this directory

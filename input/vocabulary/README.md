@@ -1,0 +1,1 @@
+Default vocabulary path, include vocabulary resources as XML or JSON files in this directory

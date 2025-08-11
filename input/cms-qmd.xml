@@ -2,8 +2,8 @@
 <ImplementationGuide xmlns="http://hl7.org/fhir"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <id value="cms.fhir.qmd" />
-  <url value="http://build.fhir.org/ig/cqframework/cms-qmd" />
-  <version value="0.1.0" />
+  <url value="http://ecqi.healthit.gov/fhir/qmd/ImplementationGuide/cms.fhir.qmd" />
+  <version value="1.0.0-cibuild" />
   <name value="CMSFHIRQMD" />
   <title value="CMS FHIR Quality Measure Development IG" />
   <status value="draft" />

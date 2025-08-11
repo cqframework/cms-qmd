@@ -2,7 +2,6 @@ CMS FHIR Quality Measure Development IG This IG is intended to provide guidance 
  
 CI Build for master branch: https://build.fhir.org/ig/cqframework/cms-qmd/branches/main/
 
-
 Page 1
 
 Summary

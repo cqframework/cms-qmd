@@ -3,6 +3,6 @@
   <a name="intro"> </a>
   <h3>Summary</h3>
 	<p>
-    This IG is built upon the FHIR Quality Measure Implementation Guide (QM IG) and provides CMS specific guidance to be used in the developmental of CMS FHIR-based measures. It is intended to support technical applications and authors.
+    This IG is built upon the FHIR Quality Measure Implementation Guide (QM IG) and provides CMS specific guidance to be used in the development of CMS FHIR-based measures. It is intended to support technical applications and authors.
   </p>
 </div>

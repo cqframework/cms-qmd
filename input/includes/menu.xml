@@ -18,6 +18,27 @@
 
     </ul>
   </li>
+  
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Authoring Patterns QI-Core v6.0.0<b class="caret">
+    </b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="model_overview.html">QI Core Information Model Overview</a>
+      </li>
+      <li>
+        <a href="expressing_negation.html">Changes to expressing something that didn’t happen for a reason</a>
+      </li>
+      <li>
+        <a href="using_cql_with_fhir.html">Using CQL with FHIR</a>
+      </li>
+      <li>
+        <a href="use_of_terminologies.html">Use of Terminologies</a>
+      </li>
+      
+    </ul>
+  </li>
 
   <li class="dropdown">
     <a data-toggle="dropdown" href="#" class="dropdown-toggle">Artifacts<b class="caret">

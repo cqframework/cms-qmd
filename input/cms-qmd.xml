@@ -83,98 +83,77 @@
         <generation value="markdown" />
       </page>
       
-      <!--8: QI Core Information Model Overview-->
+      <!--8: Authoring Patterns-->
       <page>
-        <nameUrl value="model_overview.html" />
-        <title value="QI Core Information Model Overview" />
+        <nameUrl value="patterns.html" />
+        <title value="Authoring Patterns QI-Core v6.0.0" />
         <generation value="markdown" />
       </page>
       
-      <!--9: Changes to expressing something that didn’t happen for a reason-->
-      <page>
-        <nameUrl value="expressing_negation.html" />
-        <title value="Changes to expressing something that didn’t happen for a reason" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--10: Using CQL with FHIR-->
-      <page>
-        <nameUrl value="using_cql_with_fhir.html" />
-        <title value="Using CQL with FHIR" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--11: Use of Terminologies-->
-      <page>
-        <nameUrl value="use_of_terminologies.html" />
-        <title value="Use of Terminologies" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--12: Patient (Authoring Pattern)-->
+      <!--9: Patient (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_patient.html" />
         <title value="Patient" />
         <generation value="markdown" />
       </page>
       
-      <!--13: Enconters (Authoring Pattern)-->
+      <!--10: Enconters (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_encounters.html" />
         <title value="Encounters" />
         <generation value="markdown" />
       </page>
       
-      <!--14: Conditions (Authoring Pattern)-->
+      <!--11: Conditions (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_conditions.html" />
         <title value="Conditions" />
         <generation value="markdown" />
       </page>
       
-      <!--15: Observations (Authoring Pattern)-->
+      <!--12: Observations (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_observations.html" />
         <title value="Observations" />
         <generation value="markdown" />
       </page>
       
-      <!--16: Medications (Authoring Pattern)-->
+      <!--13: Medications (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_medications.html" />
         <title value="Medications" />
         <generation value="markdown" />
       </page>
       
-      <!--17: Procedures (Authoring Pattern)-->
+      <!--14: Procedures (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_procedures.html" />
         <title value="Procedures" />
         <generation value="markdown" />
       </page>
       
-      <!--18: Devices (Authoring Pattern)-->
+      <!--15: Devices (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_devices.html" />
         <title value="Devices" />
         <generation value="markdown" />
       </page>
       
-      <!--19: Allergies (Authoring Pattern)-->
+      <!--16: Allergies (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_allergies.html" />
         <title value="Allergies" />
         <generation value="markdown" />
       </page>
       
-      <!--20: Immunizations (Authoring Pattern)-->
+      <!--17: Immunizations (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_immunizations.html" />
         <title value="Immunizations" />
         <generation value="markdown" />
       </page>
       
-      <!--21: Communication (Authoring Pattern)-->
+      <!--18: Communication (Authoring Pattern)-->
       <page>
         <nameUrl value="pattern_communication.html" />
         <title value="Communication" />

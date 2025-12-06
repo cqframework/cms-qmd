@@ -1,169 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ImplementationGuide xmlns="http://hl7.org/fhir"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <id value="cms.fhir.qmd" />
-  <url value="http://ecqi.healthit.gov/fhir/qmd/ImplementationGuide/cms.fhir.qmd" />
-  <version value="1.0.0-cibuild" />
-  <name value="CMSFHIRQMD" />
-  <title value="CMS FHIR Quality Measure Development IG" />
-  <status value="draft" />
-  <experimental value="false" />
-  <publisher value="Centers for Medicare &amp; Medicaid Services (CMS)" />
+  <id value="cms.fhir.qmd"/>
+  <url value="http://ecqi.healthit.gov/fhir/qmd/ImplementationGuide/cms.fhir.qmd"/>
+  <version value="1.0.0-cibuild"/>
+  <name value="CMSFHIRQMD"/>
+  <title value="CMS FHIR Quality Measure Development IG"/>
+  <status value="draft"/>
+  <experimental value="false"/>
+  <publisher value="Centers for Medicare &amp; Medicaid Services (CMS)"/>
   <contact>
     <telecom>
-      <system value="url" />
-      <value value="https://www.cms.gov" />
+      <system value="url"/>
+      <value value="https://www.cms.gov"/>
     </telecom>
   </contact>
-  <description value="A FHIR Implementation Guide for CMS Quality Measure Development processes." />
+  <description value="A FHIR Implementation Guide for CMS Quality Measure Development processes."/>
   <jurisdiction>
     <coding>
-      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
-      <code value="001" />
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
     </coding>
   </jurisdiction>
-  <packageId value="cms.fhir.qmd" />
-  <license value="CC0-1.0" />
-  <fhirVersion value="4.0.1" />
+  <packageId value="cms.fhir.qmd"/>
+  <license value="CC0-1.0"/>
+  <fhirVersion value="4.0.1"/>
 
   <definition>
     <page>
       <!--0: Table of Contents-->
-      <nameUrl value="toc.html" />
-      <title value="Table of Contents" />
-      <generation value="html" />
+      <nameUrl value="toc.html"/>
+      <title value="Table of Contents"/>
+      <generation value="html"/>
 
 
       <!--1: Summary-->
       <page>
-        <nameUrl value="index.html" />
-        <title value="Home" />
-        <generation value="html" />
+        <nameUrl value="index.html"/>
+        <title value="Home"/>
+        <generation value="html"/>
       </page>
 
       <!--2: CMS Library Guidance-->
       <page>
-        <nameUrl value="library_guidance.html" />
-        <title value="CMS Library Guidance" />
-        <generation value="markdown" />
+        <nameUrl value="library_guidance.html"/>
+        <title value="CMS Library Guidance"/>
+        <generation value="markdown"/>
       </page>
 
       <!--3: CMS Measure Guidance-->
       <page>
-        <nameUrl value="measure_guidance.html" />
-        <title value="CMS Measure Guidance" />
-        <generation value="markdown" />
+        <nameUrl value="measure_guidance.html"/>
+        <title value="CMS Measure Guidance"/>
+        <generation value="markdown"/>
       </page>
 
       <!--4: CMS Manifest Guidance-->
       <page>
-        <nameUrl value="manifest_guidance.html" />
-        <title value="CMS Manifest Guidance" />
-        <generation value="markdown" />
+        <nameUrl value="manifest_guidance.html"/>
+        <title value="CMS Manifest Guidance"/>
+        <generation value="markdown"/>
       </page>
 
       <!--5: CMS Measure Profile-->
       <page>
-        <nameUrl value="measure_profile.html" />
-        <title value="CMS Measure Profile" />
-        <generation value="markdown" />
+        <nameUrl value="measure_profile.html"/>
+        <title value="CMS Measure Profile"/>
+        <generation value="markdown"/>
       </page>
 
       <!--6: Example-->
       <page>
-        <nameUrl value="examples.html" />
-        <title value="Examples" />
-        <generation value="markdown" />
+        <nameUrl value="examples.html"/>
+        <title value="Examples"/>
+        <generation value="markdown"/>
       </page>
 
       <!--7: Changes-->
       <page>
-        <nameUrl value="changes.html" />
-        <title value="Change History" />
-        <generation value="markdown" />
+        <nameUrl value="changes.html"/>
+        <title value="Change History"/>
+        <generation value="markdown"/>
       </page>
-      
+
       <!--8: Authoring Patterns-->
       <page>
-        <nameUrl value="patterns.html" />
-        <title value="Authoring Patterns QI-Core v6.0.0" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--9: Patient (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_patient.html" />
-        <title value="Patient" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--10: Enconters (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_encounters.html" />
-        <title value="Encounters" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--11: Conditions (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_conditions.html" />
-        <title value="Conditions" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--12: Observations (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_observations.html" />
-        <title value="Observations" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--13: Medications (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_medications.html" />
-        <title value="Medications" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--14: Procedures (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_procedures.html" />
-        <title value="Procedures" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--15: Devices (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_devices.html" />
-        <title value="Devices" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--16: Allergies (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_allergies.html" />
-        <title value="Allergies" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--17: Immunizations (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_immunizations.html" />
-        <title value="Immunizations" />
-        <generation value="markdown" />
-      </page>
-      
-      <!--18: Communication (Authoring Pattern)-->
-      <page>
-        <nameUrl value="pattern_communication.html" />
-        <title value="Communication" />
-        <generation value="markdown" />
-      </page>
-      
+        <nameUrl value="patterns.html"/>
+        <title value="Authoring Patterns QI-Core v6.0.0"/>
+        <generation value="markdown"/>
 
+        <!--9: Patient (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_patient.html"/>
+          <title value="Patient"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--10: Enconters (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_encounters.html"/>
+          <title value="Encounters"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--11: Conditions (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_conditions.html"/>
+          <title value="Conditions"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--12: Observations (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_observations.html"/>
+          <title value="Observations"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--13: Medications (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_medications.html"/>
+          <title value="Medications"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--14: Procedures (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_procedures.html"/>
+          <title value="Procedures"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--15: Devices (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_devices.html"/>
+          <title value="Devices"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--16: Allergies (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_allergies.html"/>
+          <title value="Allergies"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--17: Immunizations (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_immunizations.html"/>
+          <title value="Immunizations"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--18: Communication (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_communication.html"/>
+          <title value="Communication"/>
+          <generation value="markdown"/>
+        </page>
+      </page>
     </page>
-
-
     <!-- <parameter>
       <code value="path-resource" />
       <value value="input/resources/device" />
@@ -185,28 +181,28 @@
       <value value="input/vocabulary/valueset" />
     </parameter> -->
     <parameter>
-      <code value="copyrightyear" />
-      <value value="2025" />
+      <code value="copyrightyear"/>
+      <value value="2025"/>
     </parameter>
     <parameter>
-      <code value="releaselabel" />
-      <value value="CI Build" />
+      <code value="releaselabel"/>
+      <value value="CI Build"/>
     </parameter>
     <parameter>
-      <code value="autoload-resources" />
-      <value value="true" />
+      <code value="autoload-resources"/>
+      <value value="true"/>
     </parameter>
     <parameter>
-      <code value="path-liquid" />
-      <value value="templates/liquid" />
+      <code value="path-liquid"/>
+      <value value="templates/liquid"/>
     </parameter>
     <parameter>
-      <code value="path-suppressed-warnings" />
-      <value value="input/ignoreWarnings.txt" />
+      <code value="path-suppressed-warnings"/>
+      <value value="input/ignoreWarnings.txt"/>
     </parameter>
     <parameter>
-      <code value="default-version" />
-      <value value="true" />
+      <code value="default-version"/>
+      <value value="true"/>
     </parameter>
   </definition>
 </ImplementationGuide>

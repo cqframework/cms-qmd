@@ -2,6 +2,8 @@
 
 {: #CMS-Measure-Profile}
 
+CMS measures SHALL use the [CMSCQMPublishableMeasure](StructureDefinition-cmscqm-publishablemeasure.html). 
+
 ###  CMS Measure Profile
 
-This page will provide information measure profiles 
+Figure out how to get profile to render here 

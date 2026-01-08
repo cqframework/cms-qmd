@@ -18,22 +18,20 @@
       <li>
         <a href="patterns.html">Authoring Patterns QI-Core v6.0.0</a>
       </li>
-
     </ul>
   </li>
-  
-  <li class="dropdown">
+    <li class="dropdown">
     <a data-toggle="dropdown" href="#" class="dropdown-toggle">Artifacts<b class="caret">
       </b>
     </a>
     <ul class="dropdown-menu">
- 
-      <li>
+       <li>
         <a href="measure_profile.html">CMS Measure Profile</a>
       </li>
- 
-    </ul>
+     </ul>
   </li>
   <li><a href="examples.html" class="item">Examples</a></li>
+  <li><a href="change_control.html" class="item">Change Control</a></li>  
   <li><a href="changes.html" class="item">Changes</a></li>
+  
 </ul>

@@ -1,6 +1,11 @@
 {
+  "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-supplementalDataGuidance" : null,
+  "http://hl7.org/fhir/uv/cqm/ValueSet/intended-venue" : null,
+  "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-effectivePeriodAnchor" : null,
+  "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-effectivePeriodDuration" : null,
   "http://loinc.org/vs/LL358-3" : {
     "server" : "http://tx.fhir.org/r4",
     "filename" : "vs-6f6cb498-704e-49a2-9600-225feb6da54f.json"
-  }
+  },
+  "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-includeInReportType" : null
 }

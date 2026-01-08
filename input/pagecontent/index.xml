@@ -3,6 +3,10 @@
   <a name="intro"> </a>
   <h3>Summary</h3>
 	<p>
-    This IG is built upon the FHIR Quality Measure Implementation Guide (QM IG) and provides CMS specific guidance to be used in the development of CMS FHIR-based measures. It is intended to support technical applications and authors.
+    This IG is intended to support application developers and measure authors for the development and packaging of CMS dQMs. It makes use of profiles and guidance from the <a href= "https://hl7.org/fhir/uv/cqm"> HL7 Universal Realm Quality Measure Implementation Guide (QM IG)</a>.
+  </p>
+  <h3>Content Management</h3>
+    <p>
+    This IG is to act as a source of truth for guidance and conformance applicable to the development of CMS dQMs, where appropriate. As the source of truth, it is imperative that change to the IG is documented, vetted and incorporated via a documented process. The process will ensure that all changes are assessed for their impact on stakeholders, downstream applications quality, compliance, and timelines, and that they are implemented in a controlled and traceable manner.
   </p>
 </div>

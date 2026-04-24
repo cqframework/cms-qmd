@@ -1,5 +1,4 @@
 # Encounters
-_Reviewed 2024-06-18 - Updates to be made and reviewed again with group based on discussions_
 
 QI-Core defines an [Encounter](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-encounter.html) profile to model any encounter between a patient and any number of providers in any setting, including virtual.
 
@@ -8,9 +7,10 @@ QI-Core defines an [Encounter](https://hl7.org/fhir/us/qicore/STU6/StructureDefi
 ## Office visit encounters
 
 
-By default, encounters in QI-Core are characterized by the `type` element, which is typically associated with a value set to limit the set of encounters returned to those that a code in the given value set. For example:
+By default, encounters in QI-Core are characterized using the `type` element, which is typically bound to a value set. This value set limits the encounters returned to those whose type includes a code from the specified value set. For example:
 
 ```cql
+CQL:
 define "Office Visit Encounters":
   [Encounter: "Office Visit"]
 ```
@@ -25,9 +25,10 @@ This issue is being reviewed and may result in a specification or tooling change
 2. Use an equivalent where clause with an exists to retrieve the expected results, as shown in the below example:
 
 ```cql
+CQL:
 define "Office Visit Encounters By Code":
-  [Encounter] E
-    where exists ((E.type) T where T ~ "Office Visit Code")
+  [Encounter] Visit
+    where exists ((Visit.type) VisitType where VisitType ~ "Office Visit Code")
 ```
 
 Note that this latter workaround will typically result in an unrestricted data requirement for Encounters. For this reason, best-practice is to use the first workaround.
@@ -35,19 +36,21 @@ Note that this latter workaround will typically result in an unrestricted data r
 ## Encounters by class
 
 
-The QI-Core profile also supports characterizing encounters by the `class` element, which is used to categorize encounters more broadly than the `type` element, using the [ActEncounterCode](https://terminology.hl7.org/3.1.0/ValueSet-v3-ActEncounterCode.html) value set. For example:
+The QI-Core profile also supports characterizing encounters using the `class` element. This element categorizes encounters more broadly than the `type` element, using the [ActEncounterCode](https://terminology.hl7.org/3.1.0/ValueSet-v3-ActEncounterCode.html) value set. For example:
 
 ```cql
+CQL:
 define "Virtual Encounters":
   [Encounter: class ~ QICoreCommon."virtual"]
 ```
 
-> Note that although QDM-based eCQMs have typically used a type-based approach to filtering encounters, because `class` is a required element in USCore, we propose using class to filter encounters first, unless measure intent needs to search for encounters by type across classes. Additional filtering may be required beyond the class to limit encounters based on specialty, for example:
+> Although QDM-based eCQMs have historically used a type-based approach to filtering encounters, `class` is a required element in USCore. Therefore, the recommendation is to filter by class first, unless the measure intent requires identifying encounters by type across classes. In many cases, additional filtering may be necessary. For example to limit encounters based on specialty:
 
 ```cql
+CQL:
 define "Ophthalmology Encounter Codes":
-  [Encounter: class in "Inpatient Encounter Classes"] InpatientEncounter
-    where InpatientEncounter.type in "Ophthalmology Encounter Codes"
+  [Encounter: class in "Inpatient Encounter Class Code"] InpatientEncounter
+    where InpatientEncounter.type in "Ophthalmology Services"
 ```
 
 ## Completed encounters in a period
@@ -55,27 +58,30 @@ define "Ophthalmology Encounter Codes":
 Encounters often need to be filtered based on `status` and `period`, for example:
 
 ```cql
-define "Completed Encounters During the Measurement Period":
+CQL:
+define "Completed Encounters During The Measurement Period":
   [Encounter: "Office Visit"] OfficeVisit
     where OfficeVisit.status = 'finished'
-      and OfficeVisit.period during "Measurement Period"
+      and OfficeVisit.period starts during "Measurement Period"
 ```
 
 ## Encounters with a certain length
 
-The CQMCommon library defines a `lengthInDays()` function that calculates the difference in days between the start and end of a period. For example, to filter encounters by the duration of stay:
+The CQMCommon library defines a `lengthInDays()` fluent function that calculates the difference in days between the start and end of a period. For example, to filter encounters by the duration of stay:
 
 ```cql
+CQL:
 define "Non-Elective Inpatient Encounter Less Than 120 Days":
-  ["Encounter": "Non-Elective Inpatient Encounter"] NonElectiveEncounter
+  [Encounter: "Non-Elective Inpatient Encounter"] NonElectiveEncounter
     where NonElectiveEncounter.period.lengthInDays() <= 120
 ```
 
 Other durations can also be calculated, for example:
 
 ```cql
+CQL:
 define "Non-Elective Inpatient Encounter Over 24 Hours":
-  ["Encounter": "Non-Elective Inpatient Encounter"] NonElectiveEncounter
+  [Encounter: "Non-Elective Inpatient Encounter"] NonElectiveEncounter
     where duration in hours of NonElectiveEncounter.period >= 24
 ```
 
@@ -83,15 +89,16 @@ define "Non-Elective Inpatient Encounter Over 24 Hours":
 
 ## Hospitalization
 
-For inpatient encounters, measures and rules often need to consider total hospitalization period, including any immediately prior emergency department and/or observation status encounters. To facilitate this, the CQMCommon library defines a `hospitalizationWithObservation()` function that returns the total duration from admission to the emergency department or observation to the end of the inpatient encounter. For example:
+For inpatient encounters, measures and rules often need to consider the entire hospitalization period, including any immediately preceding emergency department and/or observation status encounters. To support this, the CQMCommon library provides a `hospitalizationWithObservation()` fluent function that returns the total duration beginning with the earliest associated emergency department or observation encounter to the conclusion of the inpatient encounter. For example:
 
 ```cql
+CQL:
 define "Comfort Measures Performed":
-  ["Procedure": "Comfort Measures"] InterventionPerformed
+  [Procedure: "Comfort Measures"] InterventionPerformed
     where InterventionPerformed.status in { 'completed', 'in-progress' }
 
-define "Encounter with Comfort Measures Performed during Hospitalization":
-  "Non-Elective Inpatient Encounter Less Than 120 Days" Encounter
+define "Encounter With Comfort Measures Performed During Hospitalization":
+  "Non-Elective Inpatient Encounter Less Than 120 Days" NonElectiveEncounter
     with "Comfort Measures Performed" ComfortMeasure
-      such that start of ComfortMeasure.performed.toInterval() during Encounter.hospitalizationWithObservation()
+      such that start of ComfortMeasure.performed.toInterval() during NonElectiveEncounter.hospitalizationWithObservation()
 ```

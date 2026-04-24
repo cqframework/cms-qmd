@@ -6,7 +6,6 @@ CMS dQMs use manifest capabilities to define terminology packages for a given cy
 
 ### CMS Manifest Creation
 
-### Manifest Usage for Measure Authors
 
 ### NLM Manifest Guidance
 

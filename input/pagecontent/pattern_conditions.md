@@ -1,42 +1,41 @@
 # Conditions 
-_Reviewed 2025-04-01_
 
 **Change from 4.1.1**: QI-Core STU 6 defines two profiles:
 * [ConditionProblemsHealthConcerns](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-condition-problems-health-concerns.html) profile to represent information about patient problems and health concerns  
 * [ConditionEncounterDiagnosis](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-condition-encounter-diagnosis.html) profile to represent diagnoses indicated as part of an encounter.
 
-**Change from 4.1.1**: QI-Core STU6 no longer supports the use of the Encounter.diagnosisPresentOnAdmission element.  This concept should be modeled using the Claim profile and is discussed in the [Conditions present on admission](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/Authoring-Patterns-QICore-v6.0.0#conditions-present-on-admission) section below .
-Measure developers need to consider their measure intent when building measure logic to look for conditions.  If the measure intent is looking to capture conditions that were present on admission or a principal diagnosis, the Claim profile is now used to access that billing related content.  Please reference the [Conditions present on admission](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/Authoring-Patterns-QICore-v6.0.0#conditions-present-on-admission) section for patterns related to those concepts.
+**Change from 4.1.1**: QI-Core STU6 no longer supports the use of the Encounter.diagnosisPresentOnAdmission element. The Present on Admission concepts should be represented using the Claim profile as described in the [Conditions present on admission](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/Authoring-Patterns-QICore-v6.0.0#conditions-present-on-admission) section below .
+Measure developers should carefully consider measure intent when building logic that evaluates conditions. If the intent is to identify conditions that were present on admission or to determine the principal diagnosis, the Claim profile must be used to access that billing related information. Refer to the [Conditions present on admission](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/Authoring-Patterns-QICore-v6.0.0#conditions-present-on-admission) section for recommended patterns and examples.
 
 ## Active conditions
-_Reviewed 2025-05-06_
 
-By default, Condition resources are characterized by the code element which is typically associated with a value set of diagnosis codes.
+By default, the Condition resource is characterized by the code element which is typically bound to a value set of diagnosis codes.
 
-Many clinical systems make a distinction between the active conditions for a patient (i.e. the problem list or health concerns) and the diagnoses associated with an encounter. Problem list items and health concerns are typically documented with additional information about the condition such as prevalence period and clinical status, while encounter diagnoses typically have less information, usually only the diagnosis code as part of the encounter information. Within FHIR, both these types of data are represented using the Condition resource. The category element is used to indicate which kind of data the Condition represents, a problem list item, a health concern, or an encounter diagnosis, and the ConditionProblemsHealthProblems and ConditionEncounterDiagnosis profiles separate conditions by these categories.
+Many clinical systems distinguish between a patient's active conditions (e.g. the problem list or health concerns) and encounter diagnoses. Problem list items and health concerns generally include risher information such as clinical status and prevalence period whereas, encounter diagnoses often include only the diagnosis code recorded for the encounter. FHIR, however, both types of information is represented using the Condition resource. The category element is used to differentiate these types and the ConditionProblemsHealthProblems and ConditionEncounterDiagnosis profiles separate conditions accordingly.
 
-Depending on measure intent, different approaches may be needed to access condition data. In particular, clinical status and prevalence period would only be expected to be present on problem list items and health concerns:
+Depending on measure intent, different approaches may be required to retieve condition data. In particular, clinicalStatus and prevalencePeriod are typically expected only for problem list items and health concerns. For example:
 
 ```cql
+CQL:
 define "Active Diabetes Conditions":
   [ConditionProblemsHealthConcerns: "Diabetes"] Condition
     where Condition.isActive()
 ```
 
-The [QICoreCommon]([https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/input/cql/QICoreCommon.cql](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/input/cql/QICoreCommon.cql)) library defines `isProblemListItem()` and `isHealthConcern()` functions to facilitate identifying the category of a Condition, as well as an `isActive()` function to facilitate determining whether the Condition indicates the presence of a particular diagnosis for the patient. The `isActive()` function is equivalent to testing the clinicalStatus element for the active, recurrence, and relapse values.
+The [QICoreCommon]([https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/input/cql/QICoreCommon.cql](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/input/cql/QICoreCommon.cql)) library provides `isProblemListItem()` and `isHealthConcern()` fluent functions to help identify the category of a Condition. It also provides the `isActive()` fluent function to determine whether the Condition represents an active diagnosis for the patient. The `isActive()` fluent function is equivalent to checking whether the clinicalStatus element is one of the active, recurrence, or relapse values.
 
-NOTE: The isActive function makes use of the `clinicalStatus` element of the Condition, which is the _current_ status of the Condition record. In other words, in retrospective cases, the logic may be evaluated on data that exists at the time of evaluation. This means that while a given condition may have been active during the measurement period, it might no longer be active when the measure is run. As such, the `isActive()` function should not be used in retrospective contexts. Instead, the most reliable way to determine whether a condition was active _at some point in time_ is to use the [Onset, Abatement, and Prevalence Period](#onset-abatement-and-prevalence-period) elements as discussed below.
+NOTE: The isActive fluent function depends on the `clinicalStatus` of the Condition record. In retrospective scenarios, the data avalailable at evaluation times may no longer reflect the status that existed during the "Measurement Period" that exists at the time of evaluation. A condition may have been active during the period of interest but, inactive when the measure is executed. Therefore `isActive()` should not be used in retrospective contexts. In those cases, the most reliable approach is to evaluate the [Onset, Abatement, and Prevalence Period](#onset-abatement-and-prevalence-period) elements as described below.
 
-NOTE: If measure intent is such that condition information should be considered whether it is problem list, health concern, or encounter diagnosis, the category check can be omitted.
+NOTE: If measure intent indicates that the condition should be considered regardless of whether it is problem list, health concern, or encounter diagnosis, the category check may be omitted.
 
 ## Verified Conditions
-_Updated 2025-06-10_
 
-The Condition resource in FHIR has a `verificationStatus` element to represent, for example, whether the information has been confirmed. The element is not required, but if it is present, it is a modifier element, and has the potential to negate the information the Condition resource represented (e.g. refuted). For most usage, when measure intent is looking for positive evidence of a condition, the verificationStatuses of `refuted` and `entered-in-error` should be excluded if verificationStatus is present:
+The FHIR Condition resource includes a `verificationStatus` element that indicates, for example, whether the condition has been confirmed. Although this element is not required, it is a modifier element, meaning it has the ptential to change or even negate the meaning of the Condition (e.g. refuted). In most cases, when measure intent is to identify positive evidence of a condition, any verificationStatus of `refuted` and `entered-in-error` should be excluded if the verificationStatus element is present:
 
 ```cql
+CQL:
 define "Verified Conditions":
-  [Condition] VerifiedCondition
+  [Condition ProblemsHealthConcerns] VerifiedCondition
     where VerifiedCondition.verificationStatus is not null implies
       (VerifiedCondition.verificationStatus ~ "confirmed"
         or VerifiedCondition.verificationStatus ~ "unconfirmed"
@@ -45,13 +44,14 @@ define "Verified Conditions":
       )
 ```
 
-To support reuse of this pattern, the following fluent functions can be used:
+The following fluent functions can be used to support consistent reuse of this pattern:
 
 ```cql
+CQL:
 /*
 @description: Returns true if the given condition either has no verification status or has a verification status of confirmed, unconfirmed, provisional, or differential
 */
-define fluent function isVerified(condition FHIR.Condition):
+define fluent function isVerified(condition FHIR.ConditionProblemsHealthConcerns):
   condition.verificationStatus is not null implies
     (condition.verificationStatus ~ "confirmed"
       or condition.verificationStatus ~ "unconfirmed"
@@ -62,29 +62,30 @@ define fluent function isVerified(condition FHIR.Condition):
 /*
 @description: Returns conditions in the given list that either have no verification status or have a verification status of confirmed, unconfirmed, provisional, or differential
 */
-define fluent function verified(conditions List<FHIR.Condition>):
-  conditions C
-    where C.verificationStatus is not null implies
-      (C.verificationStatus ~ "confirmed"
-        or C.verificationStatus ~ "unconfirmed"
-        or C.verificationStatus ~ "provisional"
-        or C.verificationStatus ~ "differential"
+define fluent function verified(conditions List<FHIR.ConditionProblemsHealthConcerns>):
+  conditions Diagnosis
+    where Diagnosis.verificationStatus is not null implies
+      (Diagnosis.verificationStatus ~ "confirmed"
+        or Diagnosis.verificationStatus ~ "unconfirmed"
+        or Diagnosis.verificationStatus ~ "provisional"
+        or Diagnosis.verificationStatus ~ "differential"
       )
 ```
 
 ## Encounters with a condition
-_Reviewed 2025-05-06_
 
 New to STU 6.0 
-To determine a condition existed during the encounter, measure developers should use one of the following approaches:
-1.	Encounter.reasonCode = direct reference code or value set (of the Condition)
-2.	Encounter.reasonReference references ConditionProblemsHealthConcern or ConditionEncounterDiagnosis
-3.	Claim.diagnosis
+To determine whether a condition was present during the encounter, measure developers should use one of the following approaches:
+1.	Encounter.reasonCode - A direct reference code or value set representing the Condition
+2.	Encounter.reasonReference - A reference to a ConditionProblemsHealthConcern or ConditionEncounterDiagnosis
+3.	Claim.diagnosis - Diagnosis codes captured on claims
 
-This is a change from 4.1.1 where measure developers used the Encounter.diagnosis= value set pattern.  Measure developers should note that not all EHRs will have both Encounter.reasonCode and Encounter.reasonReference and patterns are developed below to look for that information both ways to account for differences in EHR implementation. The following example combines the approaches from 1 and 2 above:
+This is a change from 4.1.1 where measure developers used the Encounter.diagnosis= value set pattern.  Measure developers should note that not all EHRs provide both Encounter.reasonCode and Encounter.reasonReference. The below support both approaches to accommodate differences in EHR implementations. 
+The following example illustrates how to combine the approaches 1 and 2 above:
 
 ```cql
-define "Encounters with a Diabetes Condition":
+CQL:
+define "Encounters With A Diabetes Condition":
   "Completed Encounters During the Measurement Period" CompletedEncounter
     where CompletedEncounter.reasonCode in "Diabetes"
       or exists (
@@ -92,94 +93,113 @@ define "Encounters with a Diabetes Condition":
           where CompletedEncounter.reasonReference.references(DiabetesCondition)
       )
 ```
-Alternatively, measure developers can use the CQMCommon library fluent function encounterDiagnosis to write the same logic as:
+Alternatively, measure developers can use the encounterDiagnosis fluent function from the CQMCommon library to express the same logic as:
 
 ```cql
-define "Encounters with a Diabetes Condition": 
-   "Completed Encounters During the Measurement Period" CompletedEncounter
+CQL:
+define "Encounters With A Diabetes Condition": 
+   "Completed Encounters During The Measurement Period" CompletedEncounter
       where CompletedEncounter.reasonCode in "Diabetes"
         or CompletedEncounter.encounterDiagnosis().code in "Diabetes"
 ```
 
-It is also important for measure developers to consider that if their clinical use case requires the use of prevalence period (i.e., onset to abatement time for a condition) or even just onset time, that will require the use of option 2 – the Encounter.reasonReference to a ConditionProblemsHealthConcerns, because onset and/or abatement times are only available in the Condition resource.
+Additional Considerations:
+If the clinical use case requires access to a condition’s prevalence period (i.e., onset to abatement) or even just its onset time, developers must use Approach 2 – the Encounter.reasonReference. This is because onset and/or abatement information is only available within the Condition resource.
 
 ## History of a condition
-_Reviewed 2025-04-01_
 
-**Change from 4.1.1** When looking for history of a condition, clinical status and whether or not the condition is documented as a problem list, health concern, or encounter diagnosis are typically less relevant, so those elements are not typically referenced. However, in QI-Core, because the two types of conditions are represented with different profiles, separate retrieve statements are used to gather both:
+**Change from 4.1.1** When identifying a history of a condition, elements such as clinicalStatus and whether the condition appears on the problem list, or as a health concern, or as an encounter diagnosis are often less relevant. For this reason, these attributes/elements are typically not referenced in basic historical queries. However, in QI-Core, conditions are represented using two different profiles. As a result, separate retrievals are required to ensure complete capture:
 
 ```cql
-define "History of Diabetes":
+CQL:
+define "History Of Diabetes":
   [ConditionProblemsHealthConcerns: "Diabetes"]
     union [ConditionEncounterDiagnosis: "Diabetes"]
 ```
 
-Note that depending on measure intent, it may still be necessary to reference elements such as:
+When Additional Filtering is Needed:
+Depending on measure's intent, it may still be necessary to evaluate specific elements such as:
 
-* Completion status of the associated encounter for encounter diagnoses
-* Clinical status of problem list items and health concerns
-* Verification status of problem list items and health concerns, especially refuted conditions
+* Encounter completion status for encounter diagnoses
+* clinicalStatus of problem list items and health concerns
+* verificationStatus, especially to exclude refuted conditions
 
 For example:
 ```cql
-define "History of Diabetes":
-  ([ConditionProblemsHealthConcerns: "Diabetes"] Condition
-    where Condition.verificationStatus is not null implies Condition.verificationStatus !~ "refuted"
+CQL:
+define "History Of Diabetes":
+  ([ConditionProblemsHealthConcerns: "Diabetes"] ConditionDM
+    where ConditionDM.verificationStatus is not null implies ConditionDM.verificationStatus !~ QICoreCommon. "refuted"
   ) union (
-    [ConditionEncounterDiagnosis: "Diabetes"] Condition
-      where Condition.getEncounter().status = 'finished'
+    [ConditionEncounterDiagnosis: "Diabetes"] ConditionDM
+      where ConditionDM.encounter.getEncounter().status = 'finished'
   )
+
+define fluent function "getEncounter"(reference QICore.Reference):                 
+//revised to fluent function
+ singleton from (
+  [Encounter] Encounter
+    where reference.references(Encounter)
+      )  
 ```
 
 ## Onset, abatement, and prevalence period
-_Reviewed 2025-04-01_
 
-The Condition profiles define `onset` and `abatement` elements that specify the prevalence period of the condition. The elements can be specified as choices of various types to allow systems flexibility in the way that information is represented. The QI-Core profiles for Condition constrain those choices to only those that support actual computation of a prevalence period, and the QICoreCommon library defines `abatementInterval` and `prevalenceInterval` functions to facilitate accessing this information:
+The Condition profile defines onset and abatement elements that describe a conditions’ prevalence period. These elements are modeled as choices to give systems flexibility in how the information is captured. 
+In QI-Core, these choice types are constrained to forms that support actual computation of a prevalence period. The QICoreCommon library provides abatementInterval and prevalenceInterval functions to simplify access to this information. For example:
 
 ```cql
-define "Active Diabetes Conditions Onset During the Measurement Period":
+CQL:
+define "Active Diabetes Conditions":                                        
+ [ConditionEncounterDiagnosis: "Diabetes"] DM
+  where DM.isActive()
+
+define "Active Diabetes Conditions Onset During The Measurement Period":
   "Active Diabetes Conditions" Diabetes
     where Diabetes.prevalenceInterval() starts during "Measurement Period"
 ```
 
-The `prevalenceInterval` function takes a Condition resource and returns the interval from the start of the onset to the end of the abatement. If the Condition is active (i.e. has a clinicalStatus of active, recurrence, or relapse), then the ending boundary of the interval is inclusive (i.e. closed). Otherwise, the ending boundary of the interval is exclusive (i.e. open). When looking for whether a condition was active at some point, use the prevalenceInterval function rather than looking at the status element only.
+The `prevalenceInterval` function takes a Condition resource and returns the interval beginning at onset and ending at the abatement. If the Condition is active- that is, it has a clinicalStatus of active, recurrence, or relapse, the interval inclusive (closed). Otherwise, the ending boundary is exclusive (open). 
+
+When determining whether a condition was active during a particular time period, measure developer should use prevalenceInterval rather than relying solely on the clinicalStatus element. The interval-based approach yields more accurate and clinically meaningful results.
 
 ## Conditions present on admission and principal diagnoses
-QICore STU6 no longer supports the use of the Encounter.diagnosisPresentOnAdmission element.  To express the concept of a condition present on admission, measure developers should use the QI Core Claim profile.
+QICore STU6 no longer supports the use of the Encounter.diagnosisPresentOnAdmission element.  To express the concept of a condition present on admission (POA), measure developers should use the QI-Core Claim profile.
 
 
 ### Present on Admission
-_Reviewed 2025-04-01_
 
 ```cql
+CQL:
 define "Encounter With Asthma Present On Admission":
-  [Encounter] E
-    let
-      claim: ("Patient Claim" C where exists (C.item I where I.encounter.references(E))),
-      claimItem: (claim.item I where I.encounter.references(E))
-      claimDiagnosis: (claim.diagnosis D where D.sequence in claimItem.diagnosisSequence)
-    where claimDiagnosis.diagnosis in "Asthma"
-      and claimDiagnosis.onAdmission ~ "POA-Y"
+  [Encounter: “Office Visit”] OfficeEncounter
+   where exists  ((OfficeEncounter.claimDiagnosis()) CDiagnosis
+    where (CDiagnosis.diagnosis in "Asthma"
+    or CDiagnosis.diagnosis.getCondition().code in "Asthma")  
+     and  CDiagnosis.onAdmission ~ "POA-Y"
+      and CDiagnosis.sequence ~ 1)
 ```
 
-Alternatively, this can be expressed by making use of the `claimDiagnosis` fluent function found in the CQMCommon library:
+Alternatively, this logic can be expressed using the `claimDiagnosis` fluent function from the CQMCommon library:
 
 ```cql
+CQL:
 define "Encounter With Asthma Present On Admission":
-  [Encounter] E
+  [Encounter] Encounters
     where exists (
-      (E.claimDiagnosis()) D
-        where D.onAdmission ~ "POA-Y"
+      (Encounters.claimDiagnosis()) Dx
+        where Dx.onAdmission ~ "POA-Y"
           and (
-            D.diagnosis in "Asthma"
-              or D.diagnosis.getCondition().code in "Asthma" 
+            Dx.diagnosis in "Asthma"
+              or Dx.diagnosis.getCondition().code in "Asthma" 
           )
     )
 ```
 
-Note that the "POA-Y" code is defined as:
+"POA" Indicator codes:
 
 ```cql
+CQL:
 codesystem "Present On Admission Indicators": 'https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/HospitalAcqCond/Coding'
 
 code "POA-Y": 'Y' from "Present On Admission Indicators"
@@ -189,9 +209,11 @@ code "POA-1": '1' from "Present On Admission Indicators"
 code "POA-U": 'U' from "Present On Admission Indicators"
 ```
 
-Note also that the above examples assume the `diagnosis` element is represented as a code rather than a reference. To account for both possibilities, use the isDiagnosisPresentOnAdmission fluent function:
+Handling Code vs. Reference for Diagnosis
+The examples above assume that `diagnosis` element is represented as a code rather than a reference. To account for both representations, use the isDiagnosisPresentOnAdmission fluent function:
 
 ```cql
+CQL:
 define fluent function isDiagnosisPresentOnAdmission(encounter Encounter, diagnosisValueSet ValueSet, poaValueSet ValueSet):
   exists (
     (encounter.claimDiagnosis()) CD
@@ -204,9 +226,24 @@ define fluent function isDiagnosisPresentOnAdmission(encounter Encounter, diagno
 ```
 
 ### Principal Diagnosis
-_Reviewed 2025-04-01_
+A principal diagnosis represents the condition chiefly responsible for the patient’s admission. In QI-Core, principal diagnosis information is available through the QI-Core Claim profile using the diagnosis.type element or the sequence associated with the principal diagnosis.
+
+Principal diagnoses can be retrieved either directly from the claim resource or through the CQMCommon claimDiagnosis fluent function.
+
+Direct Retrieval Example
 
 ```cql
+CQL:
+define "Patient Claim":
+[Claim]
+define fluent function claimDiagnosis(encounter Encounter):
+  encounter E
+    let 
+      claim: ([Claim] C where C.status = 'Active' and C.use = 'claim' and exists (C.item I where I.encounter.references(E))),
+      claimItem: (claim.item I where I.encounter.references(E))
+    return claim.diagnosis D where D.sequence in claimItem.diagnosisSequence
+
+
 define "Encounter With Principal Diagnosis of Asthma":
   [Encounter] E
     let
@@ -220,26 +257,28 @@ define "Encounter With Principal Diagnosis of Asthma":
       )
 ```
 
-Alternatively, this can be expressed by making use of the `principalDiagnosis` fluent function found in the CQM Common library:
+Using the claimDiagnosis fluent function found in the CQM Common library:
 
 ```cql
-define "Encounter With Principal Diagnosis of Asthma":
-  [Encounter] E
+CQL:
+define "Encounter With Principal Diagnosis Of Asthma":
+  [Encounter] ValidEncounter
     where exists (
-      (E.principalDiagnosis()) D
-        where D.diagnosis in "Asthma"
-          or D.diagnosis.getCondition().code in "Asthma" 
+      (ValidEncounter.principalDiagnosis()) Dx
+        where Dx.diagnosis in "Asthma"
+          or Dx.diagnosis.getCondition().code in "Asthma" 
     )
 ```
 
-Note that the above can be further simplified by using the `hasPrincipalDiagnosisOf` fluent function:
+Including the `hasPrincipalDiagnosisOf` fluent function to simplify the expression:
 
 ```cql
+CQL:
 define fluent function hasPrincipalDiagnosisOf(encounter Encounter, valueSet ValueSet):
-  encounter E
+  encounter Visit
     let
-      PD: singleton from ((E.claimDiagnosis()) D where D.type.includesCode("Principal Diagnosis")),
-      CD: singleton from (([ConditionEncounterDiagnosis] union [ConditionProblemsHealthConcerns]) C where PD.diagnosis.references(C.id))
+      PD: singleton from ((Visit.claimDiagnosis()) D where D.type.includesCode("Principal Diagnosis")),
+      CD: singleton from (([ConditionEncounterDiagnosis] union [ConditionProblemsHealthConcerns]) Diagnosis where PD.diagnosis.references(Diagnosis.id))
 	return PD.diagnosis in valueSet
 	  or CD.code in valueSet
 ```

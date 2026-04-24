@@ -38,54 +38,47 @@
       <generation value="html"/>
 
 
-      <!--1: Summary-->
+      <!--1: Home-->
       <page>
         <nameUrl value="index.html"/>
-        <title value="Home"/>
-        <generation value="html"/>
-      </page>
-
-      <!--2: CMS Library Guidance-->
-      <page>
-        <nameUrl value="library_guidance.html"/>
-        <title value="CMS Library Guidance"/>
+        <title value="CMS FHIR Quality Measure Development IG Homepage"/>
         <generation value="markdown"/>
       </page>
-
-      <!--3: CMS Measure Guidance-->
+      
+      <!--2: CMS Measure Authoring Guidance-->
       <page>
         <nameUrl value="measure_guidance.html"/>
-        <title value="CMS Measure Guidance"/>
+        <title value="CMS Measure Authoring Guidance"/>
         <generation value="markdown"/>
       </page>
 
-      <!--4: CMS Manifest Guidance-->
+      <!--3: CMS Manifest Guidance-->
       <page>
         <nameUrl value="manifest_guidance.html"/>
         <title value="CMS Manifest Guidance"/>
         <generation value="markdown"/>
       </page>
 
-      <!--5: CMS Measure Profile-->
+      <!--4: CMS Measure Profile-->
       <page>
         <nameUrl value="measure_profile.html"/>
-        <title value="CMS Measure Profile"/>
+        <title value="Profiles Used by CMS Measures"/>
         <generation value="markdown"/>
       </page>
 
-      <!--6: Example-->
+      <!--5: Example-->
       <page>
         <nameUrl value="examples.html"/>
         <title value="Examples"/>
         <generation value="markdown"/>
       </page>
-      <!--7: Change Control-->
+      <!--6: Change Control-->
       <page>
         <nameUrl value="change_control.html"/>
         <title value="Change Control Process"/>
         <generation value="markdown"/>
       </page>
-      <!--8: Changes-->
+      <!--7: Changes-->
       <page>
         <nameUrl value="changes.html"/>
         <title value="Change History"/>

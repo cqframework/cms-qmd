@@ -1,35 +1,22 @@
 <ul xmlns="http://www.w3.org/1999/xhtml" class="nav navbar-nav">
-  <li><a href="index.html">Summary</a></li>
+  <li><a href="index.html">Home</a></li>
   <li><a href="toc.html">Table of Contents</a></li>
   <li class="dropdown">
-    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Guidance<b class="caret">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Authoring Guidance<b class="caret">
       </b>
     </a>
     <ul class="dropdown-menu">
       <li>
-        <a href="library_guidance.html">CMS Library Guidance</a>
-      </li>
-      <li>
-        <a href="measure_guidance.html">CMS Measure Guidance</a>
-      </li>
-      <li>
-        <a href="manifest_guidance.html">CMS Manifest Guidance</a>
+		<a href="measure_guidance.html">CMS Measure Guidance</a>
       </li>
       <li>
         <a href="patterns.html">Authoring Patterns QI-Core v6.0.0</a>
       </li>
     </ul>
   </li>
-    <li class="dropdown">
-    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Artifacts<b class="caret">
-      </b>
-    </a>
-    <ul class="dropdown-menu">
-       <li>
-        <a href="measure_profile.html">CMS Measure Profile</a>
-      </li>
-     </ul>
-  </li>
+   <li><a href="manifest_guidance.html" class="item">Manifest</a></li>
+   <li><a href="measure_profile.html" class="item">Profiles</a></li>
+   </li>
   <li><a href="examples.html" class="item">Examples</a></li>
   <li><a href="change_control.html" class="item">Change Control</a></li>  
   <li><a href="changes.html" class="item">Changes</a></li>

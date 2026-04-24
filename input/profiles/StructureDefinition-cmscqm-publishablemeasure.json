@@ -55,7 +55,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Measure",
-  "baseDefinition": "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-publishablemeasure",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Measure",
   "derivation": "constraint",
   "differential" : {
     "element" : [{

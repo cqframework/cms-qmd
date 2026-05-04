@@ -10,11 +10,11 @@ While the CMS measure profile is derived from FHIR Measure, CMS measures must al
 
 <table class="grid">
   <tr><th>Scoring Type</th><th>Profile</th></tr>
-  <tr><td>Cohort</td><td><a href="StructureDefinition-cqm-cohortmeasure.html">CQMCohortMeasure</a></td></tr>
-  <tr><td>Proportion</td><td><a href="StructureDefinition-cqm-proportionmeasure.html">CQMProportionMeasure</a></td></tr>
-  <tr><td>Ratio</td><td><a href="StructureDefinition-cqm-ratiomeasure.html">CQMRatioMeasure</a></td></tr>
-  <tr><td>Continuous Variable</td><td><a href="StructureDefinition-cqm-cvmeasure.html">CQMContinuousVariableMeasure</a></td></tr>
-  <tr><td>Composite</td><td><a href="StructureDefinition-cqm-compositemeasure.html">CQMCompositeMeasure</a></td></tr>
-  <tr><td>Attestation</td><td><a href="StructureDefinition-cqm-attestationmeasure.html">CQMAttestationMeasure</a></td></tr>
+  <tr><td>Cohort</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-cohortmeasure.html">CQMCohortMeasure</a></td></tr>
+  <tr><td>Proportion</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-proportionmeasure.html">CQMProportionMeasure</a></td></tr>
+  <tr><td>Ratio</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-ratiomeasure.html">CQMRatioMeasure</a></td></tr>
+  <tr><td>Continuous Variable</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-cvmeasure.html">CQMContinuousVariableMeasure</a></td></tr>
+  <tr><td>Composite</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-compositemeasure.html">CQMCompositeMeasure</a></td></tr>
+  <tr><td>Attestation</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-attestationmeasure.html">CQMAttestationMeasure</a></td></tr>
 </table>
 

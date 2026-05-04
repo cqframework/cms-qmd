@@ -44,7 +44,7 @@ define "CPAP Prohibited":
 CQL:
 define "CPAP Order Rejected For Reason":
   [DeviceRequest: "CPAP"] DeviceOrdered
-    with [TaskRejected: Fulfill] TaskRejected
+    with [TaskRejected: fulfill] TaskRejected
       such that TaskRejected.focus.references(DeviceOrdered)
         and (TaskRejected.statusReason in "Medical Reason"
           or TaskRejected.statusReason in "Patient Refusal"

@@ -22,7 +22,7 @@ define "Active Diabetes Conditions":
     where Condition.isActive()
 ```
 
-The [QICoreCommon]([https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/input/cql/QICoreCommon.cql](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/wiki/input/cql/QICoreCommon.cql)) library provides `isProblemListItem()` and `isHealthConcern()` fluent functions to help identify the category of a Condition. It also provides the `isActive()` fluent function to determine whether the Condition represents an active diagnosis for the patient. The `isActive()` fluent function is equivalent to checking whether the clinicalStatus element is one of the active, recurrence, or relapse values.
+The QICoreCommon library provides `isProblemListItem()` and `isHealthConcern()` fluent functions to help identify the category of a Condition. It also provides the `isActive()` fluent function to determine whether the Condition represents an active diagnosis for the patient. The `isActive()` fluent function is equivalent to checking whether the clinicalStatus element is one of the active, recurrence, or relapse values.
 
 NOTE: The isActive fluent function depends on the `clinicalStatus` of the Condition record. In retrospective scenarios, the data avalailable at evaluation times may no longer reflect the status that existed during the "Measurement Period" that exists at the time of evaluation. A condition may have been active during the period of interest but, inactive when the measure is executed. Therefore `isActive()` should not be used in retrospective contexts. In those cases, the most reliable approach is to evaluate the [Onset, Abatement, and Prevalence Period](#onset-abatement-and-prevalence-period) elements as described below.
 

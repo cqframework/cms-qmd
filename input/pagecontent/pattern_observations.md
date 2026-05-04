@@ -89,8 +89,8 @@ define "Pediatric BMI For Age":
 // USCore Pediatric Weight for Height - 77606-2
 // @profile: [https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-pediatric-weight-for-height.html](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-pediatric-weight-for-height.html)
 define "Pediatric Weight For Height":
-  [USCorePediatricWeightForHeightObservationProfile] PedsHt
-    where PedsHt.status in { 'final', 'amended', 'corrected' }
+  [USCorePediatricWeightForHeightObservationProfile] PedsWtForHt
+    where PedsWtForHt.status in { 'final', 'amended', 'corrected' }
 ```
 
 ```cql

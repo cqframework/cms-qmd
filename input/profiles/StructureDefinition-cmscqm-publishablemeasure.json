@@ -63,16 +63,110 @@
       "path" : "Measure",
       "mustSupport" : false
     },
+    {
+      "id" : "Measure.text",
+      "path" : "Measure.text",
+	  "short" : "CMS dQMs must have a human readable file",
+      "requirements" : "A published measure must provide human-readable narrative description of the measure contents.",
+      "min" : "1",
+      "max" : "1",
+      "mustSupport" : false
+    },	
+	{
+      "id" : "Measure.identifier",
+      "path" : "Measure.identifier",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "type"
+        }],
+        "rules" : "open"
+      },
+      "requirements" : "A published measure must be able to specify additional identifiers such as endorser and publisher identifiers for the measure.",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "Identifier"
+      }],
+      "mustSupport" : false
+    },
 	{
       "id" : "Measure.identifier:publisherIdentifier",
       "path" : "Measure.identifier",
       "sliceName" : "publisherIdentifier",
-      "short" : "CMS dQMs SHALL have a CMS ID for publication",
+      "short" : "CMS dQMs must have a CMS ID for publication",
       "definition" : "An identifier assigned by the measure publisher.",
       "min" : 1,
-      "max" : 1,
-      "mustSupport" : true
+      "max" : "1",
+      "mustSupport" : false
     },
+	{
+      "id" : "Measure.identifier",
+      "path" : "Measure.identifier",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "type"
+        }],
+        "rules" : "open"
+      },
+      "requirements" : "A published measure must be able to specify additional identifiers such as endorser and publisher identifiers for the measure.",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "Identifier"
+      }],
+      "mustSupport" : false
+    },
+    {
+      "id" : "Measure.identifier:shortName",
+      "path" : "Measure.identifier",
+      "sliceName" : "shortName",
+      "short" : "'eCQM Abbreviated Title' (measure short name) in MADiE.",
+      "definition" : "The short name for the measure (e.g. CMS104v4).",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+	},
+	{
+      "id" : "Measure.title",
+      "path" : "Measure.title",
+	  "short" : "'Measure Name' in MADiE.",
+      "requirements" : "A published measure must specify a human-friendly title.",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }],
+      "mustSupport" : false
+    },
+    {
+      "id" : "Measure.description",
+      "path" : "Measure.description",
+	  "short" : "'Measure Description' in MADiE.",
+      "requirements" : "Natural language description of the measure.",	  
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },	
+    {
+      "id" : "Measure.effectivePeriod",
+      "path" : "Measure.effectivePeriod",
+	  "short" : "CMS dQMs must have an effective period.",
+      "requirements" : "A published measure should provide an indication of the period during which the measure content can be effectively applied.",
+	  "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },
+    {
+      "id": "Measure.group",
+      "path": "Measure.group",
+	  "short" : "MADiE requires at least one measure population",
+      "requirements" : "A group of population criteria for the measure.",
+	  "min" : "1",
+      "max" : "*",		
+        "mustSupport": false
+      }	
 	]
   }
 }

@@ -17,7 +17,7 @@ define "Statin Allergy Intolerance":
 > NOTES: 
 * Status considerations:
 The AllergyIntolerance profile does not constrain clinicalStatus or verificationStatus elements.  Authors must consider the possible values of these elements to ensure the expression aligns with intent. 
-In this case, the `clinicalStatus`, if present, must be equivalent to the code `"allergy-active"` NOTE the use of `allergy-active` here to distinguish from similar codes used for the Condition resource). 
+In this case, the clinicalStatus, if present, must be equivalent to "allergy-active" to be distinguished from similar codes used for the Condition resource). 
 * Retrospective evaluation:
 In retrospective cases, the logic will be evaluated on data that exists at the time of evaluation. This means that while a given Allergy/Intolerance may have been active during the measurement period, it might no longer be active when the measure is run. As such, work is ongoing as of May 2025 to develop a more reliable way to determine whether an allergy was active at some point in time. 
 

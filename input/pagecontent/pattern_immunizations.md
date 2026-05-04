@@ -19,7 +19,7 @@ define "Polio Immunizations":
 
 ## Immunization not performed
 
-QI-Core defines the [ImmunizationNotDone](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-immunizationnotdone.html) profile to represent documentation of the reason an immunization was not performed. By default, ImmunizationNotDone resources in QI-Core are characterized by the `vaccineCode` element.
+QI-Core defines the [ImmunizationNotDone](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-immunizationnotdone.html) profile to represent a vaccination that has been performed. Immunization resources are characterized by the vaccineCode element which identifies the specific vaccine product administered using standardized terminology. This ensures consistent interpretation and supports interoperability across systems. 
 
 ```cql
 CQL:

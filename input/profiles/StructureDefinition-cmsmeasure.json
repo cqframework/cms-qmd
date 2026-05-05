@@ -18,7 +18,7 @@
       ]
     }
   ],
-  "description": "The CMS CQM Publishable Measure profile defines expectations for publication of CMS quality program digital measures.",
+  "description": "The CMS Measure Profile defines expectations for publication of CMS quality program digital measures.",
   "jurisdiction": [
     {
       "coding": [
@@ -160,7 +160,23 @@
       "min" : 1,
       "max" : "1",
       "mustSupport" : false
-    }
+    },
+    {
+      "id" : "Measure.group.extension:type",
+      "path" : "Measure.group.extension",
+      "sliceName" : "type",
+      "min" : 1,
+      "max" : "1",
+      "type" : [
+        {
+          "code" : "Extension",
+          "profile" : [
+            "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-type"
+          ]
+        }
+      ],
+      "mustSupport" : false
+    },	
  	]
   }
 }

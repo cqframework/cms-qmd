@@ -3,10 +3,16 @@
 {: #Profiles-Used-by-CMS-Measure}
 
 ###  CMS Measure Profile
-The CMS measure profile ([CMSMeasure](StructureDefinition-cms-measure.html))is derived from [Measure](https://hl7.org/fhir/R4/measure.html). 
+The CMS measure profile ([CMSMeasure](StructureDefinition-cms-measure.html)) is derived from [FHIR Measure](https://hl7.org/fhir/R4/measure.html). It's purpose is to express CMS specific constraints not explicitly captured in supporting profiles.
 
 ### Quality Measure IG Conformance
-While the CMS measure profile is derived from FHIR Measure, CMS measures must also conform to the appropriate measure profile based on their scoring type:
+While the CMS measure profile is derived from FHIR Measure, CMS measures must also conform to profiles and guidance in the HL7 [Quality Measure Implementation Guide (QMIG)](https://hl7.org/fhir/uv/cqm/index.html).
+
+#### QM IG Profiles of Interest
+
+[CQM Computable Measure](https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-publishablemeasure.html)
+
+[CQM Publishable Measure](https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-publishablemeasure.html)
 
 <table class="grid">
   <tr><th>Scoring Type</th><th>Profile</th></tr>
@@ -18,3 +24,5 @@ While the CMS measure profile is derived from FHIR Measure, CMS measures must al
   <tr><td>Attestation</td><td><a href="https://hl7.org/fhir/uv/cqm/StructureDefinition-cqm-attestationmeasure.html">CQMAttestationMeasure</a></td></tr>
 </table>
 
+### Extension
+[CMS Type](StructureDefinition-cms-type.html)

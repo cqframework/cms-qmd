@@ -1,10 +1,10 @@
 {
   "resourceType": "StructureDefinition",
-  "id": "cmscqm-publishablemeasure",
-  "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/cmscqm-publishablemeasure",
+  "id": "cms-measure",
+  "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/cms-measure",
   "version": "1.0.0",
-  "name": "CMSCQMPublishableMeasure",
-  "title": "CMS CQM Publishable Measure",
+  "name": "CMSMeasure",
+  "title": "CMS Measure",
   "status": "active",
   "experimental": false,
   "publisher": "CMS",
@@ -64,15 +64,6 @@
       "mustSupport" : false
     },
     {
-      "id" : "Measure.text",
-      "path" : "Measure.text",
-	  "short" : "CMS dQMs must have a human readable file",
-      "requirements" : "A published measure must provide human-readable narrative description of the measure contents.",
-      "min" : "1",
-      "max" : "1",
-      "mustSupport" : false
-    },	
-	{
       "id" : "Measure.identifier",
       "path" : "Measure.identifier",
       "slicing" : {
@@ -128,18 +119,6 @@
       "max" : "1",
       "mustSupport" : false
 	},
-	{
-      "id" : "Measure.title",
-      "path" : "Measure.title",
-	  "short" : "'Measure Name' in MADiE.",
-      "requirements" : "A published measure must specify a human-friendly title.",
-      "min" : 1,
-      "max" : "1",
-      "type" : [{
-        "code" : "string"
-      }],
-      "mustSupport" : false
-    },
     {
       "id" : "Measure.description",
       "path" : "Measure.description",
@@ -158,15 +137,30 @@
       "max" : "1",
       "mustSupport" : false
     },
-    {
-      "id": "Measure.group",
-      "path": "Measure.group",
-	  "short" : "MADiE requires at least one measure population",
-      "requirements" : "A group of population criteria for the measure.",
-	  "min" : "1",
-      "max" : "*",		
-        "mustSupport": false
-      }	
-	]
+	    {
+      "id" : "Measure.author",
+      "path" : "Measure.author",
+	  "short" : "'Measure Developer' in MADiE.",
+      "requirements" : "An individiual or organization primarily involved in the creation and maintenance of the content.",
+	  "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },
+	{
+      "id" : "Measure.library",
+      "path" : "Measure.library",
+      "type" : [
+        {
+          "code" : "canonical",
+          "targetProfile" : [
+            "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-computablelibrary"
+          ]
+        }
+      ],
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    }
+ 	]
   }
 }

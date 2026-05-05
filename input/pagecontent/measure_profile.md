@@ -3,7 +3,7 @@
 {: #Profiles-Used-by-CMS-Measure}
 
 ###  CMS Measure Profile
-The CMS publishable measure profile ([CMSCQMPublishableMeasure](StructureDefinition-cmscqm-publishablemeasure.html))is derived from [Measure](https://hl7.org/fhir/R4/measure.html). 
+The CMS measure profile ([CMSMeasure](StructureDefinition-cms-measure.html))is derived from [Measure](https://hl7.org/fhir/R4/measure.html). 
 
 ### Quality Measure IG Conformance
 While the CMS measure profile is derived from FHIR Measure, CMS measures must also conform to the appropriate measure profile based on their scoring type:

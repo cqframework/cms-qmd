@@ -23,7 +23,7 @@ QI-Core defines the [ImmunizationNotDone](https://hl7.org/fhir/us/qicore/STU6/St
 
 ```cql
 CQL:
-define "Reason For No Polio Immunization":
+define "Reason No Polio Immunization":
   [ImmunizationNotDone: "Inactivated Polio Vaccine (IPV)"] PolioVaccination
     where PolioVaccination.statusReason in "Medical Reason"
       or PolioVaccination.statusReason in "Patient Refusal"

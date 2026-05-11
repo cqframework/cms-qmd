@@ -5,7 +5,7 @@
 The QI-Core [Communication](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-communication.html) profile represents information transmitted from a sender to a receiver.  It reflects communication about or with the patient. 
 
 Important distinction:
-Measure developers looking to model clinical concepts like patient education should use the Procedure profile as that represents "An action that is being or was performed on a patient".
+If the measure intent is to represent patient education or other clinical actions, authors should use the Procedure profile instead. "An action that is being or was performed on a patient" such as training or counseling e.g., involves verification of the patient’s comprehension or aims to change the patient’s mental state.
 
 By default, Communication resources in QI-Core are characterized by the `topic` element. In comparison to STU 4.1.1, there are no new communication profiles added to STU6 of QI-Core.
 

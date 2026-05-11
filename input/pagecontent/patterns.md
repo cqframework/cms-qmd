@@ -95,6 +95,9 @@ CQL:
 
 NOTES: 
 * The comparison is performed against the code value, not the display. 
+* For example, the status finished will appear like this –
+ 
+	code "**finished**": 'finished' from EncounterStatus display 'Finished'
 * In edge-cases, string-valued elements may contain terminology values. For more information, see the [Using CQL with FHIR IG](https://hl7.org/fhir/uv/cql/using-cql.html#code-systems).
 
 #### CodeableConcept

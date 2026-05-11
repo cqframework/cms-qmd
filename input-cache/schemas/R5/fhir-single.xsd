@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, May 5, 2026 19:28+0000 for FHIR v6.0.0-ballot4 
+  Generated on Mon, May 11, 2026 03:40+0000 for FHIR v6.0.0-ballot4 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="6.0.0-ballot4">
   <!-- Note: When using this schema with some tools, it may also be necessary to declare xmlns:xml="http://www.w3.org/XML/1998/namespace", however this causes performance issues with other tools and thus is not in the base schemas. -->
@@ -43172,14 +43172,14 @@ The primary difference between a medicationstatement and a medicationadministrat
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A code that specifies the product or a textual description if no code is available. This could be such codes as a USDA Branded Food Products Database number, a USDA Food Data Central (FDC) ID number, Universal Product Code (UPC), a Langual code, or a country specific food database code.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="NutritionProductStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">The current state of the product.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code that specifies the product or a textual description if no code is available. This could be such codes as a USDA Branded Food Products Database number, a USDA Food Data Central (FDC) ID number, Universal Product Code (UPC), a Langual code, or a country specific food database code.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">

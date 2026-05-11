@@ -1,6 +1,6 @@
 # Devices
 
-FHIR defines several resources related to the tracking and management of devices used by patients, including [Device](http://hl7.org/fhir/device.html) and [DeviceRequest](http://hl7.org/fhir/devicerequest.html).  It is important to note that the types of devices modelled by these profiles are those that are considered personal use by the patient (examples include frailty devices like canes, glucometers or CPAP machines). In comparison to STU 4.1.1, there are no new device profiles added to STU6 of QI-Core.
+FHIR defines several resources for tracking and managing patient use, such as canes, glucometers or CPAP machines. These profiles [Device](http://hl7.org/fhir/device.html) and [DeviceRequest](http://hl7.org/fhir/devicerequest.html). represent devices intended for personal use by the patient.  In contrast, devices used by clinicians or for general resource management (e.g., infusion pumps, wheelchairs used in facilities) are represented using other profiles—not the patient-use device profiles. In comparison to STU 4.1.1, there are no new device profiles added to STU6 of QI-Core.
 
 ## Device ordered
 

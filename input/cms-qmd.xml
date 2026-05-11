@@ -51,34 +51,41 @@
         <title value="CMS Measure Authoring Guidance"/>
         <generation value="markdown"/>
       </page>
+	  
+	  <!--3: CMS Test Case Guidance-->
+      <page>
+        <nameUrl value="test_case_guidance.html"/>
+        <title value="CMS Test Case Guidance"/>
+        <generation value="markdown"/>
+      </page>
 
-      <!--3: CMS Manifest Guidance-->
+      <!--4: CMS Manifest Guidance-->
       <page>
         <nameUrl value="manifest_guidance.html"/>
         <title value="CMS Manifest Guidance"/>
         <generation value="markdown"/>
       </page>
 
-      <!--4: CMS Measure Profile-->
+      <!--5: Artifact-->
       <page>
         <nameUrl value="measure_profile.html"/>
         <title value="Profiles Used by CMS Measures"/>
         <generation value="markdown"/>
       </page>
 
-      <!--5: Example-->
+      <!--6: Example-->
       <page>
         <nameUrl value="examples.html"/>
         <title value="Examples"/>
         <generation value="markdown"/>
       </page>
-      <!--6: Change Control-->
+      <!--7: Change Control-->
       <page>
         <nameUrl value="change_control.html"/>
         <title value="Change Control Process"/>
         <generation value="markdown"/>
       </page>
-      <!--7: Changes-->
+      <!--8: Changes-->
       <page>
         <nameUrl value="changes.html"/>
         <title value="Change History"/>

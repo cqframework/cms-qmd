@@ -1,4 +1,4 @@
-This informmation is intended to describe the process to record, evaluate, and authorize proposed modifications to the CMS QMD IG. This process ensures that all changes are assessed for their impact on stakeholders, downstream applications quality, compliance, and timelines, and that they are implemented in a controlled and traceable manner.
+This change control process establishes a structured approach for documenting, evaluating, and approving proposed modifications to the CMS QMD IG. It ensures that all changes are systematically assessed for their impact on stakeholders, downstream systems, standards compliance, and implementation timelines, and that they are implemented in a controlled, transparent, and traceable manner.
 
 ### Stakeholders
 CMS:

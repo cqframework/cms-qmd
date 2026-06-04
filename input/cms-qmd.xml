@@ -38,24 +38,24 @@
       <generation value="html"/>
 
 
-      <!--1: Summary-->
+      <!--1: Home-->
       <page>
         <nameUrl value="index.html"/>
-        <title value="Home"/>
-        <generation value="html"/>
-      </page>
-
-      <!--2: CMS Library Guidance-->
-      <page>
-        <nameUrl value="library_guidance.html"/>
-        <title value="CMS Library Guidance"/>
+        <title value="CMS FHIR Quality Measure Development IG Homepage"/>
         <generation value="markdown"/>
       </page>
-
-      <!--3: CMS Measure Guidance-->
+      
+      <!--2: CMS Measure Authoring Guidance-->
       <page>
         <nameUrl value="measure_guidance.html"/>
-        <title value="CMS Measure Guidance"/>
+        <title value="CMS Measure Authoring Guidance"/>
+        <generation value="markdown"/>
+      </page>
+	  
+	  <!--3: CMS Test Case Guidance-->
+      <page>
+        <nameUrl value="test_case_guidance.html"/>
+        <title value="CMS Test Case Guidance"/>
         <generation value="markdown"/>
       </page>
 
@@ -66,10 +66,10 @@
         <generation value="markdown"/>
       </page>
 
-      <!--5: CMS Measure Profile-->
+      <!--5: Artifact-->
       <page>
         <nameUrl value="measure_profile.html"/>
-        <title value="CMS Measure Profile"/>
+        <title value="Profiles Used by CMS Measures"/>
         <generation value="markdown"/>
       </page>
 

@@ -1,29 +1,12 @@
 {:toc}
 
-{: #CMS-Measure-Guidance}
-This section will provide guidance related to fields used in MADiE for CMS dQM development. 
+{: #CMS-dQM-Authoring-Guidance}
+Guidance for measure developers related to CMS dQM development and maintenance will be provided in this section. 
 
-###  Guidance for MADiE Input
+###  CMS FHIR-based CQL Style Guide
 
-#### Measure Naming
-1. Title: Measure Name in MADiE 
 
-2. Short Name: eCQM Abbreviated Title in MADiE
 
-#### Human Readable Fields
+### MADiE Guidance for Human Readable Fields
 
-1. Description:
 
-2. Copyright:
-
-3. Disclaimer:
-
-4. Rationale: 
-
-5. Clinical Recommendation Statement: 
-
-6. Citation: Added as References in MADiE
-
-7. Definition:
-
-8. Guidance (Usage): 

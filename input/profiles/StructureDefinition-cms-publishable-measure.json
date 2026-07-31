@@ -1,0 +1,97 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "cms-publishable-measure",
+  "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/cms-publishable-measure",
+  "version": "1.0.0",
+  "name": "CMSPublishableMeasure",
+  "title": "CMS Publishable Measure",
+  "status": "active",
+  "experimental": false,
+  "publisher": "CMS",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/cqi/index.cfm"
+        }
+      ]
+    }
+  ],
+  "description": "The MADiE Measure Profile supports development of measures within the tool.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "http://unstats.un.org/unsd/methods/m49/m49.htm",
+          "code": "001"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Pattern"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "objimpl",
+      "uri": "http://hl7.org/fhir/object-implementation",
+      "name": "Object Implementation Information"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Measure",
+  "baseDefinition": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/madie-measure",
+  "derivation": "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Measure",
+      "path" : "Measure",
+      "mustSupport" : false
+    },
+{
+  "id": "Measure.identifier:publisherIdentifier",
+  "path": "Measure.identifier",
+  "sliceName": "publisherIdentifier",
+  "short": "CMS identifier assigned to the measure",
+  "definition": "An identifier assigned by the MADiE tool when indicated as a CMS measure.",
+  "min": 1,
+  "max": "1",
+  "mustSupport": false
+},
+{
+  "id": "Measure.identifier:cmsIdentifier.system",
+  "path": "Measure.identifier.system",
+  "short": "CMS identifier namespace",
+  "definition": "The namespace used for CMS identifiers assigned in MADiE.",
+  "min": 1,
+  "max": "1",
+  "fixedUri": "https://madie.cms.gov/measure/cmsId",
+  "mustSupport": false
+},
+{
+  "id": "Measure.identifier:cmsIdentifier.value",
+  "path": "Measure.identifier.value",
+  "short": "CMS identifier assigned to the measure.",
+  "definition": "An identifier assigned by the MADiE tool when indicated as a CMS measure.",
+  "min": 1,
+  "max": "1",
+  "mustSupport": false
+}
+ 	]
+  }
+}

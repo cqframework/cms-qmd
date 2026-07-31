@@ -7,6 +7,5 @@ Guidance for measure developers related to CMS dQM development and maintenance w
 
 
 
-### MADiE Guidance for Human Readable Fields
 
 

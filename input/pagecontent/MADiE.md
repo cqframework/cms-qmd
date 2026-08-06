@@ -243,13 +243,13 @@ Table 4-1 MADiE Field Mapping provides a crosswalk between MADiE measure authori
       <td>Risk Adjustment Definition</td>
       <td>Optional</td>
       <td>Defines patient characteristics that may influence outcomes, enabling more equitable comparisons of measure results across populations or providers.</td>
-      <td><code>Measure.supplementalData</code> where usage: Risk Adjustment</td>
+      <td><code>Measure.supplementalData</code> where usage: risk-adjustment-factor</td>
     </tr>
     <tr>
       <td>Risk Adjustment Description</td>
       <td>Optional</td>
       <td>Describes risk adjustment.</td>
-      <td><code>Measure.risk-adjustment-factor</code></td>
+      <td><code>Measure.riskAdjustment</code></td>
     </tr>
     <tr>
       <td>Steward</td>
@@ -287,6 +287,15 @@ Table 4-1 MADiE Field Mapping provides a crosswalk between MADiE measure authori
 </details>
 
 
+### Namespaces in MADiE
+
+MADiE establishes the namespace for authored and exported content by assigning canonical URLs to the associated resources.
+
+
+At this time, MADiE supports a single namespace for authored and exported content and does not support organization-specific namespaces. As support for additional organizations and publication environments evolves, namespace conventions may be expanded to ensure artifacts developed independently remain uniquely identifiable.
+
+For additional information about CQL library namespaces and their relationship to FHIR artifacts, see the Using CQL with FHIR Implementation Guide, [Library Namespaces section](https://hl7.org/fhir/uv/cql/using-cql.html#library-namespaces).
+
 ### dQM Export Naming Conventions
 
 MADiE applies consistent naming conventions to the files generated for a dQM export. File names are based on the measure’s eCQM abbreviated title, measure version, and model information. 
@@ -321,4 +330,58 @@ For example:
 
 #### MADiE CQL to ELM Translator
 
+MADiE uses the open-source [cqframework CQL-to-ELM Translator]( https://github.com/cqframework/clinical_quality_language/tree/main/cql-to-elm) to translate CQL into Expression Logical Model (ELM), the computable representation used for validation and execution of CQL expressions.
 
+Table 4-2 represents the translator parameters used in MADiE
+
+<p><strong>Table 4-2 MADiE Translator Parameters</strong></p> <table class="grid">
+<table class="grid">
+  <thead>
+    <tr>
+      <th scope="col">Parameter</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>disable-method-invocation</td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td>validate-units</td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td>locators</td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td>error-severity (Export)</td>
+      <td><code>Info</code></td>
+    </tr>
+    <tr>
+      <td>error-severity (Export for publishing)</td>
+      <td><code>error</code></td>
+    </tr>
+    <tr>
+      <td>disable-list-promotion</td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td>result-types</td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td>detailed-errors</td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td>annotations</td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td>disable-list-demotion</td>
+      <td><code>true</code></td>
+    </tr>
+  </tbody>
+</table>

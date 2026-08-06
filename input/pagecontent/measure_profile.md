@@ -17,7 +17,7 @@ CMS test cases must conform to the [CMSTestCase](StructureDefinition-cms-test-ca
 ### Extensions
 [CMS Type](StructureDefinition-cms-type.html)
 
-[CMS Scoring](StructureDefinition/cms-scoring.html)
+[CMS Scoring](StructureDefinition-cms-scoring.html)
 
 ### Terminology
 [CMS Measure Scoring value set](ValueSet-cms-measure-scoring.html)

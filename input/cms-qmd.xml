@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <id value="cms.fhir.qmd"/>
   <url value="http://ecqi.healthit.gov/fhir/qmd/ImplementationGuide/cms.fhir.qmd"/>
-  <version value="0.5.0-cibuild"/>
+  <version value="0.8.0-cibuild"/>
   <name value="CMSFHIRQMD"/>
   <title value="CMS FHIR Quality Measure Development IG"/>
   <status value="draft"/>

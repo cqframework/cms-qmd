@@ -2,7 +2,6 @@
   "resourceType": "StructureDefinition",
   "id": "cms-scoring",
   "url": "http://ecqi.healthit.gov/fhir/uv/cqm/StructureDefinition/cms-scoring",
-  "version": "1.0.0",
   "name": "CMSScoring",
   "title": "CMS Scoring",
   "status": "active",

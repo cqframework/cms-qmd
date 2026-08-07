@@ -2,7 +2,6 @@
   "resourceType": "StructureDefinition",
   "id": "madie-measure",
   "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/madie-measure",
-  "version": "1.0.0",
   "name": "MADiEMeasure",
   "title": "MADiE Measure",
   "status": "active",

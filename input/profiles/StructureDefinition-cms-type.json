@@ -2,7 +2,6 @@
   "resourceType": "StructureDefinition",
   "id": "cms-type",
   "url": "http://ecqi.healthit.gov/fhir/uv/cqm/StructureDefinition/cms-type",
-  "version": "1.0.0",
   "name": "CMSType",
   "title": "CMS Type",
   "status": "active",

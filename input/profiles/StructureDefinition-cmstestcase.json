@@ -2,7 +2,6 @@
   "resourceType": "StructureDefinition",
   "id": "cms-test-case",
   "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/cms-test-case",
-  "version": "1.0.0",
   "name": "CMSTestCase",
   "status": "active",
   "kind": "resource",

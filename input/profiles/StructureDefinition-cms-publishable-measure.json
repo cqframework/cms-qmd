@@ -2,7 +2,6 @@
   "resourceType": "StructureDefinition",
   "id": "cms-publishable-measure",
   "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/cms-publishable-measure",
-  "version": "1.0.0",
   "name": "CMSPublishableMeasure",
   "title": "CMS Publishable Measure",
   "status": "active",

@@ -58,34 +58,40 @@
         <title value="CMS Test Case Guidance"/>
         <generation value="markdown"/>
       </page>
+	<!--4: MADiE-->
+      <page>
+        <nameUrl value="MADiE.html"/>
+        <title value="MADiE"/>
+        <generation value="markdown"/>
+      </page>
 
-      <!--4: CMS Manifest Guidance-->
+      <!--5: CMS Manifest Guidance-->
       <page>
         <nameUrl value="manifest_guidance.html"/>
         <title value="CMS Manifest Guidance"/>
         <generation value="markdown"/>
       </page>
 
-      <!--5: Artifact-->
+      <!--6: Artifact-->
       <page>
         <nameUrl value="measure_profile.html"/>
         <title value="Profiles Used by CMS Measures"/>
         <generation value="markdown"/>
       </page>
 
-      <!--6: Example-->
+      <!--7: Example-->
       <page>
         <nameUrl value="examples.html"/>
         <title value="Examples"/>
         <generation value="markdown"/>
       </page>
-      <!--7: Change Control-->
+      <!--8: Change Control-->
       <page>
         <nameUrl value="change_control.html"/>
         <title value="Change Control Process"/>
         <generation value="markdown"/>
       </page>
-      <!--8: Changes-->
+      <!--9: Changes-->
       <page>
         <nameUrl value="changes.html"/>
         <title value="Change History"/>
@@ -167,6 +173,13 @@
           <title value="Communication"/>
           <generation value="markdown"/>
         </page>
+		
+        <!--20: License)-->
+        <page>
+          <nameUrl value="license.html"/>
+          <title value="License"/>
+          <generation value="markdown"/>
+        </page>		
       </page>
     </page>
     <!-- <parameter>

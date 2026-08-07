@@ -1,0 +1,223 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "madie-measure",
+  "url": "http://ecqi.healthit.gov/fhir/qmd/StructureDefinition/madie-measure",
+  "version": "1.0.0",
+  "name": "MADiEMeasure",
+  "title": "MADiE Measure",
+  "status": "active",
+  "experimental": false,
+  "publisher": "CMS",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/cqi/index.cfm"
+        }
+      ]
+    }
+  ],
+  "description": "The MADiE Measure Profile supports development of measures within the tool.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "http://unstats.un.org/unsd/methods/m49/m49.htm",
+          "code": "001"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Pattern"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "objimpl",
+      "uri": "http://hl7.org/fhir/object-implementation",
+      "name": "Object Implementation Information"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Measure",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Measure",
+  "derivation": "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Measure",
+      "path" : "Measure",
+      "mustSupport" : false
+    },
+{
+  "id": "Measure.identifier",
+  "path": "Measure.identifier",
+  "slicing": {
+    "discriminator": [
+      {
+        "type": "value",
+        "path": "type"
+      }
+    ],
+    "rules": "open"
+  },
+  "requirements": "A published measure must be able to specify additional identifiers such as publisher, short-name, and endorser identifiers for the measure.",
+  "min": 1,
+  "max": "*",
+  "type": [
+    {
+      "code": "Identifier"
+    }
+  ],
+  "mustSupport": false
+},
+{
+  "id": "Measure.identifier:shortName",
+  "path": "Measure.identifier",
+  "sliceName": "shortName",
+  "short": "'eCQM Abbreviated Title' (measure short name) in MADiE.",
+  "definition": "The short name for the measure, such as CMS104v4.",
+  "min": 1,
+  "max": "1",
+  "mustSupport": false
+},
+{
+  "id": "Measure.identifier:shortNameIdentifier.system",
+  "path": "Measure.identifier.system",
+  "short": "CMS Short Name identifier namespace",
+  "definition": "The namespace used for CMS Short Name identifiers assigned in MADiE.",
+  "min": 1,
+  "max": "1",
+  "fixedUri": "https://madie.cms.gov/measure/shortNameId",
+  "mustSupport": false
+},
+{
+  "id": "Measure.identifier:shortNameIdentifier.value",
+  "path": "Measure.identifier.value",
+  "short": "'eCQM Abbreviated Title' (measure short name) in MADiE.",
+  "definition": "The short name identifier assigned to the measure by CMS",
+  "min": 1,
+  "max": "1",
+  "mustSupport": false
+},
+{
+  "id": "Measure.identifier:cbeIdentifier",
+  "path": "Measure.identifier",
+  "sliceName": "cbeIdentifier",
+  "short": "CBE endorsement identifier",
+  "definition": "An identifier assigned to the measure by the consensus-based entity (CBE).",
+  "requirements": "A CMS measure that has received CBE endorsement should identify the endorsement number assigned by the CBE.",
+  "min": 0,
+  "max": "1",
+  "mustSupport": true
+},
+{
+  "id": "Measure.identifier:cbeIdentifier.system",
+  "path": "Measure.identifier.system",
+  "short": "CBE identifier namespace",
+  "definition": "The namespace used for CBE endorsement identifiers assigned in MADiE.",
+  "min": 1,
+  "max": "1",
+  "fixedUri": "https://madie.cms.gov/measure/cbeId",
+  "mustSupport": true
+},
+{
+  "id": "Measure.identifier:cbeIdentifier.value",
+  "path": "Measure.identifier.value",
+  "short": "CBE endorsement identifier value",
+  "definition": "The endorsement identifier assigned to the measure by the consensus-based entity.",
+  "min": 1,
+  "max": "1",
+  "mustSupport": true
+},
+    {
+      "id" : "Measure.description",
+      "path" : "Measure.description",
+	  "short" : "'Measure Description' in MADiE.",
+      "requirements" : "Natural language description of the measure.",	  
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },	
+    {
+      "id" : "Measure.effectivePeriod",
+      "path" : "Measure.effectivePeriod",
+	  "short" : "CMS dQMs must have an effective period.",
+      "requirements" : "A published measure should provide an indication of the period during which the measure content can be effectively applied.",
+	  "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },
+	    {
+      "id" : "Measure.author",
+      "path" : "Measure.author",
+	  "short" : "'Measure Developer' in MADiE.",
+      "requirements" : "An individiual or organization primarily involved in the creation and maintenance of the content.",
+	  "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },
+	{
+      "id" : "Measure.library",
+      "path" : "Measure.library",
+      "type" : [
+        {
+          "code" : "canonical",
+          "targetProfile" : [
+            "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-computablelibrary"
+          ]
+        }
+      ],
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : false
+    },
+    {
+      "id" : "Measure.group.extension:type",
+      "path" : "Measure.group.extension",
+      "sliceName" : "type",
+      "min" : 1,
+      "max" : "1",
+      "type" : [
+        {
+          "code" : "Extension",
+          "profile" : [
+            "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-type"
+          ]
+        }
+      ],
+      "mustSupport" : false
+    },	
+      {
+        "id" : "Measure.group.extension:scoring",
+        "path" : "Measure.group.extension",
+        "sliceName" : "scoring",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Extension",
+            "profile" : [
+              "http://ecqi.healthit.gov/fhir/uv/cqm/StructureDefinition/cms-scoring"
+            ]
+          }
+        ],
+        "mustSupport" : false
+      }
+ 	]
+  }
+}

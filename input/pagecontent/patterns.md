@@ -1,14 +1,18 @@
-This page provides guidance and best-practice recommendations for authoring QI-Core- and CQL-based query patterns used to retrieve patient information from clinical information systems. For general conventions and guidance regarding the use of FHIR and CQL, refer to the [Using CQL](https://hl7.org/fhir/us/cqfmeasures/using-cql.html) topic in the Quality Measure IG.
+This page provides guidance and best-practice recommendations for authoring US Quality Core- and CQL-based query patterns used to retrieve patient information from clinical information systems. For general conventions and guidance regarding the use of FHIR and CQL, refer to the [Using CQL](https://hl7.org/fhir/us/cqfmeasures/using-cql.html) topic in the Quality Measure IG.
 
 Feedback on the patterns, guidance or recommendations can be provided by submitting a [New Issue](https://github.com/cqframework/CQL-Formatting-and-Usage-Wiki/issues/new/choose) to this repository.
 
-## QI-Core Information Model Overview
+### Model Overview
 
 [HL7 Fast Healthcare Interoperability Resources (FHIR)](https://hl7.org/fhir/R4) is a platform specification for exchanging healthcare data. FHIR defines a core information model that can be profiled for use in a variety of applications across the healthcare industry. These profiles are defined in Implementation Guides that provide constraints on the ways that FHIR resources can be used to support interoperability (i.e. the ability for different computer systems or software to correctly interpret the information being exchanged).
 
-In the United States, the [US Core](https://hl7.org/fhir/us/core/STU6.1/) Implementation Guide defines a floor for that interoperability, enabling a broad range of clinical and administrative use cases. For quality improvement use cases, such as decision support and quality measurement, the [QI-Core](https://hl7.org/fhir/us/qicore/STU6/) Implementation Guide extends US Core to support additional information used for quality improvement. For the most part, US Core covers the data required, but some use cases, such as documentation of events that did not occur, require additional profiles.
+In the United States, the [US Core](https://hl7.org/fhir/us/core/STU6.1/) Implementation Guide defines a floor for that interoperability, enabling a broad range of clinical and administrative use cases. For quality improvement use cases, such as decision support and quality measurement, the [US Quality Core](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/) Implementation Guide extends US Core to support additional information used for quality improvement. For the most part, US Core covers the data required, but some use cases, such as documentation of events that did not occur, require additional profiles.
+
+The information on this page specifically uses the [v0.5.0](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/) version of US Quality Core, which depends on the [6.1.0](https://hl7.org/fhir/us/core/STU6.1.0) version of USCore, and both of which are based on the [R4](https://hl7.org/fhir/R4) version 4.0.1 of FHIR.
 
 [Clinical Quality Language(CQL)](https://cql.hl7.org/N1) is high-level, domain-specific language focused on clinical quality and targeted at measure and decision support artifact authors.
+
+> NOTE: For background information on accessing clinical information with CQL, see the [Retrieve](https://cql.hl7.org/02-authorsguide.html#retrieve) topic in the CQL specification.
 
 To simplify the expression of logic in quality improvement artifacts, CQL can be authored directly against the information model defined by the QI-Core profiles. In the simplest terms, that information model provides:
 
@@ -23,7 +27,7 @@ To simplify the expression of logic in quality improvement artifacts, CQL can be
 9. [Immunizations](pattern_immunizations.html) - Information related to immunizations the patient has received or been recommended
 10. [Communication](pattern_communication.html) - Information related to communications with or about the patient
 
-> NOTE: The information in this page specifically uses the [6.0.0](https://hl7.org/fhir/us/qicore/STU6/) version of QI-Core, which depends on the [6.1.0](https://hl7.org/fhir/us/core/STU6.1.0) version of USCore, and both of which are based on the [R4](https://hl7.org/fhir/R4) version 4.0.1 of FHIR.
+
 
 The following sections provide specific examples of best practices for querying information in each of these high-level areas.
 
@@ -55,8 +59,6 @@ As an aside, the decision to reference particular elements of a profile depend w
 To begin with, every element in a FHIR profile is assigned a cardinality that defines the minimum and maximum number of times an element can appear in a resource. Cardinality is expressed as a range, typically beginning with 0 or 1 and ending with 1 or *. For example, a cardinality of 0..1 means the element is optional, 1..1 means one occurance is required, 0..* indicates that it may appear any number of times, and 1..* means the element must appear at least once, but may appear multiple times. Although other cardinalities are possible, those described above are the most common.
 
 NOTE: Cardinality determines whether and how many values may appear for a given element, but a required cardinality (e.g. 1..1) does not imply that expressions using that profile must reference that element.
-
-In addition, elements in FHIR profiles may have "(QI-Core)" prepended to the element's short description in the Description & Constraints column of the Key Elements Table. To ensure that expression logic can be evaluated correctly, expressions should reference those elements marked "(QI-Core)". For a complete discussion of this requirement, refer to the [MustSupport Flag](https://hl7.org/fhir/us/qicore/STU6/#mustsupport-flag) topic in the QI-Core Implementation Guide.
 
 Finally, some elements in FHIR profiles are designed as modifier elements, meaning that the value of the element may change the overall meaning of the resource. For example, the clinicalStatus element of a Condition is a modifier element because its value determines whether the Condition represents the presence or absence of a condition. As a result, authors must carefully consider for each modifier element, whether itd possible value(s) could affect the intended meaning of the expression.
 

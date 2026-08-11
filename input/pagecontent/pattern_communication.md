@@ -1,23 +1,19 @@
-# Communication
-
-## Communication
-
-The QI-Core [Communication](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-communication.html) profile represents information transmitted from a sender to a receiver.  It reflects communication about or with the patient. 
+The US Quality Core [US Quality Core Communication](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-communication.html) profile represents information transmitted from a sender to a receiver.  It reflects communication about or with the patient. 
+<strong style="color:red;">REVIEW NEEDED: should we acknowledge these profiles are out of scope?.</strong>
 
 Important distinction:
 If the measure intent is to represent patient education or other clinical actions, authors should use the Procedure profile instead. "An action that is being or was performed on a patient" such as training or counseling e.g., involves verification of the patient’s comprehension or aims to change the patient’s mental state.
 
-By default, Communication resources in QI-Core are characterized by the `topic` element. In comparison to STU 4.1.1, there are no new communication profiles added to STU6 of QI-Core.
+By default, Communication resources in US Quality Core are characterized by the `topic` element. 
 
 ```cql
 CQL:
 define "Lab Results Communicated":
-   [Communication: "report-labs"] LabReport
-       where LabReport.topic = 'report-labs'
-       and LabReport.status = 'completed'
-       and exists (LabReport.reasonCode  reason
-	   where reason ~ 'Serum pregnancy test negative (finding)')
-
+ [USQualityCore.Communication: "Informing health care professional of test result (procedure)"] LabReport
+   where LabReport.topic ~ "Laboratory test result abnormal (situation)"
+     and LabReport.status ~ 'completed'
+     and exists(LabReport.reasonCode reason
+       where reason ~ "Serum potassium level above reference range (finding)")
 ```
 
 > NOTES: 
@@ -25,22 +21,24 @@ The Communication profile does not fix the value of the `status` element, author
 
 .reasonCode, in the example above, this expression uses a direct-reference code of "Serum pregnancy test negative (finding)" (i.e. referencing a specific code from a code system, rather than a value set consisting of multiple codes).  For more information on using direct-reference codes in CQL expressions, refer to the [Codes](https://hl7.org/fhir/uv/cql/using-cql.html#codes) topic in the Using CQL with FHIR IG.
 
-## Communication Not Done
+### Communication Not Done
 
-QI-Core defines the [CommunicationNotDone](https://hl7.org/fhir/us/qicore/STU6/StructureDefinition-qicore-communicationnotdone.html) to represent documentation of the reason a communication was not done. By default, CommunicationNotDone resources in QI-Core are characterized by the `topic` element.
+US Quality Core defines the [US Quality Core Communication Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-communicationnotdone.html) to represent documentation of the reason a communication was not done. By default, CommunicationNotDone resources in US Quality Core are characterized by the `topic` element.
 
 ```cql
 CQL:
-define "Medication Not Available":
-[CommunicationNotDone: code ~ "progress update (procedure)"] ProgressUpdate 
-    where ProgressUpdate.topic ~ "Medication not available (finding)"
-    and ProgressUpdate.status = 'completed'
-    and exists (ProgressUpdate.reasonCode = Reason
-	where Reason = 'Medication not available from manufacturer (finding)')
+define "Medication Not Available Communication":
+[USQualityCore.CommunicationNotDone] Update
+  where exists(Update.category category
+    where category ~ "Informing health care professional (procedure)")
+    and Update.topic ~ "Medication not available (finding)"
+    and Update.status = 'completed'
+     and exists(Update.reasonCode reason   
+       where reason ~ "Medication not available (finding)")
 ```
 
 > NOTES: 
-The CommunicationNotDone profile fixes the value of the `status` element to `not-done`, this element does not need to be tested in the expression.
+The US Quality Core Communication Not Done profile fixes the value of the `status` element to `not-done`, this element does not need to be tested in the expression.
 
 Direct-reference codes cannot be used as the terminology target of a retrieve of a negation profile. 
 Workarounds Include:

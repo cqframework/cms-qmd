@@ -37,7 +37,6 @@
       <title value="Table of Contents"/>
       <generation value="html"/>
 
-
       <!--1: Home-->
       <page>
         <nameUrl value="index.html"/>
@@ -58,129 +57,130 @@
         <title value="CMS Test Case Guidance"/>
         <generation value="markdown"/>
       </page>
-	<!--4: MADiE-->
-      <page>
-        <nameUrl value="MADiE.html"/>
-        <title value="MADiE"/>
-        <generation value="markdown"/>
-      </page>
 
-      <!--5: CMS Manifest Guidance-->
-      <page>
-        <nameUrl value="manifest_guidance.html"/>
-        <title value="CMS Manifest Guidance"/>
-        <generation value="markdown"/>
-      </page>
-
-      <!--6: Artifact-->
-      <page>
-        <nameUrl value="measure_profile.html"/>
-        <title value="Profiles Used by CMS Measures"/>
-        <generation value="markdown"/>
-      </page>
-
-      <!--7: Example-->
-      <page>
-        <nameUrl value="examples.html"/>
-        <title value="Examples"/>
-        <generation value="markdown"/>
-      </page>
-      <!--8: Change Control-->
-      <page>
-        <nameUrl value="change_control.html"/>
-        <title value="Change Control Process"/>
-        <generation value="markdown"/>
-      </page>
-      <!--9: Changes-->
-      <page>
-        <nameUrl value="changes.html"/>
-        <title value="Change History"/>
-        <generation value="markdown"/>
-      </page>
-
-      <!--9: Authoring Patterns-->
+      <!--4: Authoring Patterns-->
       <page>
         <nameUrl value="patterns.html"/>
-        <title value="Authoring Patterns QI-Core v6.0.0"/>
+        <title value="Authoring Patterns US Quality Core v0.5.0"/>
         <generation value="markdown"/>
 
-        <!--10: Patient (Authoring Pattern)-->
+        <!--4.1: Patient (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_patient.html"/>
           <title value="Patient"/>
           <generation value="markdown"/>
         </page>
 
-        <!--11: Enconters (Authoring Pattern)-->
+        <!--4.2: Enconters (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_encounters.html"/>
           <title value="Encounters"/>
           <generation value="markdown"/>
         </page>
-
-        <!--12: Conditions (Authoring Pattern)-->
-        <page>
-          <nameUrl value="pattern_conditions.html"/>
-          <title value="Conditions"/>
-          <generation value="markdown"/>
-        </page>
-
-        <!--13: Observations (Authoring Pattern)-->
+		
+        <!--4.3: Observations (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_observations.html"/>
           <title value="Observations"/>
           <generation value="markdown"/>
         </page>
 
-        <!--14: Medications (Authoring Pattern)-->
+        <!--4.4: Conditions (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_conditions.html"/>
+          <title value="Conditions"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--4.5: Medications (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_medications.html"/>
           <title value="Medications"/>
           <generation value="markdown"/>
         </page>
 
-        <!--15: Procedures (Authoring Pattern)-->
+        <!--4.6: Procedures (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_procedures.html"/>
           <title value="Procedures"/>
           <generation value="markdown"/>
         </page>
 
-        <!--16: Devices (Authoring Pattern)-->
+        <!--4.7: Devices (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_devices.html"/>
           <title value="Devices"/>
           <generation value="markdown"/>
         </page>
 
-        <!--17: Allergies (Authoring Pattern)-->
+        <!--4.8: Allergies (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_allergies.html"/>
           <title value="Allergies"/>
           <generation value="markdown"/>
         </page>
 
-        <!--18: Immunizations (Authoring Pattern)-->
+        <!--4.9: Immunizations (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_immunizations.html"/>
           <title value="Immunizations"/>
           <generation value="markdown"/>
         </page>
 
-        <!--19: Communication (Authoring Pattern)-->
+        <!--4.10: Communication (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_communication.html"/>
           <title value="Communication"/>
           <generation value="markdown"/>
         </page>
+		</page>
+
+	 <!--5: MADiE-->
+      <page>
+        <nameUrl value="MADiE.html"/>
+        <title value="MADiE"/>
+        <generation value="markdown"/>
+      </page>
+
+      <!--6: CMS Manifest Guidance-->
+      <page>
+        <nameUrl value="manifest_guidance.html"/>
+        <title value="CMS Manifest Guidance"/>
+        <generation value="markdown"/>
+      </page>
+
+      <!--7: Artifact-->
+      <page>
+        <nameUrl value="measure_profile.html"/>
+        <title value="Profiles Used by CMS Measures"/>
+        <generation value="markdown"/>
+      </page>
+
+      <!--8: Example-->
+      <page>
+        <nameUrl value="examples.html"/>
+        <title value="Examples"/>
+        <generation value="markdown"/>
+      </page>
+      <!--9: Change Control-->
+      <page>
+        <nameUrl value="change_control.html"/>
+        <title value="Change Control Process"/>
+        <generation value="markdown"/>
+      </page>
+      <!--10: Changes-->
+      <page>
+        <nameUrl value="changes.html"/>
+        <title value="Change History"/>
+        <generation value="markdown"/>
+      </page>
 		
-        <!--20: License)-->
+        <!--11: License)-->
         <page>
           <nameUrl value="license.html"/>
           <title value="License"/>
           <generation value="markdown"/>
         </page>		
-      </page>
     </page>
     <!-- <parameter>
       <code value="path-resource" />

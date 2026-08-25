@@ -133,6 +133,20 @@
           <title value="Communication"/>
           <generation value="markdown"/>
         </page>
+
+        <!--4.11: US Quality Core Update Process -->
+        <page>
+          <nameUrl value="usqc_update_process.html"/>
+          <title value="US Quality Core Update Process"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--4.12: Refactored Index -->
+        <page>
+          <nameUrl value="refactored_index.html"/>
+          <title value="Refactored Index"/>
+          <generation value="markdown"/>
+        </page>
 		</page>
 
 	 <!--5: MADiE-->

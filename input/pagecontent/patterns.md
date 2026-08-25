@@ -27,7 +27,7 @@ To simplify the expression of logic in quality improvement artifacts, CQL can be
 9. [Immunizations](pattern_immunizations.html) - Information related to immunizations the patient has received or been recommended
 10. [Communication](pattern_communication.html) - Information related to communications with or about the patient
 
-
+> For guidance on refactoring QICore-based measure to use US Quality Core, refer to the [US Quality Core Update Process](usqc_update_process.html) page, as well as the [Refactored Index](refactored_index.html).
 
 The following sections provide specific examples of best practices for querying information in each of these high-level areas.
 

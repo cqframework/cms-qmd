@@ -148,13 +148,6 @@
           <generation value="markdown"/>
         </page>
 
-        <!--4.11: Billing-related elements (Authoring Pattern)-->
-        <page>
-          <nameUrl value="pattern_billingrelated.html"/>
-          <title value="Billing-related Elements"/>
-          <generation value="markdown"/>
-        </page>
-
         <!--4.12: Claim (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_claim.html"/>
@@ -166,6 +159,13 @@
         <page>
           <nameUrl value="pattern_coverage.html"/>
           <title value="Coverage"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--4.11: Billing-related elements (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_billingrelated.html"/>
+          <title value="Billing-related Elements"/>
           <generation value="markdown"/>
         </page>
 

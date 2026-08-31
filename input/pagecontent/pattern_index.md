@@ -57,6 +57,10 @@ Each pattern page opens with a link to the modifier elements, search parameters,
 | [Completed encounters in a period](pattern_encounters.html#completed-encounters-in-a-period) | Filtering on `status` and `period` together. |
 | [Encounters of a certain length](pattern_encounters.html#encounters-with-a-certain-length) | `lengthInDays()` and direct duration calculations, and what an absent period end implies. |
 | [Hospitalization](pattern_encounters.html#hospitalization) | The fourteen CQMCommon functions spanning an inpatient stay and any immediately prior emergency department or observation encounter. |
+| [Present on admission](pattern_encounters.html#present-on-admission) | The clinical representation, using the `presentOnAdmission` extension on `Encounter.diagnosis`. |
+| [Principal diagnosis](pattern_encounters.html#principal-diagnosis) | The clinical representation, using `Encounter.diagnosis` with a `use` of billing and a `rank` of 1. |
+| [Primary procedure](pattern_encounters.html#primary-procedure) | The clinical representation, where `Encounter.diagnosis.condition` references a Procedure rather than a Condition. |
+| [Discharge disposition](pattern_encounters.html#discharge-disposition) | The clinical representation, using `Encounter.hospitalization.dischargeDisposition`. |
 {: .grid}
 
 ### Observations
@@ -151,11 +155,15 @@ Each pattern page opens with a link to the modifier elements, search parameters,
 | Pattern | Description |
 |----|----|
 | [Claim elements used by measures](pattern_claim.html#claim-elements-used-by-measures) | How a claim relates to an encounter, and the CQMCommon functions that navigate the sequence-keyed diagnosis and procedure lists. |
-| [Coverage status](pattern_coverage.html#coverage-status) | Restricting to active coverage, the only modifier element on the resource. |
-| [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `memberID()` and `policyNumber()`, and the invariant requiring one of them. |
-| [Payer](pattern_coverage.html#payer) | `SDE Payer` for supplemental data reporting, and the status filter it omits. |
+| [Present on admission](pattern_claim.html#present-on-admission) | The claim representation, using `Claim.diagnosis.onAdmission` with the CMS indicator codes. |
+| [Principal diagnosis](pattern_claim.html#principal-diagnosis) | The claim representation, identified by `Claim.diagnosis.type`. |
+| [Primary procedure](pattern_claim.html#primary-procedure) | The claim representation, identified by `Claim.procedure.type`. |
+| [Discharge disposition](pattern_claim.html#discharge-disposition) | The claim representation, carried in `Claim.supportingInfo`; tying it to a specific encounter is an open question. |
 | [Claim status, use, and type](https://hl7.org/fhir/us/cql/en/patterns-claim.html#status-use-and-type) | The functions that select active professional or institutional claims and explanations of benefit. |
 | [Claim items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#claim-items) | Selecting the items of a claim. |
 | [Explanation of Benefit items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#eob-items) | Selecting the items of an adjudicated response. |
 | [Mammography claim](https://hl7.org/fhir/us/cql/en/patterns-claim.html#mammography-claim) | A worked example over claim and EoB items. |
+| [Coverage status](pattern_coverage.html#coverage-status) | Restricting to active coverage, the only modifier element on the resource. |
+| [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `memberID()` and `policyNumber()`, and the invariant requiring one of them. |
+| [Payer](pattern_coverage.html#payer) | `SDE Payer` for supplemental data reporting, and the status filter it omits. |
 {: .grid}

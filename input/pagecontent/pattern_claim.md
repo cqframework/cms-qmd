@@ -2,6 +2,8 @@ FHIR uses the [Claim](https://hl7.org/fhir/R4/claim.html) resource for provider-
 
 [Claim](https://hl7.org/fhir/us/cql/en/patterns-claim.html) in the US CQL implementation guide covers [status, use, and type](https://hl7.org/fhir/us/cql/en/patterns-claim.html#status-use-and-type), [claim items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#claim-items), [EoB items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#eob-items), and a [mammography](https://hl7.org/fhir/us/cql/en/patterns-claim.html#mammography-claim) example. This page carries the patterns specific to quality measurement; see the [Pattern Index](pattern_index.html) for the full list.
 
+For Claim, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-claim.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-claim.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-claim.html#cross-version-considerations) in that guide.
+
 > NOTE: The US Quality Core Claim and ClaimResponse profiles are both marked with an asterisk in the [US Quality Core profile list](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/profiles.html), meaning they are not part of that guide's conformance expectations. US Quality Core does not profile ExplanationOfBenefit at all, so logic reaching for adjudicated information works against the base FHIR resource.
 
 ### Claim elements used by measures
@@ -18,6 +20,7 @@ A claim relates to an encounter through its items, and carries diagnoses and pro
 | `Claim.diagnosis.onAdmission` | Whether the diagnosis was present on admission |
 | `Claim.procedure.procedure[x]` | The procedure itself, as a code or a reference to a Procedure |
 | `Claim.procedure.sequence` / `Claim.procedure.type` | Matching to an item, and identifying the primary procedure |
+{: .grid}
 
 Navigating that structure by hand is verbose, so CQMCommon provides fluent functions over an Encounter that do it:
 
@@ -28,6 +31,7 @@ Navigating that structure by hand is verbose, so CQMCommon provides fluent funct
 | `hasPrincipalDiagnosisOf(valueSet)` | True if the principal diagnosis has a code in the given value set |
 | `isDiagnosisPresentOnAdmission(diagnosisValueSet, poaValueSet)` | True if a diagnosis in the first value set is present on admission per the second |
 | `principalProcedure()` | The claim procedure identified as primary |
+{: .grid}
 
 CQMCommon also declares the terminology these depend on: `Principal Diagnosis` (`principal` from the FHIR diagnosis type code system), `Primary procedure` (`primary` from the procedure type code system), and the CMS present-on-admission indicators `POA-Y`, `POA-N`, `POA-W`, `POA-1`, and `POA-U`.
 

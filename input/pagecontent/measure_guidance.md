@@ -23,6 +23,7 @@ The Quality Measure IG establishes the following conventions by identifier kind:
 | [Aliases](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html#aliases-and-argument-names) | PascalCase; descriptive rather than abbreviated | SHOULD |
 | [Argument names](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html#aliases-and-argument-names) | camelCase; descriptive rather than abbreviated | SHOULD |
 | &nbsp; | No quoted identifiers for aliases or arguments | SHALL NOT |
+{: .grid}
 
 An alias should also differ from every other identifier in scope, so that references within the query are unambiguous.
 
@@ -52,5 +53,6 @@ Beyond casing and quoting, the name of a declaration should make clear what it r
 | Say how a list was filtered or processed | `Active Confirmed Conditions` |
 | Use `All` when a list is unfiltered apart from its primary code | `All Allergies and Intolerances` |
 | Begin non-fluent function names with a verb, to distinguish them from definitions | `GetEncounter`, `ComputeRiskScore`, `MapToInterval` |
+{: .grid}
 
 > NOTE: These are informative recommendations rather than conformance requirements, and the list is expected to grow. Feedback is welcome, both on the recommendations themselves and on how they are applied in CMS content.

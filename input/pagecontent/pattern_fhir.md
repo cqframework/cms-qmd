@@ -97,3 +97,4 @@ The following topics in the Using CQL With FHIR IG apply throughout these patter
 | [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) | Day-boundary calculations such as "on hospital day 2" |
 | [Time-Valued Quantities](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`) |
 | [Use of Terminologies](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#use-of-terminologies) | Comparing `code`, `Coding`, and `CodeableConcept` elements, including multi-cardinality and direct-reference code cases |
+{: .grid}

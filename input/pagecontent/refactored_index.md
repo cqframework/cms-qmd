@@ -35,67 +35,74 @@ The remaining libraries are expected to still be developed in MADiE, but are inc
 
 This index lists functions from the QICore-based library versions and where they are now following the refactor.
 
-| **Library** | **Prior Version or Name** | **New Version or New Library/Location** | **USCoreCommon** |
-|----|----|----|----|
-| **CQMCommon** | **4.1.000** | **5.1.000** |  |
-|  |  | The new CQMCommon deliberately retains that same arrangement. "ED Visit" is deprecated in favor of edVisit(), and "Hospitalization" is deprecated in favor of hospitalization(). <br>The first is retained primarily for backward compatibility; **the fluent function is preferred.** |  |
-| **QICoreCommon** | deprecated | **FHIRCommon, USCoreCommon, or USQualityCoreCommon** |
-|  |  | [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
-|  |  | [USCoreCommon](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) |
-|  |  | [USQualityCoreCommon](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html) |
-|  | **QICoreCommon function** | **New location** |
-|  | isActive() | **FHIRCommon** |
-|  | hasCategory(Condition, Code) | FHIRCommon |
-|  | isProblemListItem() | FHIRCommon |
-|  | isEncounterDiagnosis() | FHIRCommon |
-|  | hasCategory(Observation, Code) | FHIRCommon |
-|  | isSocialHistory() | FHIRCommon |
-|  | isVitalSign() | FHIRCommon |
-|  | isImaging() | FHIRCommon |
-|  | isLaboratory() | FHIRCommon |
-|  | isProcedure() | FHIRCommon |
-|  | isSurvey() | FHIRCommon |
-|  | isExam() | FHIRCommon |
-|  | isTherapy() | FHIRCommon |
-|  | isActivity() | FHIRCommon |
-|  | isCommunity() | FHIRCommon |
-|  | isDischarge() | FHIRCommon |
-|  | references() | FHIRCommon |
-|  | toInterval() | FHIRCommon |
-|  | abatementInterval() | FHIRCommon |
-|  | prevalenceInterval() | FHIRCommon |
-|  | includesCode() | FHIRCommon |
-|  | HasStart() / hasStart() | FHIRCommon |
-|  | HasEnd() / hasEnd() | FHIRCommon |
-|  | Latest() / latest() | FHIRCommon |
-|  | Earliest() / earliest() | FHIRCommon |
-|  | getId() | **USQualityCoreCommon** |
-|  | "Interval To Day Numbers" / toDayNumbers() | USQualityCoreCommon |
-|  | "Days In Period" / daysInPeriod() | USQualityCoreCommon |
-|  | doNotPerform(DeviceNotRequested) | USQualityCoreCommon |
-|  | DeviceNotRequested.doNotPerformReason() | USQualityCoreCommon |
-|  | DeviceNotRequested.doNotPerform() | USQualityCoreCommon |
-|  | DeviceNotRequested.code() | USQualityCoreCommon |
-|  | CommunicationNotDone.recorded() | USQualityCoreCommon |
-|  | CommunicationNotDone.topic() | USQualityCoreCommon |
-|  | ImmunizationNotDone.vaccineCode() | USQualityCoreCommon |
-|  | MedicationAdministrationNotDone.recorded() | USQualityCoreCommon |
-|  | MedicationAdministrationNotDone.medication() | USQualityCoreCommon |
-|  | MedicationDispenseDeclined.recorded() | USQualityCoreCommon |
-|  | MedicationDispenseDeclined.medication() | USQualityCoreCommon |
-|  | MedicationNotRequested.medication() | USQualityCoreCommon |
-|  | ObservationCancelled.notDoneReason() | USQualityCoreCommon |
-|  | ObservationCancelled.code() | USQualityCoreCommon |
-|  | ProcedureNotDone.recorded() | USQualityCoreCommon |
-|  | ProcedureNotDone.code() | USQualityCoreCommon |
-|  | ServiceNotRequested.reasonRefused() | USQualityCoreCommon |
-|  | ServiceNotRequested.code() | USQualityCoreCommon |
-|  | TaskRejected.code() | USQualityCoreCommon |
-|  | isHealthConcern() | **USCoreCommon** |
-| **Cumulative Medication Duration** | **6.0.000** | **hl7.fhir.us.cql.CumulativeMedicationDuration 2.0.0** |
-|  |  | No changes |
-| **Status** | **Old Status 1.15.000** | **New Status 2.1.000** |  |
-|  | verified() (consider deprecating) | FHIRCommon verified() should be used instead |
+| Library | Prior version or name | New version or location |
+|----|----|----|
+| **CQMCommon** | 4.1.000 | 5.1.000 |
+| **QICoreCommon** | deprecated | [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [USCoreCommon](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html), or [USQualityCoreCommon](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html) |
+| **CumulativeMedicationDuration** | 6.0.000 | hl7.fhir.us.cql.CumulativeMedicationDuration 2.0.0 |
+| **Status** | 1.15.000 | 2.1.000 |
+{: .grid}
+
+Notes on the libraries above:
+
+* **CQMCommon** &mdash; The new CQMCommon deliberately retains that same arrangement. "ED Visit" is deprecated in favor of edVisit(), and "Hospitalization" is deprecated in favor of hospitalization(). The first is retained primarily for backward compatibility; **the fluent function is preferred.**
+* **CumulativeMedicationDuration** &mdash; No changes.
+* **Status** &mdash; verified() (consider deprecating); FHIRCommon verified() should be used instead.
+
+#### QICoreCommon function locations
+
+QICoreCommon is deprecated. Its functions are now distributed across three libraries:
+
+| QICoreCommon function | New location |
+|----|----|
+| isActive() | FHIRCommon |
+| hasCategory(Condition, Code) | FHIRCommon |
+| isProblemListItem() | FHIRCommon |
+| isEncounterDiagnosis() | FHIRCommon |
+| hasCategory(Observation, Code) | FHIRCommon |
+| isSocialHistory() | FHIRCommon |
+| isVitalSign() | FHIRCommon |
+| isImaging() | FHIRCommon |
+| isLaboratory() | FHIRCommon |
+| isProcedure() | FHIRCommon |
+| isSurvey() | FHIRCommon |
+| isExam() | FHIRCommon |
+| isTherapy() | FHIRCommon |
+| isActivity() | FHIRCommon |
+| isCommunity() | FHIRCommon |
+| isDischarge() | FHIRCommon |
+| references() | FHIRCommon |
+| toInterval() | FHIRCommon |
+| abatementInterval() | FHIRCommon |
+| prevalenceInterval() | FHIRCommon |
+| includesCode() | FHIRCommon |
+| HasStart() / hasStart() | FHIRCommon |
+| HasEnd() / hasEnd() | FHIRCommon |
+| Latest() / latest() | FHIRCommon |
+| Earliest() / earliest() | FHIRCommon |
+| getId() | USQualityCoreCommon |
+| "Interval To Day Numbers" / toDayNumbers() | USQualityCoreCommon |
+| "Days In Period" / daysInPeriod() | USQualityCoreCommon |
+| doNotPerform(DeviceNotRequested) | USQualityCoreCommon |
+| DeviceNotRequested.doNotPerformReason() | USQualityCoreCommon |
+| DeviceNotRequested.doNotPerform() | USQualityCoreCommon |
+| DeviceNotRequested.code() | USQualityCoreCommon |
+| CommunicationNotDone.recorded() | USQualityCoreCommon |
+| CommunicationNotDone.topic() | USQualityCoreCommon |
+| ImmunizationNotDone.vaccineCode() | USQualityCoreCommon |
+| MedicationAdministrationNotDone.recorded() | USQualityCoreCommon |
+| MedicationAdministrationNotDone.medication() | USQualityCoreCommon |
+| MedicationDispenseDeclined.recorded() | USQualityCoreCommon |
+| MedicationDispenseDeclined.medication() | USQualityCoreCommon |
+| MedicationNotRequested.medication() | USQualityCoreCommon |
+| ObservationCancelled.notDoneReason() | USQualityCoreCommon |
+| ObservationCancelled.code() | USQualityCoreCommon |
+| ProcedureNotDone.recorded() | USQualityCoreCommon |
+| ProcedureNotDone.code() | USQualityCoreCommon |
+| ServiceNotRequested.reasonRefused() | USQualityCoreCommon |
+| ServiceNotRequested.code() | USQualityCoreCommon |
+| TaskRejected.code() | USQualityCoreCommon |
+| isHealthConcern() | USCoreCommon |
 {: .grid}
 
 ### Extension Index

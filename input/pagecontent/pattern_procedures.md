@@ -1,6 +1,8 @@
 FHIR defines several resources to represent the proposal, planning, ordering, and performance of services and procedures for a patient.
 
-[Service](https://hl7.org/fhir/us/cql/en/patterns-service.html) in the US CQL implementation guide covers modifier elements, search parameters, cross-version considerations, [requested services](https://hl7.org/fhir/us/cql/en/patterns-service.html#requested-services), [procedures performed](https://hl7.org/fhir/us/cql/en/patterns-service.html#procedures-performed), [imaging procedures](https://hl7.org/fhir/us/cql/en/patterns-service.html#imaging-procedures), and [mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography). The patterns below add the US Quality Core profiles and the negated forms; see the [Pattern Index](pattern_index.html) for the full list.
+[Service](https://hl7.org/fhir/us/cql/en/patterns-service.html) in the US CQL implementation guide covers [requested services](https://hl7.org/fhir/us/cql/en/patterns-service.html#requested-services), [procedures performed](https://hl7.org/fhir/us/cql/en/patterns-service.html#procedures-performed), [imaging procedures](https://hl7.org/fhir/us/cql/en/patterns-service.html#imaging-procedures), and [mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography). The patterns below add the US Quality Core profiles and the negated forms; see the [Pattern Index](pattern_index.html) for the full list.
+
+For ServiceRequest and Procedure, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-service.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-service.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-service.html#cross-version-considerations) in that guide.
 
 Neither the Procedure nor the ServiceRequest profile fixes `status`, so expressions must account for every value relevant to measure intent.
 

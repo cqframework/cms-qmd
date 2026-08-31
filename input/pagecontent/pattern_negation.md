@@ -18,6 +18,7 @@ When a reason is required, negation statements cover three use cases. US Quality
 | **Negation rationale** &mdash; an event did not occur | *I did not administer aspirin for a reason*<br>*I did not give an immunization for a reason* | CommunicationNotDone\*, ImmunizationNotDone, MedicationAdministrationNotDone, MedicationDispenseDeclined, ObservationCancelled, ProcedureNotDone |
 | **Prohibited activities** &mdash; an activity was requested *not* to be performed | *I did not order aspirin because the patient is allergic*<br>*I did not order mammography because the patient has had bilateral mastectomies* | DeviceNotRequested, MedicationNotRequested, ServiceNotRequested |
 | **Rejected requests** &mdash; a proposal to perform an activity was rejected | *I reject the proposal to order aspirin because the patient is allergic*<br>*I reject the proposal to refer to an ophthalmologist because the patient refuses* | TaskRejected, with `focus` referencing a DeviceRequest, MedicationRequest, or ServiceRequest |
+{: .grid}
 
 \* CommunicationNotDone is not part of the conformance expectations of US Quality Core because it contains no USCDI+ Quality flagged data elements.
 

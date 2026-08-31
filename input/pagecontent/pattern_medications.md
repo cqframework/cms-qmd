@@ -1,6 +1,8 @@
 FHIR defines several medication-related resources, profiled for use in quality improvement artifacts by US Quality Core. For background see the [Medication module](https://hl7.org/fhir/R4/medications-module.html) in the base FHIR specification and the [Medication list guidance](https://hl7.org/fhir/us/core/STU6.1/medication-list.html) in US Core.
 
-[Medication](https://hl7.org/fhir/us/cql/en/patterns-medication.html) in the US CQL implementation guide covers modifier elements, search parameters, cross-version considerations, [active medications](https://hl7.org/fhir/us/cql/en/patterns-medication.html#active-medications), and [electronically transmitted prescriptions](https://hl7.org/fhir/us/cql/en/patterns-medication.html#electronically-transmitted-prescriptions). The patterns below are those specific to quality measurement, principally the positive and negated forms of ordering, administering, and dispensing; see the [Pattern Index](pattern_index.html) for the full list.
+[Medication](https://hl7.org/fhir/us/cql/en/patterns-medication.html) in the US CQL implementation guide covers [active medications](https://hl7.org/fhir/us/cql/en/patterns-medication.html#active-medications) and [electronically transmitted prescriptions](https://hl7.org/fhir/us/cql/en/patterns-medication.html#electronically-transmitted-prescriptions). The patterns below are those specific to quality measurement, principally the positive and negated forms of ordering, administering, and dispensing; see the [Pattern Index](pattern_index.html) for the full list.
+
+For MedicationRequest, MedicationAdministration, and MedicationDispense, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-medication.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-medication.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-medication.html#cross-version-considerations) in that guide.
 
 Two considerations apply throughout. `status`, `intent`, and `doNotPerform` are all modifier elements on MedicationRequest, and where a profile does not fix them the expression must account for every value they may take. And each medication profile is characterized by the `medication` element, which may be a code or a reference. The category functions `isCommunity()`, `isDischarge()`, and `hasCategory()` are defined in [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html).
 
@@ -14,6 +16,7 @@ FHIRCommon defines status functions for observations, conditions, and allergies,
 | MedicationRequest intent | `isOrder()`, `isPlan()`, `isProposal()`, and `isOrderIntent()` for any of the order intents, with the list form `orderIntent()` |
 | MedicationAdministration status | `isCompleted()`, `isInProgress()`, `isOnHold()`, `isStopped()`, `isNotDone()`, `isEnteredInError()`, and the list form `completed()` |
 | MedicationDispense status | `isCompleted()`, `isInProgress()`, `isPreparation()`, `isOnHold()`, `isCancelled()`, `isStopped()`, `isDeclined()`, `isEnteredInError()`, and the list form `completed()` |
+{: .grid}
 
 `isOrderIntent()` covers `order`, `original-order`, `reflex-order`, `filler-order`, and `instance-order`, which is the set used by the `Active Medication Orders` expression in USCoreElements; it distinguishes an actual order from a proposal, plan, or option.
 

@@ -24,7 +24,7 @@ The examples below apply that shape to each element. Two cautions apply througho
 
 ### Present on Admission
 
-The claim representation is `Claim.diagnosis.onAdmission`, reached with `isDiagnosisPresentOnAdmission()`; the clinical representation is the `presentOnAdmission` extension on `Encounter.diagnosis`.
+The [claim representation](pattern_claim.html#present-on-admission) is `Claim.diagnosis.onAdmission`, reached with `isDiagnosisPresentOnAdmission()`; the [clinical representation](pattern_encounters.html#present-on-admission) is the `presentOnAdmission` extension on `Encounter.diagnosis`.
 
 ```cql
 define "Encounter With Asthma Present On Admission":
@@ -42,7 +42,7 @@ Both representations are bound to the same CMS present-on-admission indicator co
 
 ### Principal Diagnosis
 
-The claim representation identifies the principal diagnosis by `Claim.diagnosis.type`, reached with `hasPrincipalDiagnosisOf()`; the clinical representation uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1.
+The [claim representation](pattern_claim.html#principal-diagnosis) identifies the principal diagnosis by `Claim.diagnosis.type`, reached with `hasPrincipalDiagnosisOf()`; the [clinical representation](pattern_encounters.html#principal-diagnosis) uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1.
 
 ```cql
 define "Encounter With Principal Diagnosis Of Asthma":
@@ -61,7 +61,7 @@ Both branches ultimately test a diagnosis code, so the same value set serves bot
 
 ### Primary Procedure
 
-The claim representation identifies the primary procedure by `Claim.procedure.type`, reached with `principalProcedure()`; the clinical representation uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1, where `condition` references a Procedure rather than a Condition.
+The [claim representation](pattern_claim.html#primary-procedure) identifies the primary procedure by `Claim.procedure.type`, reached with `principalProcedure()`; the [clinical representation](pattern_encounters.html#primary-procedure) uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1, where `condition` references a Procedure rather than a Condition.
 
 ```cql
 define "Encounter With Primary Procedure Of Appendectomy":
@@ -82,7 +82,7 @@ As with principal diagnosis, both branches test a procedure code, so one value s
 
 ### Discharge Disposition
 
-The clinical representation is `Encounter.hospitalization.dischargeDisposition`:
+The [clinical representation](pattern_encounters.html#discharge-disposition) is `Encounter.hospitalization.dischargeDisposition`:
 
 ```cql
 define "Encounter With Discharge Disposition To Home":

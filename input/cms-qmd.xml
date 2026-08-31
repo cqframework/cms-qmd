@@ -162,6 +162,13 @@
           <generation value="markdown"/>
         </page>
 
+        <!--4.12a: Coverage (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_coverage.html"/>
+          <title value="Coverage"/>
+          <generation value="markdown"/>
+        </page>
+
         <!--4.13: Negation (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_negation.html"/>

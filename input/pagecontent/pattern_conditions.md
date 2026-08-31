@@ -2,6 +2,8 @@ FHIR represents both problem list items and encounter diagnoses with the [Condit
 
 Authoring patterns for conditions are documented in [Condition](https://hl7.org/fhir/us/cql/en/patterns-condition.html) in the US CQL implementation guide, covering category, active and verified conditions, historical conditions, onset and abatement, and evidence of a diagnosis during an encounter. This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
 
+For Condition, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-condition.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-condition.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-condition.html#cross-version-considerations) in that guide.
+
 > NOTE: Retrieves in the US CQL patterns are written against the US Core model, and the shared definitions in [USCoreElements](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) &mdash; including `All Conditions`, which unions problem list items, health concerns, and encounter diagnoses &mdash; retrieve US Core-conformant instances. Measures requiring US Quality Core conformance retrieve against US Quality Core directly, and therefore union the two profiles themselves.
 
 ### Active conditions

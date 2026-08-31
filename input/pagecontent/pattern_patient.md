@@ -2,6 +2,8 @@ US Quality Core defines a [US Quality Core Patient](https://fhir.org/guides/onc/
 
 The [Patient](https://hl7.org/fhir/us/cql/en/patterns-patient.html) patterns page in the US CQL implementation guide covers **name**, **birth date**, **age**, **gender**, **sex**, **race and ethnicity**, and **deceased**. This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
 
+For Patient, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-patient.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-patient.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-patient.html#cross-version-considerations) in that guide.
+
 ### Patient age
 
 See [Patient age](https://hl7.org/fhir/us/cql/en/patterns-patient.html#patient-age).

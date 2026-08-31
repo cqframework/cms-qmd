@@ -97,6 +97,7 @@ For inpatient encounters, measures often need the whole hospitalization, includi
 | `hospitalArrivalTime()` | Earliest arrival time for the encounter, including any prior emergency department visit |
 | `hospitalDepartureTime()` | Latest departure time for the encounter, including any prior emergency department visit |
 | `firstInpatientIntensiveCareUnit()` | The first intensive care unit location of the encounter, not considering any immediately prior emergency department visit |
+{: .grid}
 
 For example, to find comfort measures performed at any point during the hospitalization:
 

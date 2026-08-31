@@ -14,6 +14,7 @@ For the purposes of this discussion, we will be focusing on the following 5 meas
 | CMS125: Breast Cancer Screening | [QICore](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CMS125FHIRBreastCancerScreen.cql) | [USQualityCore](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/CMS125FHIRBreastCancerScreen.cql) |
 | CMS130: Colon Cancer Screening | [QICore](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CMS130FHIRColorectalCancerScrn.cql) | [USQualityCore](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/CMS130FHIRColorectalCancerScrn.cql) |
 | CMS165: Controlling High Blood Pressure | [QICore](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CMS165FHIRControllingHighBP.cql) | [USQualityCore](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/CMS165FHIRControllingHighBP.cql) |
+{: .grid}
 
 Note that this list is not a complete listing of the measures, see the [input/cql](input/cql) directory for all CQL source, and see the [Measures](https://build.fhir.org/ig/cqframework/dqm-content-cms-2025/measures.html) index in the CI build for a listing of all the specifications.
 
@@ -41,6 +42,7 @@ The measures make use of the following shared libraries:
 | SupplementalDataElements | [QICore](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/SupplementalDataElements.cql) | [USQualityCore](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/SupplementalDataElements.cql) |
 | TJCOverall | [QICore](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/TJCOverall.cql) | [USQualityCore](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/TJCOverall.cql) |
 | VTE | [QICore](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/VTE.cql) | [USQualityCore](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/VTE.cql) |
+{: .grid}
 
 This topic will use CMS125: Breast Cancer Screening as a running example
 
@@ -127,6 +129,7 @@ Once the models have been updated, we need to update the shared library referenc
 | USCoreCommon | - | hl7.fhir.us.cql.USCoreCommon version 2.0.0-ballot |
 | USCoreElements | - | hl7.fhir.us.cql.USCoreElements version 2.0.0-ballot |
 | USQualityCoreCommon | - | USQualityCoreCommon version 0.1.0-cibuild |
+{: .grid}
 
 For example, the following snippet is the includes section of the CMS125 QI Core 6.0.0 Breast Cancer Screening measure:
 

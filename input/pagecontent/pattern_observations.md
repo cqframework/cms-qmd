@@ -2,6 +2,8 @@ US Core defines a variety of profiles for representing and accessing a patient's
 
 Authoring patterns for observations are documented in [Observation](https://hl7.org/fhir/us/cql/en/patterns-observation.html) in the US CQL implementation guide, covering status, category, interpretation, timings, and each of the observation profiles. This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
 
+For Observation, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-observation.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-observation.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-observation.html#cross-version-considerations) in that guide.
+
 Two points apply throughout. A retrieve against a profile is a filter by conformance, so the expression does not need to test elements the profile fixes &mdash; retrieving `[USCore.RespiratoryRateProfile]` does not need a test for LOINC 9279-1. And observation status should be tested with the [status functions](https://hl7.org/fhir/us/cql/en/patterns-observation.html#status) in [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) &mdash; `isResulted()` for the usual `final`, `amended`, or `corrected` test, or `isFinal()`, `isAmended()`, and `isCorrected()` individually &mdash; rather than by listing status codes inline.
 
 ```cql

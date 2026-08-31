@@ -20,8 +20,6 @@ For guidance on authoring CQL against FHIR generally, and US Core and US Quality
 
 See the [Pattern Index](pattern_index.html) for a complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
 
-Documentation of events that did not occur follows a distinct set of patterns that apply across all of the above; see [Negation Patterns](pattern_negation.html).
-
 For guidance on refactoring QICore-based measures to use US Quality Core, refer to the [US Quality Core Update Process](usqc_update_process.html) page, as well as the [Refactored Index](refactored_index.html).
 
 The following pages provide authoring patterns for each type of information:
@@ -38,3 +36,6 @@ The following pages provide authoring patterns for each type of information:
 10. [Communication](pattern_communication.html) - Information related to communications with or about the patient
 11. [Claim](pattern_claim.html) - Billing information, including present on admission, principal diagnosis, and primary procedure
 12. [Billing-related elements](pattern_billingrelated.html) - Choosing between the clinical, claim, and adjudicated representations of those elements
+13. [Coverage](pattern_coverage.html) - Insurance coverage information, including payer for supplemental data reporting
+
+Documentation of events that did not occur follows a distinct set of patterns that apply across all of the above; see [Negation Patterns](pattern_negation.html).

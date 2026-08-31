@@ -1,4 +1,8 @@
-This page provides guidance and best-practice recommendations for authoring US Quality Core- and CQL-based query patterns used to retrieve patient information from clinical information systems. For general conventions and guidance regarding the use of FHIR and CQL, refer to the [Using CQL](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html) topic in the Quality Measure IG.
+This section provides guidance and best-practice recommendations for authoring CQL queries and logic to retrieve patient information from clinical systems using US Quality Core as the primary information model.
+
+For style and naming conventions, refer to the [Measure Guidance](measure_guidance.html) section of this guide.
+
+For conformance requirements for measure specifications, refer to the [Measure Profile](measure_profile.html) section of this guide.
 
 Feedback on the patterns, guidance or recommendations can be provided by submitting a [New Issue](https://github.com/cqframework/cms-qmd/issues/new) to this repository.
 
@@ -8,13 +12,17 @@ Feedback on the patterns, guidance or recommendations can be provided by submitt
 
 In the United States, the [US Core](https://hl7.org/fhir/us/core/STU6.1/) Implementation Guide defines a floor for that interoperability, enabling a broad range of clinical and administrative use cases. For quality improvement use cases, such as decision support and quality measurement, the [US Quality Core](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/) Implementation Guide extends US Core to support additional information used for quality improvement. For the most part, US Core covers the data required, but some use cases, such as documentation of events that did not occur, require additional profiles.
 
-The information on this page specifically uses the [v0.5.0](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/) version of US Quality Core, which depends on the [6.1.0](https://hl7.org/fhir/us/core/STU6.1/) version of USCore, and both of which are based on the [R4](https://hl7.org/fhir/R4) version 4.0.1 of FHIR.
+The information in this guide specifically uses the [v0.5.0](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/) version of US Quality Core, which depends on the [6.1.0](https://hl7.org/fhir/us/core/STU6.1/) version of USCore, both of which are based on the [R4](https://hl7.org/fhir/R4) version 4.0.1 of FHIR.
 
 [Clinical Quality Language(CQL)](https://cql.hl7.org/N1) is a high-level, domain-specific language focused on representing clinical logic and targeted at measure and decision support artifact authors.
 
-> NOTE: For background information on accessing clinical information with CQL, see the [Retrieve](https://cql.hl7.org/02-authorsguide.html#retrieve) topic in the CQL specification.
+### Pattern Overview
 
-To simplify the expression of logic in quality improvement artifacts, CQL can be authored directly against the information model defined by the profiles in FHIR implementation guides. In the broadest terms, this information model consists of:
+See the [Pattern Index](pattern_index.html) for a complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
+
+For guidance on refactoring QICore-based measures to use US Quality Core, refer to the [US Quality Core Update Process](usqc_update_process.html) page, as well as the [Refactored Index](refactored_index.html).
+
+The following pages provide authoring patterns for each type of information:
 
 1. [Patient](pattern_patient.html) - Representation of patient demographic and basic characteristics
 2. [Encounters](pattern_encounters.html) - Encounters between a patient and healthcare providers, typically taking place at a facility or virtually
@@ -26,14 +34,6 @@ To simplify the expression of logic in quality improvement artifacts, CQL can be
 8. [Allergies](pattern_allergies.html) - Allergies and intolerances the patient has (or does not have)
 9. [Immunizations](pattern_immunizations.html) - Information related to immunizations the patient has received or been recommended
 10. [Communication](pattern_communication.html) - Information related to communications with or about the patient
-
-> For an index of every data element and pattern available &mdash; in this guide and in the
-> [US CQL](https://hl7.org/fhir/us/cql/en/patterns.html) implementation guide &mdash; see the
-> [Pattern Index](pattern_index.html).
-
-> For guidance on refactoring QICore-based measure to use US Quality Core, refer to the [US Quality Core Update Process](usqc_update_process.html) page, as well as the [Refactored Index](refactored_index.html).
-
-The following sections provide specific examples of best practices for querying information in each of these high-level areas.
 
 ### Using CQL with FHIR
 

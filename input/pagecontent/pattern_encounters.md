@@ -1,102 +1,174 @@
-US Quality Core defines an [US Quality Core Encounter](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-encounter.html) profile to model any encounter between a patient and any number of providers in any setting, including virtual.
+US Quality Core defines a [US Quality Core Encounter](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-encounter.html) profile to model any encounter between a patient and any number of providers in any setting, including virtual.
+
+The US CQL implementation guide does not publish an Encounter patterns page, so this page is the primary source for encounter patterns; see the [Pattern Index](pattern_index.html) for the full list of available patterns. The encounter-specific fluent functions referenced below are defined in the CQMCommon library.
+
+Several [billing-related elements](pattern_billingrelated.html) are represented in the clinical record on the Encounter resource rather than on Condition or Procedure: present on admission, principal diagnosis, and primary procedure on `Encounter.diagnosis`, and discharge disposition on `Encounter.hospitalization`. Those patterns are below; the corresponding claim representations are documented in [Claim](pattern_claim.html).
 
 ### Office visit encounters
 
-
-By default, encounters in US Quality Core are characterized using the `type` element, which is typically bound to a value set. This value set limits the encounters returned to those whose type includes a code from the specified value set. For example:
+By default, encounters in US Quality Core are characterized using the `type` element, which is typically bound to a value set. The retrieve limits the result to encounters whose type includes a code from that value set:
 
 ```cql
-CQL:
 define "Office Visit Encounters":
-  [Encounter: "Office Visit"]
+  [USQualityCore.Encounter: "Office Visit"]
 ```
+
 ### Accessing Encounters with a Direct-reference code
 
+The `type` element is multi-cardinality, so a given Encounter may carry several types. With a value set the retrieve resolves using the `List<Concept>` overload of the [in(ValueSet)](https://cql.hl7.org/09-b-cqlreference.html#in-valueset) operator, but there is no equivalent overload of [Equivalent (~)](https://cql.hl7.org/09-b-cqlreference.html#equivalent) for comparing a list against a direct-reference code.
 
-The type element of Encounters is plural meaning that a given Encounter may have multiple types associated with it. When using value sets such as the "Office Visit" example above, the retrieve resolves using the List<Concept> overload of the <a href="https://cql.hl7.org/09-b-cqlreference.html#in-valueset"><code>in(ValueSet)</code></a> operator in CQL. However, when attempting to use a direct-reference code, there is no overload of the <a href="https://cql.hl7.org/09-b-cqlreference.html#equivalent"><code>Equivalent (~)</code></a> operator to support the comparison.
+This is under review and may result in a specification or tooling change (see [Translator Issue 1181](https://github.com/cqframework/clinical_quality_language/issues/1181)). Until then there are two workarounds:
 
-This issue is being reviewed and may result in a specification or tooling change to support this use case (see [Translator Issue 1181](https://github.com/cqframework/clinical_quality_language/issues/1181)). However, at this time there are two possible workarounds:
-
-1. Define a value set containing the required code and use that value set to perform the retrieve
-2. Use an equivalent where clause with an exists to retrieve the expected results, as shown in the below example:
+1. Define a value set containing the required code, and retrieve with that value set.
+2. Retrieve without a terminology filter and test with an `exists`:
 
 ```cql
-CQL:
 define "Office Visit Encounters By Code":
-  [Encounter] Visit
+  [USQualityCore.Encounter] Visit
     where exists ((Visit.type) VisitType where VisitType ~ "Office Visit Code")
 ```
 
-Note that this latter workaround will typically result in an unrestricted data requirement for Encounters. For this reason, best-practice is to use the first workaround.
+The second workaround typically produces an unrestricted data requirement for Encounter, so the first is preferred.
 
 ### Encounters by class
 
-
-The US Quality Core profile also supports characterizing encounters using the `class` element. This element categorizes encounters more broadly than the `type` element, using the [ActEncounterCode](https://terminology.hl7.org/3.1.0/ValueSet-v3-ActEncounterCode.html) value set. For example:
+The profile also supports characterizing encounters by `class`, which categorizes more broadly than `type` using the [ActEncounterCode](https://terminology.hl7.org/3.1.0/ValueSet-v3-ActEncounterCode.html) value set. Because `class` is single-cardinality, a direct-reference code works in the retrieve:
 
 ```cql
-CQL:
-//Encounters by Class
 define "Virtual Encounters":
-  [Encounter: class ~ USQualityCoreCommon."virtual"]
+  [USQualityCore.Encounter: class ~ USQualityCoreCommon."virtual"]
 ```
 
-> Although QDM-based eCQMs have historically used a type-based approach to filtering encounters, `class` is a required element in US Core. Therefore, the recommendation is to filter by class first, unless the measure intent requires identifying encounters by type across classes. In many cases, additional filtering may be necessary. For example to limit encounters based on specialty:
+> Although QDM-based eCQMs have historically filtered encounters by type, `class` is a required element in US Core, so the recommendation is to filter by class first unless measure intent requires identifying encounters by type across classes. Additional filtering is often needed, for example to limit encounters by specialty:
 
 ```cql
-CQL:
 define "Ophthalmology Encounter Codes":
-  [Encounter: class in "Inpatient Encounter Class Code"] InpatientEncounter
+  [USQualityCore.Encounter: class in "Inpatient Encounter Class Code"] InpatientEncounter
     where InpatientEncounter.type in "Ophthalmology Services"
 ```
 
 ### Completed encounters in a period
 
-Encounters often need to be filtered based on `status` and `period`, for example:
+Encounters usually need filtering on `status` and `period`:
 
 ```cql
-CQL:
 define "Completed Encounters During The Measurement Period":
-  [Encounter: "Office Visit"] OfficeVisit
+  [USQualityCore.Encounter: "Office Visit"] OfficeVisit
     where OfficeVisit.status = 'finished'
       and OfficeVisit.period starts during "Measurement Period"
 ```
 
 ### Encounters with a certain length
 
-<strong style="color:red;">REVIEW NEEDED: Confirm library and function name.</strong>
-The CQMCommon library defines a `lengthInDays()` fluent function that calculates the difference in days between the start and end of a period. For example, to filter encounters by the duration of stay:
+CQMCommon defines `lengthInDays()`, which returns the difference in calendar days between the start and end of an interval:
 
 ```cql
-CQL:
 define "Non Elective Inpatient Encounter Less Than 120 Days":
- [Encounter: "Non Elective Inpatient Encounter"] NonElectiveEncounter
-   where NonElectiveEncounter.period.lengthInDays() <= 120 
+  [USQualityCore.Encounter: "Non Elective Inpatient Encounter"] NonElectiveEncounter
+    where NonElectiveEncounter.period.lengthInDays() <= 120
 ```
 
-Other durations can also be calculated, for example:
+Other durations are calculated directly:
 
 ```cql
-CQL:
 define "Non-Elective Inpatient Encounter Over 24 Hours":
- [Encounter: "Non Elective Inpatient Encounter"] NonElectiveEncounter
-   where duration in hours of NonElectiveEncounter.period >= 24
+  [USQualityCore.Encounter: "Non Elective Inpatient Encounter"] NonElectiveEncounter
+    where duration in hours of NonElectiveEncounter.period >= 24
 ```
 
-> NOTE: For ongoing encounters, the end of the period is often not specified, which will typically be interpreted in CQL as an ongoing period, resulting in large duration values.
+> NOTE: For an ongoing encounter the end of the period is often absent, which CQL interprets as an ongoing period and which will produce large duration values.
 
 ### Hospitalization
 
-For inpatient encounters, measures and rules often need to consider the entire hospitalization period, including any immediately preceding emergency department and/or observation status encounters. To support this, <strong style="color:red;">REVIEW NEEDED: Confirm library and function name.</strong>the CQMCommon library provides a `hospitalizationWithObservation()` fluent function that returns the total duration beginning with the earliest associated emergency department or observation encounter to the conclusion of the inpatient encounter. For example:
+For inpatient encounters, measures often need the whole hospitalization, including any immediately preceding emergency department or observation encounter. CQMCommon defines a family of fluent functions over an Encounter for this:
+
+| Function | Returns |
+|----|----|
+| `hospitalization()` | The admission-to-discharge interval, extended back to the admission of any immediately prior emergency department visit |
+| `hospitalizationWithObservation()` | The same, extended back through any immediately prior observation encounter |
+| `hospitalizationWithObservationAndOutpatientSurgeryService()` | The same, also including an immediately prior outpatient surgery service |
+| `hospitalizationLengthOfStay()` | Length of stay in days over the hospitalization interval |
+| `hospitalizationWithObservationLengthofStay()` | Length of stay in days including observation |
+| `hospitalizationLocations()` | All locations within the encounter, including those of an immediately prior emergency department visit |
+| `edVisit()` | The most recent emergency department visit occurring one hour or less before the encounter, if any |
+| `emergencyDepartmentArrivalTime()` | Emergency department arrival time for the encounter |
+| `hospitalAdmissionTime()` | Admission time for the encounter, or for an immediately prior emergency department visit |
+| `hospitalDischargeTime()` | Discharge time for the encounter |
+| `hospitalArrivalTime()` | Earliest arrival time for the encounter, including any prior emergency department visit |
+| `hospitalDepartureTime()` | Latest departure time for the encounter, including any prior emergency department visit |
+| `firstInpatientIntensiveCareUnit()` | The first intensive care unit location of the encounter, not considering any immediately prior emergency department visit |
+
+For example, to find comfort measures performed at any point during the hospitalization:
 
 ```cql
-CQL:
 define "Comfort Measures Performed":
-  [Procedure: "Comfort Measures"] InterventionPerformed
+  [USQualityCore.Procedure: "Comfort Measures"] InterventionPerformed
     where InterventionPerformed.status in { 'completed', 'in-progress' }
 
 define "Encounter With Comfort Measures Performed During Hospitalization":
   "Non Elective Inpatient Encounter Less Than 120 Days" NonElectiveEncounter
     with "Comfort Measures Performed" ComfortMeasure
-      such that start of ComfortMeasure.performed.toInterval() during NonElectiveEncounter.hospitalizationWithObservation() 
+      such that start of ComfortMeasure.performed.toInterval() during NonElectiveEncounter.hospitalizationWithObservation()
 ```
+
+### Present on Admission
+
+Present on admission is an indication of whether or not the diagnosis was present when the patient was admitted (as opposed to a condition that developed during the encounter). This is not the same as the _admitting diagnosis_.
+
+Within the clinical record, present-on-admission is represented in US Quality Core using the `presentOnAdmission` extension:
+
+```cql
+define "Encounter With Asthma Present On Admission":
+  [Encounter] E
+    where exists (
+      E.diagnosis D
+        where D.condition.getCondition().code in "Asthma"
+          and D.presentOnAdmission() in "Present On Admission Indicators"
+    )
+```
+
+See [Present on Admission](pattern_claim.html#present-on-admission).
+
+### Principal Diagnosis
+
+Principal diagnosis is primarily a term used in hospital coding and reporting. However, FHIR also allows the element to be represented using the `diagnosis` element of an Encounter:
+
+```cql
+define "Encounter With Principal Diagnosis Of Asthma":
+  [Encounter] E
+    where exists (
+      E.diagnosis D
+        where D.condition.getCondition().code in "Asthma"
+          and D.use = FHIRCommon."Billing"
+          and D.rank = 1
+    )
+```
+
+See [Principal Diagnosis](pattern_claim.html#principal-diagnosis).
+
+### Primary Procedure
+
+Primary procedure is primarily a term used in hospital coding and reporting. However, FHIR also allows the element to be represented using the `diagnosis` element of an Encounter. That is not a copy of the principal diagnosis pattern above: `Encounter.diagnosis.condition` is a reference to either a Condition or a Procedure, so the same element carries both, distinguished by what it points at.
+
+```cql
+define "Encounter With Primary Procedure Of Appendectomy":
+  [Encounter] E
+    where exists (
+      E.diagnosis D
+        where D.condition.getProcedure().code in "Appendectomy"
+          and D.use = FHIRCommon."Billing"
+          and D.rank = 1
+    )
+```
+
+### Discharge Disposition
+
+In US Quality Core, discharge disposition on an encounter is represented as a clinical element using the [Clinical Discharge Disposition](https://terminology.hl7.org/7.1.0/en/ValueSet-clinical-discharge-disposition.html) value set.
+
+```cql
+define "Encounter With Discharge Disposition To Home":
+  [Encounter] E
+    where E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
+```
+
+See [Discharge Disposition](pattern_claim.html#discharge-disposition).

@@ -1,68 +1,23 @@
-FHIR defines the [AllergyIntolerance](http://hl7.org/fhir/allergyintolerance.html) resource to represent allergies and intolerances for a patient.  
+FHIR defines the [AllergyIntolerance](https://hl7.org/fhir/R4/allergyintolerance.html) resource to represent allergies and intolerances for a patient. US Quality Core defines the [US Quality Core AllergyIntolerance](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-allergyintolerance.html) profile, which derives from US Core AllergyIntolerance, requires `patient`, and adds the `resolutionAge` extension.
+
+Authoring patterns for allergies and intolerances are documented in [AllergyIntolerance](https://hl7.org/fhir/us/cql/en/patterns-allergy.html) in the US CQL implementation guide, covering modifier elements, search parameters, cross-version considerations, onset and abatement, and worked examples for contrast dye, egg, and nut allergies. This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
+
+> NOTE: Retrieves in the US CQL patterns are written against the US Core model (`[USCore.AllergyIntolerance]`). In CMS dQMs they are written against US Quality Core (`[USQualityCore.AllergyIntolerance]`). The element-level guidance is otherwise the same. The shared definitions in [USCoreElements](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) &mdash; `All Allergies and Intolerances`, `Active Confirmed Allergies and Intolerances`, and their variants &mdash; retrieve US Core-conformant instances, so measures requiring US Quality Core conformance should retrieve against US Quality Core directly.
 
 ### Current Allergies
 
-US Quality Core defines the [US Quality Core AllergyIntolerance](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-allergyintolerance.html) profile to represent allergies and intolerances for a patient. By default, AllergyIntolerance resources in US Quality Core are characterized by the `code` element.
+See [Current allergies](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#current-allergies).
 
-```cql
-CQL:
-define "Statin Allergy Intolerance":
-  [AllergyIntolerance: "HMG-CoA Reductase Inhibitor [EPC]"] StatinAllergyIntolerance                    
-    where StatinAllergyIntolerance.clinicalStatus is null 
-      or StatinAllergyIntolerance.clinicalStatus ~ USQualityCoreCommon."allergy-active"
-```
-
-> NOTES: 
-* Status considerations:
-The AllergyIntolerance profile does not constrain clinicalStatus or verificationStatus elements.  Authors must consider the possible values of these elements to ensure the expression aligns with intent. 
-In this case, the clinicalStatus, if present, must be equivalent to "allergy-active" to be distinguished from similar codes used for the Condition resource). 
-* Retrospective evaluation:
-In retrospective cases, the logic will be evaluated on data that exists at the time of evaluation. This means that while a given Allergy/Intolerance may have been active during the measurement period, it might no longer be active when the measure is run. As such, work is ongoing as of May 2025 <strong style="color:red;">REVIEW NEEDED: check for updates.</strong> to develop a more reliable way to determine whether an allergy was active at some point in time. 
+Quality measures are evaluated retrospectively, against the data that exists at the time of evaluation rather than during the measurement period. Because `isActive()` tests the *current* `clinicalStatus`, it should not be used to establish that an allergy was active during the measurement period. Use the prevalence interval instead, as described in [Onset, abatement, and prevalence interval](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#onset-abatement-and-prevalence-interval); `prevalenceInterval()` accounts for `resolutionAge` as well as `abatement`.
 
 ### No Known Allergies
 
-<strong style="color:red;">REVIEW NEEDED: confirm link for guidance.</strong> US Core guidance for [allergies](https://hl7.org/fhir/us/core/STU6.1/AllergyIntolerance-example.html) states that if a patient has been asked, but has indicated no known allergies, this would be represented as:
-```cql
-CQL:
-define "No Known Allergies":
- [AllergyIntolerance: "No known allergy (situation)"] NKA
-    where NKA.verificationStatus = USQualityCoreCommon."allergy-confirmed"
-```
+See [No known allergies](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#no-known-allergies).
+
+USCoreElements distinguishes `No Known Allergies (Confirmed)` from `No Known Allergies (Not Asked)`; a measure asserting that a patient has no known allergies should use the confirmed form. Both definitions test `isActive()`, so the retrospective consideration above applies to them.
 
 ### Verified Allergies
 
-Similar to the Condition resource, the AllergyIntolerance resource in FHIR has a `verificationStatus` element to represent, for example, whether the information has been confirmed. The element is not required, but if it is present, it is a modifier element, and has the potential to negate the information the AllergyIntolerance resource represents (e.g. refuted). For most usage, when measure intent is looking for positive evidence of an allergy, the verificationStatuses of `refuted` and `entered-in-error` should be excluded if verificationStatus is present:
+See [Clinical and verification status](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#clinical-and-verification-status).
 
-```cql
-CQL:
-define "Verified Allergies":
-  [AllergyIntolerance] VerifiedAllergyIntolerance
-    where VerifiedAllergyIntolerance.verificationStatus is not null implies
-      (VerifiedAllergyIntolerance.verificationStatus ~ USQualityCoreCommon."allergy-confirmed"
-        or VerifiedAllergyIntolerance.verificationStatus ~ USQualityCoreCommon."allergy-unconfirmed"
-      )
-```
-
-Reuseable Verification of AllergyIntolerance Fluent Functions:
-
-```cql
-CQL:
-/*
-@description: Returns true if the given condition either has no verification status or has a verification status of confirmed, unconfirmed, provisional, or differential
-*/
-define fluent function isVerified(allergyIntolerance AllergyIntolerance):                 
-  allergyIntolerance.verificationStatus is not null implies
-    (allergyIntolerance.verificationStatus ~ USQualityCoreCommon."allergy-confirmed"
-      or allergyIntolerance.verificationStatus ~ USQualityCoreCommon."allergy-unconfirmed"
-    )
-
-/*
-@description: Returns conditions in the given list that either have no verification status or have a verification status of confirmed, unconfirmed, provisional, or differential
-*/
-define fluent function verified(allergyIntolerances List<AllergyIntolerance>):               
-  allergyIntolerances A //removed FHIR. 
-    where A.verificationStatus is not null implies
-      (A.verificationStatus ~ USQualityCoreCommon."allergy-confirmed"
-        or A.verificationStatus ~ USQualityCoreCommon."allergy-unconfirmed"
-      )
-```
+Measure logic should use the verification-status functions defined in [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) &mdash; `isVerified()` and `verified()`, along with `isConfirmed()`, `isUnconfirmed()`, `isRefuted()`, and their list-valued forms &mdash; rather than re-declaring them locally. QICoreCommon's `verified()` is deprecated in favor of the FHIRCommon function; see the [Refactored Index](refactored_index.html).

@@ -1,151 +1,118 @@
-FHIR defines several procedure-related resources to support representing the proposal, planning, ordering, and performance of services and procedures for a patient. 
+FHIR defines several resources to represent the proposal, planning, ordering, and performance of services and procedures for a patient.
+
+[Service](https://hl7.org/fhir/us/cql/en/patterns-service.html) in the US CQL implementation guide covers modifier elements, search parameters, cross-version considerations, [requested services](https://hl7.org/fhir/us/cql/en/patterns-service.html#requested-services), [procedures performed](https://hl7.org/fhir/us/cql/en/patterns-service.html#procedures-performed), [imaging procedures](https://hl7.org/fhir/us/cql/en/patterns-service.html#imaging-procedures), and [mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography). The patterns below add the US Quality Core profiles and the negated forms; see the [Pattern Index](pattern_index.html) for the full list.
+
+Neither the Procedure nor the ServiceRequest profile fixes `status`, so expressions must account for every value relevant to measure intent.
 
 ### Procedure performed
-US Quality Core defines the [US Quality Core Procedure](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedure.html) profile to represent an in-progress or complete procedure for a patient. By default, Procedure resources in US Quality Core are characterized by the `code` element.
 
-```
-CQL:
-define "Application of Intermittent Pneumatic Compression Devices 2":
-  [Procedure: "Application of Intermittent Pneumatic Compression Devices"] DeviceApplied
-    where DeviceApplied.status = 'Completed'
-```
+See [Procedures performed](https://hl7.org/fhir/us/cql/en/patterns-service.html#procedures-performed).
 
-NOTE: Because the Procedure profile does not fix the value of the `status` element, authors must consider all the possible values of the element to ensure the expression meets measure intent. In this case, `completed` status is used to indicate that only completed procedures should be returned.
+Measures use the [US Quality Core Procedure](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedure.html) profile, characterized by `code`.
+
+```cql
+define "Intermittent Pneumatic Compression Devices Applied":
+  [USQualityCore.Procedure: "Application of Intermittent Pneumatic Compression Devices"] DeviceApplied
+    where DeviceApplied.status = 'completed'
+```
 
 ### Procedure not done
-US Quality Core defines the [US Quality Core Procedure Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedurenotdone.html) profile to represent documentation of the reason a particular procedure, or class of procedures, was not performed. By default, ProcedureNotDone resources in US Quality Core are characterized by the `code` element.
 
-```
-CQL:
+US Quality Core defines the [US Quality Core Procedure Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedurenotdone.html) profile to document the reason a procedure, or class of procedures, was not performed. The profile fixes `status` to `not-done`, so it need not be tested. See [Negation Patterns](patterns.html#negation-patterns).
+
+```cql
 define "Intermittent Pneumatic Compression Devices Not Applied":
-  [ProcedureNotDone: "Application of Intermittent Pneumatic Compression Devices"] DeviceNotApplied
-    where DeviceNotApplied.statusReason in "Medical Reason For Not Providing Treatment"  
+  [USQualityCore.ProcedureNotDone: "Application of Intermittent Pneumatic Compression Devices"] DeviceNotApplied
+    where DeviceNotApplied.statusReason in "Medical Reason For Not Providing Treatment"
       or DeviceNotApplied.statusReason in "Patient Declined"
 ```
 
-NOTE: Because the ProcedureNotDone profile fixes the value of the `status` element to `not-done`, that element does not need to be tested in the expression.
-
 ### Procedure ordered
 
-US Quality Core defines the [US Quality Core ServiceRequest](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicerequest.html) profile to represent the proposal, planning, or ordering of a particular service. By default, ServiceRequest resources in US Quality Core are characterized by the `code` element.
+See [Requested services](https://hl7.org/fhir/us/cql/en/patterns-service.html#requested-services).
 
-```
-CQL:
+Measures use the [US Quality Core ServiceRequest](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicerequest.html) profile, characterized by `code`.
+
+```cql
 define "Intermittent Pneumatic Compression Devices Ordered":
-  [ServiceRequest: "Application of Intermittent Pneumatic Compression Devices"] DeviceOrdered
+  [USQualityCore.ServiceRequest: "Application of Intermittent Pneumatic Compression Devices"] DeviceOrdered
+    without [USQualityCore.TaskRejected] TaskReject
+      such that TaskReject.focus.references(DeviceOrdered)
+        and TaskReject.code ~ FHIRCommon."Fulfill"
     where DeviceOrdered.status in { 'active', 'completed', 'on-hold' }
-      and not exists (["TaskRejected"] TaskReject 
-        where TaskReject.focus.references(DeviceOrdered) 
-          and TaskReject.code ~  USQualityCoreCommon."Fulfill" )           
 ```
-NOTES: 
-* Use of ServiceRequested for non-patient-use devices:
-The ServiceRequest profile is appropriate for retrieving non-patient use devices such as intermittent pneumatic compression devices (IPC). If the order was for a patient-use device, the appropriate profile would be DeviceRequest.  
 
-* Status element considerations:
-Because the ServiceRequest profile does not fix the value status , authors must explicitly account for all statuses relevant to the measure’s intent (e.g.,  active, completed, and on-hold) to ensure a positive order.  
+ServiceRequest is the right profile for a service performed on the patient, including the use of a non-patient device such as an intermittent pneumatic compression device. An order for a device the patient themselves uses is a DeviceRequest; see [Devices](pattern_devices.html).
 
-* doNotPerform element:
-The ServiceRequest profile fixes the value of the doNotPerform element to false if it is present, that element does not need to be tested in the expression. However, since real-world applications may not populate the value for doNotPerform unless it is true, the expression should include indication that doNotPerform is not null.  
+The profile fixes `doNotPerform` to false where present, but systems commonly omit the element unless it is true, so logic testing it against an unconstrained request should use `doNotPerform is not true` rather than an equality comparison &mdash; see [Working with doNotPerform](patterns.html#working-with-donotperform).
 
 ### Procedure not ordered
 
-1. _Search for procedure not ordered for a reason:_  
+US Quality Core defines the [US Quality Core Service Not Requested](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicenotrequested.html) profile to document the reason a service, or class of services, was not ordered. The profile fixes `doNotPerform` to true.
 
-US Quality Core defines the [US Quality Core Service Not Requested](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicenotrequested.html) profile to represent documentation of the reason a particular service or class of services was not ordered. By default, ServiceNotRequested resources in US Quality Core are characterized by the `code` element.
-
-```
-CQL:
+```cql
 define "Intermittent Pneumatic Compression Devices Prohibited":
   [USQualityCore.ServiceNotRequested: "Application of Intermittent Pneumatic Compression Devices"] DeviceProhibited
-    where (DeviceProhibited.reasonRefused in "Medical Reason For Not Providing Treatment" 
-      or DeviceProhibited.reasonRefused in "Patient Declined")
+    where (DeviceProhibited.reasonRefused in "Medical Reason For Not Providing Treatment"
+        or DeviceProhibited.reasonRefused in "Patient Declined")
       and DeviceProhibited.status in { 'active', 'completed', 'on-hold' }
 ```
 
-NOTES: 
-* Status element considerations:
-The ServiceNotRequested profile does not fix the value of the `status` element, authors must consider all the possible values of the element to ensure the expression matches measure intent. In this case, the `active`, `completed`, and `on-hold` statuses are used to ensure a valid order statement.
+A prohibition is a different statement from the rejection of a proposal, which uses TaskRejected against the positive request:
 
-Because the ServiceNotRequested profile fixes the value of `doNotPerform` to true, that element does not need to be tested in the expression.
-
-
-2. _Search for evidence that the proposal to order the procedure was rejected_  
-
-```
-CQL:
-define "Application of intermittent pneumatic compression devices (IPC) Order Rejected for Reason":
-  [ServiceRequest: "Application of Intermittent Pneumatic Compression Devices"] DeviceOrdered
-    with ["TaskRejected": code ~ USQualityCoreCommon."Fulfill" ] TaskRejected
+```cql
+define "Intermittent Pneumatic Compression Devices Order Rejected for Reason":
+  [USQualityCore.ServiceRequest: "Application of Intermittent Pneumatic Compression Devices"] DeviceOrdered
+    with [USQualityCore.TaskRejected] TaskRejected
       such that TaskRejected.focus.references(DeviceOrdered)
-        //and TaskRejected.code = 'fulfill'
-        and (TaskRejected.statusReason in "Medical Reason For Not Providing Treatment" 
-          or TaskRejected.statusReason in "Patient Declined"
-        )
+        and TaskRejected.code ~ FHIRCommon."Fulfill"
+        and (TaskRejected.statusReason in "Medical Reason For Not Providing Treatment"
+          or TaskRejected.statusReason in "Patient Declined")
     where DeviceOrdered.status = 'active'
 ```
 
 ### Imaging Procedures
 
-In FHIR, imaging procedures (such as X-Rays, CT-Scans, MRIs, etc.) involve specialized information and therefore may require multiple resources to represent orders, performance, results and interpretations. Imaging procedures may be documented across several resource types:
+See [Imaging procedures](https://hl7.org/fhir/us/cql/en/patterns-service.html#imaging-procedures), which describes how an imaging procedure may be spread across ServiceRequest, Procedure, ImagingStudy, DiagnosticReport, Observation, Claim, and ExplanationOfBenefit, and why not every resource is present for every procedure.
 
-* [ServiceRequest](http://hl7.org/fhir/R4/servicerequest.html) - represents a proposal, plan, or order for an imaging procedure, using the `code` element to identify the type of procedure ordered.
-* [Procedure](http://hl7.org/fhir/R4/procedure.html) - represents the actual performance of the imaging procedure, using the `code` element to distinguish the type of procedure performed.
-* [ImagingStudy](http://hl7.org/fhir/R4/imagingstudy.html) - represents the resulting images and underlying DICOM data, using the `procedureCode`, `procedureReference`, and/or `basedOn` elements to associate the study to an order or procedure.
-* [DiagnosticReport](http://hl7.org/fhir/R4/diagnosticreport.html) - representing the interpretation or clinical impression of the imaging procedure (detected or ruled out diagnoses), using the `code` element to distinguish the type of test or report.
-* [Observation](http://hl7.org/fhir/R4/observation.html) - represents the interpretation or clinical impression of the images, using the code element to distinguish what type of measurement.
-* [Claim](http://hl7.org/fhir/R4/claim.html) - when present in a provider system, represents billing for the imaging procedure, typically through the procedure[x] element to distinguish the type of procedure performed.
-
-Depending on the procedure, and the extent to which the results of that procedure are captured by clinical systems, there is variation in whether each of these resources is present for any given imaging procedure. In particular, Some diagnostic procedures might not have a Procedure record. The [Procedure record](https://hl7.org/fhir/procedure.html#bnr) is only necessary when there is a need to capture information about the physical intervention that was performed to capture the diagnostic information (e.g. anaesthetic, incision, scope size, etc.). As a result, authors must consider how to approach gathering information for specific procedures to ensure expressions match measure intent.
-
-For example, if measure intent is that a CT Scan was performed, regardless of the results of that scan, authors should consider looking in all of the above possible locations for evidence that a CT Scan was performed:
-
-* [ServiceRequest](#procedure-ordered) with an intent of order and a status of completed
-* [Procedure](#procedure-performed) with a status of completed
-
-<strong style="color:red;">REVIEW NEEDED: should we note this profile is out of scope</strong>* [US Quality Core ImagingStudy](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-imagingstudy.html) with a status of available and related by `basedOn` or one of the `procedure` elements
-* [US Quality Core DiagnosticReport Profile for Report and Note Exchange](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-diagnosticreport-note.html) with a status of final, amended, appended, or corrected
-* [ObservationClinicalResult](#clinical-result)<strong style="color:red;">REVIEW NEEDED: fix link</strong> with a status of final, amended, or corrected
-
-If measure intent is only looking for the performance of the scan, not whether it was resulted, the first two may suffice:
+For measures, the practical question is how far to look. If intent is only that the scan was performed, the order and the procedure may suffice:
 
 ```cql
-CQL:
 define "CT Scan Order Completed":
-  [ServiceRequest: "Abdominal or Pelvic CT Scan with Contrast"] SR
+  [USQualityCore.ServiceRequest: "Abdominal or Pelvic CT Scan with Contrast"] SR
     where SR.intent = 'order'
-      and SR.status = 'Completed'
+      and SR.status = 'completed'
 
 define "CT Scan Procedure Performed":
-  [Procedure: "Abdominal or Pelvic CT Scan with Contrast"] ScanAbdPelvic
-    where ScanAbdPelvic.status = 'Completed'
+  [USQualityCore.Procedure: "Abdominal or Pelvic CT Scan with Contrast"] ScanAbdPelvic
+    where ScanAbdPelvic.status = 'completed'
 
 define "CT Scan Performed":
   exists "CT Scan Order Completed"
     or exists "CT Scan Procedure Performed"
 ```
 
-However, if measure intent is that the scan was performed and resulted, diagnostic report provides the next level of checking:
+If intent is that the scan was also resulted, the diagnostic report is the next level of evidence:
 
 ```cql
-CQL:
 define "CT Scan Diagnostic Report":
-  [DiagnosticReportNote: "Abdominal or Pelvic CT Scan with Contrast"] ReportNote
-    where ReportNote.status in {'final', 'amended', 'corrected', 'appended'}
+  [USQualityCore.DiagnosticReportNote: "Abdominal or Pelvic CT Scan with Contrast"] ReportNote
+    where ReportNote.status in { 'final', 'amended', 'corrected', 'appended' }
 ```
 
-An additional check may be considered by looking for any imaging study results:
+An imaging study may be checked as well, related to the order or procedure by `procedureCode`, `procedureReference`, or `basedOn`:
 
 ```cql
-CQL:
 define "CT Scan Imaging Study":
-  ["ImagingStudy"] IS
+  [USQualityCore.ImagingStudy] IS
     where exists (IS.procedureCode C where C in "CT Scan Procedure Codes")
       or exists ("CT Scan Procedure Performed" P
         where IS.procedureReference.references(P)
       )
 ```
 
-As well as potentially looking for any measurements performed as part of the scan or study.
+Measurements taken during the scan are represented as observations; see [Clinical Result](pattern_observations.html#clinical-result).
 
-> NOTE: This topic is a summary of discussion with the Orders & Observations Work Group in this [FHIR Zulip chat](https://chat.fhir.org/#narrow/channel/179256-Orders-and-Observation-WG/topic/How.20to.20represent.20CT-Scan.3F/with/541254708). Also note that part of that discussion suggests that [ChargeItem](https://hl7.org/fhir/R4/chargeitem.html) may be useful as a source of evidence that something was done. This needs follow-up and additional investigation.
+> NOTE: The US Quality Core ImagingStudy profile is marked with an asterisk in the [US Quality Core profile list](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/profiles.html), meaning it is not part of that guide's conformance expectations.
+
+> NOTE: This topic summarizes discussion with the Orders &amp; Observations Work Group in this [FHIR Zulip chat](https://chat.fhir.org/#narrow/channel/179256-Orders-and-Observation-WG/topic/How.20to.20represent.20CT-Scan.3F/with/541254708). That discussion also suggests [ChargeItem](https://hl7.org/fhir/R4/chargeitem.html) may be useful as evidence that something was done, which needs follow-up.

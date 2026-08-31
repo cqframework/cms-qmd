@@ -64,6 +64,13 @@
         <title value="Authoring Patterns US Quality Core v0.5.0"/>
         <generation value="markdown"/>
 
+        <!--4.0: Pattern Index-->
+        <page>
+          <nameUrl value="pattern_index.html"/>
+          <title value="Pattern Index"/>
+          <generation value="markdown"/>
+        </page>
+
         <!--4.1: Patient (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_patient.html"/>
@@ -134,14 +141,28 @@
           <generation value="markdown"/>
         </page>
 
-        <!--4.11: US Quality Core Update Process -->
+        <!--4.11: Billing-related elements (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_billingrelated.html"/>
+          <title value="Billing-related Elements"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--4.12: Claim (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_claim.html"/>
+          <title value="Claim"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--4.13: US Quality Core Update Process -->
         <page>
           <nameUrl value="usqc_update_process.html"/>
           <title value="US Quality Core Update Process"/>
           <generation value="markdown"/>
         </page>
 
-        <!--4.12: Refactored Index -->
+        <!--4.14: Refactored Index -->
         <page>
           <nameUrl value="refactored_index.html"/>
           <title value="Refactored Index"/>

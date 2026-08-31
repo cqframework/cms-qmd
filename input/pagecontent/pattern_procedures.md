@@ -18,7 +18,7 @@ define "Intermittent Pneumatic Compression Devices Applied":
 
 ### Procedure not done
 
-US Quality Core defines the [US Quality Core Procedure Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedurenotdone.html) profile to document the reason a procedure, or class of procedures, was not performed. The profile fixes `status` to `not-done`, so it need not be tested. See [Negation Patterns](patterns.html#negation-patterns).
+US Quality Core defines the [US Quality Core Procedure Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedurenotdone.html) profile to document the reason a procedure, or class of procedures, was not performed. The profile fixes `status` to `not-done`, so it need not be tested. See [Negation Patterns](pattern_negation.html).
 
 ```cql
 define "Intermittent Pneumatic Compression Devices Not Applied":
@@ -44,7 +44,7 @@ define "Intermittent Pneumatic Compression Devices Ordered":
 
 ServiceRequest is the right profile for a service performed on the patient, including the use of a non-patient device such as an intermittent pneumatic compression device. An order for a device the patient themselves uses is a DeviceRequest; see [Devices](pattern_devices.html).
 
-The profile fixes `doNotPerform` to false where present, but systems commonly omit the element unless it is true, so logic testing it against an unconstrained request should use `doNotPerform is not true` rather than an equality comparison &mdash; see [Working with doNotPerform](patterns.html#working-with-donotperform).
+The profile fixes `doNotPerform` to false where present, but systems commonly omit the element unless it is true, so logic testing it against an unconstrained request should use `doNotPerform is not true` rather than an equality comparison &mdash; see [Working with doNotPerform](pattern_negation.html#working-with-donotperform).
 
 ### Procedure not ordered
 

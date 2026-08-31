@@ -220,7 +220,7 @@ US Quality Core:
     and Patient.sex() = '248152002'
 ```
 
-See the [Extension Elements](refactored_index.html#extension-elements) topic in the Refactored Index for a complete description of extension-based elements in QICore that are now accessed with fluent functions in USQualityCore.
+See the [Extension Index](refactored_index.html#extension-index) topic in the Refactored Index for a complete description of extension-based elements in QICore that are now accessed with fluent functions in USQualityCore.
 
 ### Step 5: Consider Functions
 
@@ -265,4 +265,4 @@ define "Numerator":
   )
 ```
 
-See the [Pattern Index](refactored_index.html#pattern-index) topic in the Refactored Index for a complete index of where data element patterns are documented.
+See the [Pattern Index](pattern_index.html) topic in the Refactored Index for a complete index of where data element patterns are documented.

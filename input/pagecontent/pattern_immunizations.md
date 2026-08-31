@@ -20,7 +20,7 @@ The profile does not fix `status`, so the expression must account for every valu
 
 ### Immunization not performed
 
-US Quality Core defines the [US Quality Core Immunization Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-immunizationnotdone.html) profile to document the reason an immunization was *not* administered, also characterized by `vaccineCode`. The profile fixes `status` to `not-done`, so that element need not be tested. See [Negation Patterns](patterns.html#negation-patterns).
+US Quality Core defines the [US Quality Core Immunization Not Done](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-immunizationnotdone.html) profile to document the reason an immunization was *not* administered, also characterized by `vaccineCode`. The profile fixes `status` to `not-done`, so that element need not be tested. See [Negation Patterns](pattern_negation.html).
 
 ```cql
 define "Reason for No Polio Immunization":
@@ -29,4 +29,4 @@ define "Reason for No Polio Immunization":
       or PolioVaccination.statusReason in "Patient Declined"
 ```
 
-Where the statement is that no vaccine in a value set was administered, rather than that one specific vaccine was not, the value set is carried on the `vaccineCode` element through the `notDoneValueSet` extension. `vaccineCode()` in USQualityCoreCommon returns the negated activity extent in either form; see [Extent of negation](patterns.html#extent-of-negation).
+Where the statement is that no vaccine in a value set was administered, rather than that one specific vaccine was not, the value set is carried on the `vaccineCode` element through the `notDoneValueSet` extension. `vaccineCode()` in USQualityCoreCommon returns the negated activity extent in either form; see [Extent of negation](pattern_negation.html#extent-of-negation).

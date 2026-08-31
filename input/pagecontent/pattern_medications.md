@@ -34,7 +34,7 @@ define "Antithrombotic Therapy at Discharge":
       and Antithrombotic.isOrder()
 ```
 
-Here `active` and `completed` identify active or filled prescriptions. The `without` clause is required because a rejected proposal may be recorded against any request; see [Positive requests and rejected proposals](patterns.html#positive-requests-and-rejected-proposals). The profile fixes `doNotPerform` to false where present, so it need not be tested.
+Here `active` and `completed` identify active or filled prescriptions. The `without` clause is required because a rejected proposal may be recorded against any request; see [Positive requests and rejected proposals](pattern_negation.html#positive-requests-and-rejected-proposals). The profile fixes `doNotPerform` to false where present, so it need not be tested.
 
 ### Medication Not Ordered
 

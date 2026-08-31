@@ -69,7 +69,7 @@ define "Pap Test With Results":
 
 ### Observations Not Done
 
-An observation that was not performed is represented as the rejection of a proposal to perform it: [US Quality Core Task Rejected](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-taskrejected.html) with `focus` referencing a [US Quality Core ServiceRequest](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicerequest.html) for the intended observation. See [Negation Patterns](patterns.html#negation-patterns) for the general treatment.
+An observation that was not performed is represented as the rejection of a proposal to perform it: [US Quality Core Task Rejected](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-taskrejected.html) with `focus` referencing a [US Quality Core ServiceRequest](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicerequest.html) for the intended observation. See [Negation Patterns](pattern_negation.html) for the general treatment.
 
 ```cql
 define "Pap Test Rejected For Reason":

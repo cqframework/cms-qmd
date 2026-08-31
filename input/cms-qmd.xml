@@ -61,8 +61,15 @@
       <!--4: Authoring Patterns-->
       <page>
         <nameUrl value="patterns.html"/>
-        <title value="Authoring Patterns US Quality Core v0.5.0"/>
+        <title value="Authoring Patterns"/>
         <generation value="markdown"/>
+
+        <!--4.0a: FHIR Patterns (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_fhir.html"/>
+          <title value="FHIR Patterns"/>
+          <generation value="markdown"/>
+        </page>
 
         <!--4.0: Pattern Index-->
         <page>
@@ -152,6 +159,13 @@
         <page>
           <nameUrl value="pattern_claim.html"/>
           <title value="Claim"/>
+          <generation value="markdown"/>
+        </page>
+
+        <!--4.13: Negation (Authoring Pattern)-->
+        <page>
+          <nameUrl value="pattern_negation.html"/>
+          <title value="Negation Patterns"/>
           <generation value="markdown"/>
         </page>
 

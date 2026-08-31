@@ -16,11 +16,11 @@ define "Device Indicating Frailty":
       and FrailtyDeviceOrder.intent in { 'order', 'original-order', 'reflex-order', 'filler-order', 'instance-order' }
 ```
 
-The profile does not fix `status`, so the expression must account for every value relevant to measure intent; `active`, `on-hold`, and `completed` together identify a positive device order. The profile does fix `doNotPerform` to false where present, but systems commonly omit the element unless it is true, so logic testing it against an unconstrained request should use `doNotPerform is not true` &mdash; see [Working with doNotPerform](patterns.html#working-with-donotperform).
+The profile does not fix `status`, so the expression must account for every value relevant to measure intent; `active`, `on-hold`, and `completed` together identify a positive device order. The profile does fix `doNotPerform` to false where present, but systems commonly omit the element unless it is true, so logic testing it against an unconstrained request should use `doNotPerform is not true` &mdash; see [Working with doNotPerform](pattern_negation.html#working-with-donotperform).
 
 ### Device not ordered
 
-US Quality Core defines the [US Quality Core Device Not Requested](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-devicenotrequested.html) profile to document the reason a device, or class of devices, was not ordered. The profile fixes `doNotPerform` to true, so it need not be tested. See [Negation Patterns](patterns.html#negation-patterns).
+US Quality Core defines the [US Quality Core Device Not Requested](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-devicenotrequested.html) profile to document the reason a device, or class of devices, was not ordered. The profile fixes `doNotPerform` to true, so it need not be tested. See [Negation Patterns](pattern_negation.html).
 
 ```cql
 define "CPAP Prohibited":

@@ -12,7 +12,7 @@ Reading the tables below:
 * A link in the **US CQL 2.0.0** column alone means that guide is the complete reference; there is nothing measure-specific to add.
 * A link in the **CMS dQM guidance** column alone means the pattern is specific to quality measurement, or covers a resource the US CQL guide does not yet address.
 
-> NOTE: The patterns in this guide are authored against [US Quality Core 0.5.0](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/), while the US CQL patterns are authored against US Core directly. Retrieves therefore differ in the model qualifier &mdash; `[USQualityCore.AllergyIntolerance]` here, `[USCore.AllergyIntolerance]` there &mdash; but the element-level guidance applies to both. See [Authoring against the US Quality Core model](patterns.html#authoring-against-the-us-quality-core-model).
+> NOTE: The patterns in this guide are authored against [US Quality Core 0.5.0](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/), while the US CQL patterns are authored against US Core directly. Retrieves therefore differ in the model qualifier &mdash; `[USQualityCore.AllergyIntolerance]` here, `[USCore.AllergyIntolerance]` there &mdash; but the element-level guidance applies to both. See [Authoring against the US Quality Core model](pattern_fhir.html#authoring-against-the-us-quality-core-model).
 
 ### Resource-level guidance
 
@@ -29,7 +29,7 @@ Each US CQL resource page opens with three sections that apply to every pattern 
 | Claim | [Modifier elements](https://hl7.org/fhir/us/cql/en/patterns-claim.html#modifier-elements) | [Search parameters](https://hl7.org/fhir/us/cql/en/patterns-claim.html#search-parameters) | [Cross-version](https://hl7.org/fhir/us/cql/en/patterns-claim.html#cross-version-considerations) |
 | Coverage | [Modifier elements](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#modifier-elements) | [Search parameters](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#search-parameters) | [Cross-version](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#cross-version-considerations) |
 
-General guidance that applies across all resources &mdash; element cardinality, must support, modifier elements, implicit rules, accessing data, and naming &mdash; is covered in [Overall Patterns](https://hl7.org/fhir/us/cql/en/patterns-overall.html) in the US CQL guide and, for quality measures specifically, in the [Patterns](patterns.html) topic of this guide.
+General guidance that applies across all resources &mdash; element cardinality, must support, modifier elements, implicit rules, accessing data, and naming &mdash; is covered in [Overall Patterns](https://hl7.org/fhir/us/cql/en/patterns-overall.html) in the US CQL guide and, for quality measures specifically, in [FHIR Patterns](pattern_fhir.html). Documentation of events that did not occur is covered in [Negation Patterns](pattern_negation.html).
 
 ### Patient
 

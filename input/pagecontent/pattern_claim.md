@@ -49,7 +49,9 @@ define "Encounter With Asthma Present On Admission":
     where E.isDiagnosisPresentOnAdmission("Asthma", "Present On Admission Indicators")
 ```
 
-The second argument is a value set of present-on-admission indicator codes; CQMCommon declares the individual codes, from which such a value set can be composed. The function handles both representations of `Claim.diagnosis.diagnosis[x]`.
+The second argument is a value set of present-on-admission indicator codes; CQMCommon declares the individual codes so they can be referenced in logic specifically if needed. The function handles both representations of `Claim.diagnosis.diagnosis[x]`.
+
+For the clinical representation, see [Present on Admission](pattern_encounter.html#present-on-admission). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Principal Diagnosis
 
@@ -64,6 +66,8 @@ define "Encounter With Principal Diagnosis Of Asthma":
 ```
 
 Where the diagnosis element itself is needed rather than a value set test, `principalDiagnosis()` returns it, and `claimDiagnosis()` returns all claim diagnoses for the encounter.
+
+For the clinical representation, see [Principal Diagnosis](pattern_encounter.html#principal-diagnosis). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Primary Procedure
 
@@ -88,6 +92,8 @@ define fluent function getProcedure(reference FHIR.Reference):
 Two gaps are worth noting for anyone writing this logic. CQMCommon defines `getCondition()` for resolving a claim diagnosis reference but has no `getProcedure()` counterpart, so the example declares one. And the US CQL guide documents a `hasPrincipalProcedureOf()` function, the procedure equivalent of `hasPrincipalDiagnosisOf()`, which CQMCommon does not define &mdash; so the code-or-reference choice is handled in the expression rather than by a library function.
 
 > NOTE: This guide uses *primary procedure*, matching the `Primary procedure` code that identifies it, in contrast with *principal diagnosis*. The US CQL guide and the CQMCommon function name both use *principal* for the procedure; the concept is the same.
+
+For the clinical representation, see [Primary Procedure](pattern_encounter.html#primary-procedure). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Discharge Disposition
 

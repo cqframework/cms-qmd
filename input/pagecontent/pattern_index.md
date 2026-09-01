@@ -22,11 +22,6 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Authoring against the US Quality Core model](pattern_fhir.html#authoring-against-the-us-quality-core-model) | Derived ModelInfo, the required version on the `using` declaration, and why extensions are reached through fluent functions. |
 | [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, model-qualified type names, and the status functions to apply when accessing a resource. |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
-| [Choosing a negation pattern](pattern_negation.html#choosing-a-negation-pattern) | Absence of evidence versus negation rationale, and when a negation profile is not the right choice. |
-| [Use cases for negation rationale](pattern_negation.html#use-cases-for-negation-rationale) | The three use cases and the ten US Quality Core negation profiles that realize them. |
-| [Extent of negation](pattern_negation.html#extent-of-negation) | Negating a specific activity versus an entire value set, through the `notDoneValueSet` extension. |
-| [Working with doNotPerform](pattern_negation.html#working-with-donotperform) | Why `is not true` rather than an equality comparison, given the profiles that fix the element. |
-| [Positive requests and rejected proposals](pattern_negation.html#positive-requests-and-rejected-proposals) | Excluding requests that carry a rejecting Task when looking for a positive request. |
 | [Primitives](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
 | [Choices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
 | [Slices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `systolic()` and `diastolic()`. |
@@ -36,6 +31,11 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) | Day-boundary calculations such as "on hospital day 2". |
 | [Time-Valued Quantities](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`). |
 | [Overall Patterns](https://hl7.org/fhir/us/cql/en/patterns-overall.html) | The US CQL treatment of the same element considerations, plus its naming best-practices for shared library declarations. |
+| [Choosing a negation pattern](pattern_negation.html#choosing-a-negation-pattern) | Absence of evidence versus negation rationale, and when a negation profile is not the right choice. |
+| [Use cases for negation rationale](pattern_negation.html#use-cases-for-negation-rationale) | The three use cases and the ten US Quality Core negation profiles that realize them. |
+| [Extent of negation](pattern_negation.html#extent-of-negation) | Negating a specific activity versus an entire value set, through the `notDoneValueSet` extension. |
+| [Working with doNotPerform](pattern_negation.html#working-with-donotperform) | Why `is not true` rather than an equality comparison, given the profiles that fix the element. |
+| [Positive requests and rejected proposals](pattern_negation.html#positive-requests-and-rejected-proposals) | Excluding requests that carry a rejecting Task when looking for a positive request. |
 {: .grid}
 
 ### Patient

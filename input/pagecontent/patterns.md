@@ -1,8 +1,12 @@
 This section provides guidance and best-practice recommendations for authoring Clinical Quality Language (CQL) queries and logic to retrieve patient information from clinical systems using US Quality Core as the primary information model. [Clinical Quality Language(CQL)](https://cql.hl7.org/N1) is a high-level, domain-specific language focused on representing clinical logic and targeted at measure and decision support artifact authors.
 
-For style and naming conventions used in measure logic, refer to the [Measure Guidance](measure_guidance.html) section of this guide.
+For style and naming conventions used in measure logic, refer to the [**Measure Guidance**](measure_guidance.html) section of this guide.
 
-For conformance requirements for measure specifications and logic, refer to the [Measure Profile](measure_profile.html) section of this guide.
+For conformance requirements for measure specifications and logic, refer to the [**Measure Profile**](measure_profile.html) section of this guide.
+
+See the [**Pattern Index**](pattern_index.html) for a complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
+
+For guidance on refactoring QICore-based measures to use US Quality Core, refer to the [**US Quality Core Update Process**](usqc_update_process.html) page, as well as the [**Refactored Index**](refactored_index.html).
 
 Feedback on the patterns, guidance, or recommendations can be provided by submitting a [New Issue](https://github.com/cqframework/cms-qmd/issues/new) to this repository.
 
@@ -37,10 +41,6 @@ request. |
 {: .grid}
 
 ### Pattern Overview
-
-See the [Pattern Index](pattern_index.html) for a complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
-
-For guidance on refactoring QICore-based measures to use US Quality Core, refer to the [US Quality Core Update Process](usqc_update_process.html) page, as well as the [Refactored Index](refactored_index.html).
 
 The following pages provide authoring patterns for each type of information:
 

@@ -116,7 +116,9 @@ define "Encounter With Comfort Measures Performed During Hospitalization":
 
 Present on admission is an indication of whether or not the diagnosis was present when the patient was admitted (as opposed to a condition that developed during the encounter). This is not the same as the _admitting diagnosis_.
 
-Within the clinical record, present-on-admission is represented in US Quality Core using the `presentOnAdmission` extension:
+In the clinical record, whether or not a given diagnosis is or was present on admission is not always recorded explicitly. It may not be recorded unless that element has direct bearing on treatment (and even then it may not be discretely captured). In a clinical setting, if it is recorded, it is likely captured with a simple boolean flag. Also, whether or not a diagnosis was present on admission may be inferred, for example a congenital condition was obviously present on admission.
+
+With those caveats, within the clinical record, present-on-admission is represented in US Quality Core using the `presentOnAdmission` extension:
 
 ```cql
 define "Encounter With Asthma Present On Admission":
@@ -128,7 +130,7 @@ define "Encounter With Asthma Present On Admission":
     )
 ```
 
-See [Present on Admission](pattern_claim.html#present-on-admission).
+For the claim representation, see [Present on Admission](pattern_claim.html#present-on-admission). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Principal Diagnosis
 
@@ -145,7 +147,7 @@ define "Encounter With Principal Diagnosis Of Asthma":
     )
 ```
 
-See [Principal Diagnosis](pattern_claim.html#principal-diagnosis).
+For the claim representation, see [Principal Diagnosis](pattern_claim.html#principal-diagnosis). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Primary Procedure
 
@@ -162,6 +164,8 @@ define "Encounter With Primary Procedure Of Appendectomy":
     )
 ```
 
+For the claim representation, see [Primary Procedure](pattern_claim.html#primary-procedure). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
 ### Discharge Disposition
 
 In US Quality Core, discharge disposition on an encounter is represented as a clinical element using the [Clinical Discharge Disposition](https://terminology.hl7.org/7.1.0/en/ValueSet-clinical-discharge-disposition.html) value set.
@@ -172,4 +176,4 @@ define "Encounter With Discharge Disposition To Home":
     where E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
 ```
 
-See [Discharge Disposition](pattern_claim.html#discharge-disposition).
+For the claim representation see [Discharge Disposition](pattern_claim.html#discharge-disposition). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.

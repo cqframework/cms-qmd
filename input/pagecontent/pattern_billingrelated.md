@@ -10,7 +10,9 @@ The patterns in this guidance allow for elements to be identified in each of the
 
 ### Preferring claim information
 
-Where a measure is willing to use either representation, the usual intent is to prefer the billing information when it is present, because it has been coded for reporting, and to fall back on the clinical record when it is not. That is expressed by testing whether the claim information exists at all, rather than whether the claim test succeeded &mdash; an encounter with no claim and an encounter whose claim says *no* are different answers:
+In the payer-adjudicated claim information (i.e. the ExplanationOfBenefit), these elements are preserved from whatever was submitted by the provider. Although other information is also present in the EoB, a payer will never modify the provider submitted information. In addition, payer-adjudicated claim information is typically not available until well after the encounter took place. The consequence of these considerations is that the most reliable available source for these elements is the claim data, either the provider-submitted, or the payer-adjudicated, whichever is available.
+
+Where a measure is willing to use either the claim or clinical representation, the usual intent is to prefer the billing information when it is present, because it has been coded for reporting, and to fall back on the clinical record when it is not. That is expressed by testing whether the claim information exists at all, rather than whether the claim test succeeded &mdash; an encounter with no claim and an encounter whose claim says *no* are different answers:
 
 ```cql
 define "<Element> Present":
@@ -20,9 +22,11 @@ define "<Element> Present":
       else <clinical test>
 ```
 
-The examples below apply that shape to each element. Two cautions apply throughout. Whether the two representations share terminology varies by element, so check before reusing a value set across both branches. And because the fallback is per encounter rather than per measure, a population may end up mixing encounters answered from claims with encounters answered from the clinical record; where that matters, test the two sources separately instead.
+The examples below apply this pattern to each element. Two cautions apply throughout: First, whether the two representations share terminology varies by element, so check before reusing a value set across both branches. And second, because the fallback is per encounter rather than per measure, a population may end up mixing encounters answered from claims with encounters answered from the clinical record; where that matters, test the two sources separately instead.
 
 ### Present on Admission
+
+In the provider-submitted claim information, the onAdmission indicator is explicitly captured as part of assessment during the billing process by looking at the encounter and related information to make a post-encounter determination about whether the diagnosis was actually present on admission. In addition, this indicator carries explicit information about whether the diagnosis is considered known to be present or not present, versus whether additional information is needed, or a determination cannot be made.
 
 The [claim representation](pattern_claim.html#present-on-admission) is `Claim.diagnosis.onAdmission`, reached with `isDiagnosisPresentOnAdmission()`; the [clinical representation](pattern_encounters.html#present-on-admission) is the `presentOnAdmission` extension on `Encounter.diagnosis`.
 

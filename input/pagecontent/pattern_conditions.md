@@ -57,9 +57,9 @@ See [Onset, abatement, and prevalence period](https://hl7.org/fhir/us/cql/en/pat
 
 ### Conditions present on admission and principal diagnoses
 
-Present on admission, principal diagnosis, primary procedure, and discharge disposition are not elements of the Condition resource. Each is a [billing-related element](pattern_billingrelated.html) with more than one representation, and neither of them is on Condition:
+Present on admission, principal diagnosis, primary procedure, and discharge disposition are not elements of the Condition resource. Each is a [billing-related element](pattern_billingrelated.html) with more than one representation:
 
-* In the **clinical record** they are carried on the Encounter &mdash; on `Encounter.diagnosis` for present on admission, principal diagnosis, and primary procedure, and on `Encounter.hospitalization` for discharge disposition. These are documented in [Encounters](pattern_encounters.html).
-* In **provider-submitted billing information** they are carried on the Claim, documented in [Claim](pattern_claim.html).
+* In the **clinical record** they are represented on the Encounter &mdash; on `Encounter.diagnosis` for present on admission, principal diagnosis, and primary procedure, and on `Encounter.hospitalization` for discharge disposition. These are documented in [Encounters](pattern_encounters.html).
+* In **claim information** they are represented on the Claim for provider-submitted claims, and on ExplanationOfBenefit for payer-adjudicated claims, documented in [Claim](pattern_claim.html).
 
 Which representation a measure should use depends on measure intent; see [Billing-related elements](pattern_billingrelated.html) for the trade-off.

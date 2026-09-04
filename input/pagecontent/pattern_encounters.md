@@ -130,6 +130,8 @@ define "Encounter With Asthma Present On Admission":
     )
 ```
 
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
+
 For the claim representation, see [Present on Admission](pattern_claim.html#present-on-admission). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Principal Diagnosis
@@ -146,6 +148,8 @@ define "Encounter With Principal Diagnosis Of Asthma":
           and D.rank = 1
     )
 ```
+
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
 
 For the claim representation, see [Principal Diagnosis](pattern_claim.html#principal-diagnosis). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
@@ -164,6 +168,8 @@ define "Encounter With Primary Procedure Of Appendectomy":
     )
 ```
 
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
+
 For the claim representation, see [Primary Procedure](pattern_claim.html#primary-procedure). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
 ### Discharge Disposition
@@ -176,4 +182,22 @@ define "Encounter With Discharge Disposition To Home":
     where E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
 ```
 
+> Note that the `dischargeDisposition` element in US Core is profiled to use UB-04 billing codes, whereas the element in US Quality Core is overridden to use clinical discharge disposition codes, with the billing codes used in the claim representation (see below).
+
 For the claim representation see [Discharge Disposition](pattern_claim.html#discharge-disposition). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
+### Admission Source
+
+In FHIR, admission source on an encounter is represented using the `Encounter.hospitalization.admitSource` element, using the [Admit Source](https://terminology.hl7.org/en/ValueSet-encounter-admit-source.html) terminology.
+
+```cql
+define "Encounter With Admission From Emergency Department":
+  [Encounter] E
+    where E.hospitalization.admitSource in "Emergency Department Admission Source Codes"
+```
+
+> NOTE: This element is being proposed for inclusion in the US Quality Core Encounter Profile in the 1.0.0 ballot. It is not currently profiled in the 0.5.0 version, though the element can still be referenced in logic because it is not restricted by the profile, it is just not marked as required or must support.
+
+> NOTE: The clinical terminology for this element does not currently have hospice as an admission source. A UTG ticket has been submitted to add hospice to this terminology: https://jira.hl7.org/browse/UP-865 
+
+For the claim representation see [Admission Source](pattern_claim.html#admission-source). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.

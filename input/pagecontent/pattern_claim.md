@@ -51,7 +51,30 @@ define "Encounter With Asthma Present On Admission":
 
 The second argument is a value set of present-on-admission indicator codes; CQMCommon declares the individual codes so they can be referenced in logic specifically if needed. The function handles both representations of `Claim.diagnosis.diagnosis[x]`.
 
+Note that there are multiple reasons that the present on admission indiciator for a given diagnosis may not be present on a given claim, including:
+
+* The diagnosis is one of a set of ICD codes that are exempt from present on admission reporting
+* The claim is for an encounter that is not in a setting where present on admission reporting is required by policy/regulation
+* The diagnosis is for a congenital condition
+
 For the clinical representation, see [Present on Admission](pattern_encounter.html#present-on-admission). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
+#### Examples
+
+Whether a diagnosis is present on admission is a key aspect of measure intent in CMS1028 - Severe Obstetric Complications:
+
+```cql
+define "Delivery Encounters With Severe Obstetric Complications Diagnosis Or Procedure Excluding Blood Transfusion":
+  "Delivery Encounters At Greater Than Or Equal To 20 Weeks Gestation" TwentyWeeksPlusEncounter
+    where TwentyWeeksPlusEncounter.isDiagnosisPresentOnAdmission ( "Severe Maternal Morbidity Diagnoses", "Present on Admission is No or Unable To Determine" )
+      or ( exists ( ["Procedure": "Severe Maternal Morbidity Procedures"] SMMProcedures
+            where SMMProcedures.status = 'completed'
+              and SMMProcedures.performed.toInterval ( ) starts during TwentyWeeksPlusEncounter.hospitalizationWithEDOBTriageObservation ( )
+        )
+      )
+```
+
+Although the information about whether a diagnosis is present on admission may be available in the encounter representation, the fact that the determination is explicitly made as part of billing results in more accurate data for this element, directly impacting the accuracy of the performance rate for the measure.
 
 ### Principal Diagnosis
 
@@ -68,6 +91,20 @@ define "Encounter With Principal Diagnosis Of Asthma":
 Where the diagnosis element itself is needed rather than a value set test, `principalDiagnosis()` returns it, and `claimDiagnosis()` returns all claim diagnoses for the encounter.
 
 For the clinical representation, see [Principal Diagnosis](pattern_encounter.html#principal-diagnosis). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
+#### Examples
+
+Whether an encounter has a principal diagnosis is a key aspect of measure intent in CMS108 - Venous Thromboembolism Prophylaxis:
+
+```cql
+define "Encounter With Principal Diagnosis Of Mental Disorder Or Stroke":
+  VTE."Encounter With Age Range And Without VTE Diagnosis Or Obstetrical Conditions" QualifyingEncounter
+    where QualifyingEncounter.hasPrincipalDiagnosisOf ( "Mental Health Diagnoses" )
+      or QualifyingEncounter.hasPrincipalDiagnosisOf ( "Hemorrhagic Stroke" )
+      or QualifyingEncounter.hasPrincipalDiagnosisOf ( "Ischemic Stroke" )
+```
+
+This definition is one of the allowable exclusions for the measure, directly impacting the performance rate of the measure.
 
 ### Primary Procedure
 
@@ -95,6 +132,24 @@ Two gaps are worth noting for anyone writing this logic. CQMCommon defines `getC
 
 For the clinical representation, see [Primary Procedure](pattern_encounter.html#primary-procedure). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
+#### Examples
+
+Whether an encounter has a principal procedure is a key aspect of measure intent for CMS108 - Venous Thromboembolism Prophylaxis:
+
+```cql
+define "Encounter With Principal Procedure Of Selected Surgery":
+  VTE."Encounter With Age Range And Without VTE Diagnosis Or Obstetrical Conditions" QualifyingEncounter
+    where QualifyingEncounter.hasPrincipalProcedureOf ( "General Surgery" )
+      or QualifyingEncounter.hasPrincipalProcedureOf ( "Gynecological Surgery" )
+      or QualifyingEncounter.hasPrincipalProcedureOf ( "Hip Fracture Surgery" )
+      or QualifyingEncounter.hasPrincipalProcedureOf ( "Hip Replacement Surgery" )
+      or QualifyingEncounter.hasPrincipalProcedureOf ( "Intracranial Neurosurgery" )
+      or QualifyingEncounter.hasPrincipalProcedureOf ( "Knee Replacement Surgery" )
+      or QualifyingEncounter.hasPrincipalProcedureOf ( "Urological Surgery" )
+```
+
+This definition is one of the allowable exclusions for the measure, directly impacting the performance rate of the measure.
+
 ### Discharge Disposition
 
 The discharge disposition is identified on the claim by `supportingInfo` carrying the `Discharge status` code. `dischargeStatus()` returns the value of the discharge disposition.
@@ -111,6 +166,28 @@ Example of claim with a discharge status supportingInfo:
     "code": "discharge-status" }] },
   "code": { "coding": [{
     "system": "https://www.nubc.org/PatientDischargeStatus",
-    "code": "01" }] }
+    "code": "..." }] }
 }]
 ```
+
+For the clinical representation, see [Discharge Disposition](pattern_encounter.html#discharge-disposition). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
+### Admission Source
+
+The admission source is identified on the claim by `supportingInfo` carrying the `Point of origin` code. `pointOfOrigin()` returns the value of the point of origin.
+
+Example of claim with a point of origin supportingInfo:
+
+```json
+"supportingInfo": [{
+  "sequence": 1,
+  "category": { "coding": [{
+    "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+    "code": "point-of-origin" }] },
+  "code": { "coding": [{
+    "system": "https://www.nubc.org/CodeSystem/PointOfOrigin",
+    "code": "..." }] }
+}]
+```
+
+For the clinical representation, see [Admission Source](pattern_encounter.html#admission-source). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.

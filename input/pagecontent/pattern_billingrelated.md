@@ -97,3 +97,9 @@ define "Encounter With Discharge Disposition To Home":
 The fallback pattern is not yet available for this element. The claim representation carries discharge status in `Claim.supportingInfo`, which sits at the root of the Claim while encounter linking happens at the item level, so tying a discharge status to a particular encounter is unresolved &mdash; see the open question in [Claim](pattern_claim.html#discharge-disposition).
 
 Note also that the two representations do not share terminology: the clinical element is bound to the [Clinical Discharge Disposition](https://terminology.hl7.org/7.1.0/en/ValueSet-clinical-discharge-disposition.html) value set, drawn from the HL7 discharge disposition code system, while claims carry NUBC patient discharge status codes. A measure using both would need a value set for each, and a mapping between them.
+
+### Admission Source
+
+The [clinical representation](pattern_encounters.html#admission-source) is `Encounter.hospitalization.admitSource`.
+
+The fallback pattern is not yet available for this element. The claim representation carries admission source in `Claim.supportingInfo`, which sits at the root of the Claim, while encounter linking happens at the item level, so tying an admission source to a particular encounter is unresolved &mdash; see the open question in [Claim](pattern_claim.html#admission-source).

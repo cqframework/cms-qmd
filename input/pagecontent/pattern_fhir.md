@@ -61,6 +61,55 @@ define "Active Confirmed Allergies and Intolerances":
 
 See [Accessing Data](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#accessing-data) for further discussion.
 
+### References
+
+See [References in FHIR](http://hl7.org/fhir/R4/references.html#Reference)
+
+Many elements of FHIR resources are _references_ to other resources. A reference
+is always represented in one direction, from a _source_ to a _target_.
+
+References target a resource based on its _identity_, and there are several
+types of resource [identities](http://hl7.org/fhir/R4/resource.html#id) in FHIR.
+
+The FHIRHelpers and FHIRCommon libraries include several functions for dealing with references in FHIR:
+
+* `reference(String): Reference` - Returns a `FHIR.Reference` with the given value as the reference target
+* `reference(Resource): Reference` - Returns a `FHIR.Reference` with the logical id of the given Resource as the reference target
+* `references(Resource): Boolean` - Returns true if the reference is to the given Resource
+* `references(String): Boolean` - Returns true if the reference is to the given id
+
+For example, to determine whether an Observation is referencing an Encounter:
+
+```cql
+define "Encounter With Blood Pressure Observation":
+  [USQualityCore.Encounter] E
+    with [USCore.BloodPressureProfile] BP
+      such that BP.encounter.references(E)
+```
+
+These reference functions are used throughout the patterns in this guide to establish relationships. 
+Note however that references are not always populated in the source data, and establishing a temporal
+relationship can often be more robust:
+
+```cql
+define "Encounter With Blood Pressure Observation":
+  [USQualityCore.Encounter] E
+    with [USCore.BloodPressureProfile] BP
+      such that BP.effective.toInterval() during E.period
+```
+
+> NOTE: Although FHIR does provide a mechansim for business identifiers to be used for both the
+source and target of a reference, this is not a common practice and should typically be avoided.
+US Core in particular specifies that when [referencing](http://hl7.org/fhir/us/core/general-guidance.html#referencing-us-core-profiles) data in US Core profiles, references should include a logical id
+and not a business identifier.
+
+> NOTE: Although FHIRHelpers provides a `resolve()` function that can be used to retrieve
+the resource targeted by a reference, this approach is not recommended in CQL, because CQL already has
+a retrieve mechanism. Using resolve() means that implementing systems need to support multiple 
+ways of accomplishing the same underlying task; as well, CQL data access layers use the retrieve syntax
+in CQL as a primary optimization strategy, and the resolve() function is not likely to be understood or
+used by those optimization strategies.
+
 ### Use of terminologies
 
 FHIR terminology-valued elements are compared in CQL using the equal (`=`), equivalent (`~`), and `in` operators. As a general rule,

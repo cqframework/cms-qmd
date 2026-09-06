@@ -21,6 +21,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Modifier elements](pattern_fhir.html#modifier-elements) | Elements whose value changes the meaning of the resource, including modifier extensions and `implicitRules`. |
 | [Authoring against the US Quality Core model](pattern_fhir.html#authoring-against-the-us-quality-core-model) | Derived ModelInfo, the required version on the `using` declaration, and why extensions are reached through fluent functions. |
 | [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, model-qualified type names, and the status functions to apply when accessing a resource. |
+| [References](pattern_fhir.html#references) | Best-practice for dealing with references in FHIR resources. |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
 | [Primitives](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
 | [Choices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
@@ -166,18 +167,6 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Communication not done](pattern_communication.html#communication-not-done) | Documenting the reason a communication did not occur. |
 {: .grid}
 
-### Billing-related elements
-
-| Pattern | Description |
-|----|----|
-| [Billing-related elements](pattern_billingrelated.html) | Why these elements have several representations, and how to choose between the clinical record, the claim, and the adjudicated response. |
-| [Preferring claim information](pattern_billingrelated.html#preferring-claim-information) | The shape for using claim information when it is present and falling back on the clinical record when it is not. |
-| [Present on admission](pattern_billingrelated.html#present-on-admission) | Whether a diagnosis was present at admission, on the claim and in the clinical record; both use the same CMS indicator codes. |
-| [Principal diagnosis](pattern_billingrelated.html#principal-diagnosis) | The diagnosis chiefly responsible for the admission, identified by claim diagnosis type or by encounter diagnosis rank. |
-| [Primary procedure](pattern_billingrelated.html#primary-procedure) | The procedure identified as primary, on the claim and in the clinical record. |
-| [Discharge disposition](pattern_billingrelated.html#discharge-disposition) | Where the patient went after the encounter; the two representations use different code systems and the claim side has an open question. |
-{: .grid}
-
 ### Claims and coverage
 
 | Pattern | Description |
@@ -195,3 +184,16 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `memberID()` and `policyNumber()`, and the invariant requiring one of them. |
 | [Payer](pattern_coverage.html#payer) | `SDE Payer` for supplemental data reporting, and the status filter it omits. |
 {: .grid}
+
+### Billing-related elements
+
+| Pattern | Description |
+|----|----|
+| [Billing-related elements](pattern_billingrelated.html) | Why these elements have several representations, and how to choose between the clinical record, the claim, and the adjudicated response. |
+| [Preferring claim information](pattern_billingrelated.html#preferring-claim-information) | The shape for using claim information when it is present and falling back on the clinical record when it is not. |
+| [Present on admission](pattern_billingrelated.html#present-on-admission) | Whether a diagnosis was present at admission, on the claim and in the clinical record; both use the same CMS indicator codes. |
+| [Principal diagnosis](pattern_billingrelated.html#principal-diagnosis) | The diagnosis chiefly responsible for the admission, identified by claim diagnosis type or by encounter diagnosis rank. |
+| [Primary procedure](pattern_billingrelated.html#primary-procedure) | The procedure identified as primary, on the claim and in the clinical record. |
+| [Discharge disposition](pattern_billingrelated.html#discharge-disposition) | Where the patient went after the encounter; the two representations use different code systems and the claim side has an open question. |
+{: .grid}
+

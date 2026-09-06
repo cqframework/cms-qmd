@@ -27,6 +27,7 @@ Measures that report payer as a supplemental data element take it from Coverage.
 ```cql
 define "SDE Payer":
   [USQualityCore.Coverage: type in "Payer Type"] Payer
+    where Payer.status = 'active'
     return {
       code: Payer.type,
       period: Payer.period
@@ -34,5 +35,3 @@ define "SDE Payer":
 ```
 
 Use the shared definition rather than reading Coverage directly, so that payer is represented consistently across measures; see the [Refactored Index](refactored_index.html) for its current version.
-
-> NOTE: `SDE Payer` does not filter on `status`. Where measure intent requires the coverage to have been active, that test has to be added.

@@ -61,6 +61,8 @@ For the clinical representation, see [Present on Admission](pattern_encounter.ht
 
 #### Examples
 
+##### CMS1028 - Severe Obstetric Complications
+
 Whether a diagnosis is present on admission is a key aspect of measure intent in CMS1028 - Severe Obstetric Complications:
 
 ```cql
@@ -75,6 +77,16 @@ define "Delivery Encounters With Severe Obstetric Complications Diagnosis Or Pro
 ```
 
 Although the information about whether a diagnosis is present on admission may be available in the encounter representation, the fact that the determination is explicitly made as part of billing results in more accurate data for this element, directly impacting the accuracy of the performance rate for the measure.
+
+##### Patient Safety Measures
+
+TODO: MUC 877
+
+TODO: 1017
+
+##### Other Examples
+
+TODO: 1218, 832
 
 ### Principal Diagnosis
 

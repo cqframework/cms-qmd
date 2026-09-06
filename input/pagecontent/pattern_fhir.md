@@ -110,6 +110,8 @@ ways of accomplishing the same underlying task; as well, CQL data access layers 
 in CQL as a primary optimization strategy, and the resolve() function is not likely to be understood or
 used by those optimization strategies.
 
+> NOTE: This topic is proposed for inclusion in the FHIR Patterns page of the Using CQL With FHIR implementation guide: https://jira.hl7.org/browse/FHIR-58895
+
 ### Use of terminologies
 
 FHIR terminology-valued elements are compared in CQL using the equal (`=`), equivalent (`~`), and `in` operators. As a general rule,

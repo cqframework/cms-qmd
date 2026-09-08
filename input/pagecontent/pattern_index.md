@@ -90,6 +90,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Principal diagnosis](pattern_encounters.html#principal-diagnosis) | The clinical representation, using `Encounter.diagnosis` with a `use` of billing and a `rank` of 1. |
 | [Primary procedure](pattern_encounters.html#primary-procedure) | The clinical representation, where `Encounter.diagnosis.condition` references a Procedure rather than a Condition. |
 | [Discharge disposition](pattern_encounters.html#discharge-disposition) | The clinical representation, using `Encounter.hospitalization.dischargeDisposition`. |
+| [Admission source](pattern_encounters.html#admission-source) | The clinical representation, using `Encounter.hospitalization.admitSource`. |
 {: .grid}
 
 ### Observations
@@ -171,15 +172,16 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 
 | Pattern | Description |
 |----|----|
-| [Claim elements used by measures](pattern_claim.html#claim-elements-used-by-measures) | How a claim relates to an encounter, and the CQMCommon functions that navigate the sequence-keyed diagnosis and procedure lists. |
+| [Claim elements used by measures](pattern_claim.html#claim-elements-used-by-measures) | The ClaimElements definitions that unfold a claim into flat elements keyed to the encounter, and the ClaimCommon predicates that go with them. |
 | [Present on admission](pattern_claim.html#present-on-admission) | The claim representation, using `Claim.diagnosis.onAdmission` with the CMS indicator codes. |
 | [Principal diagnosis](pattern_claim.html#principal-diagnosis) | The claim representation, identified by `Claim.diagnosis.type`. |
 | [Primary procedure](pattern_claim.html#primary-procedure) | The claim representation, identified by `Claim.procedure.type`. |
-| [Discharge disposition](pattern_claim.html#discharge-disposition) | The claim representation, carried in `Claim.supportingInfo`; tying it to a specific encounter is an open question. |
-| [Claim status, use, and type](https://hl7.org/fhir/us/cql/en/patterns-claim.html#status-use-and-type) | The functions that select active professional or institutional claims and explanations of benefit. |
-| [Claim items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#claim-items) | Selecting the items of a claim. |
-| [Explanation of Benefit items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#eob-items) | Selecting the items of an adjudicated response. |
-| [Mammography claim](https://hl7.org/fhir/us/cql/en/patterns-claim.html#mammography-claim) | A worked example over claim and EoB items. |
+| [Discharge disposition](pattern_claim.html#discharge-disposition) | The claim representation, reached with `dischargeStatus()` over `Claim.supportingInfo`. |
+| [Admission source](pattern_claim.html#admission-source) | The claim representation, reached with `pointOfOrigin()` over `Claim.supportingInfo`. |
+| [Claim status, use, and type](pattern_claim.html#claim-elements-used-by-measures) | The ClaimCommon predicates that select active professional or institutional claims and explanations of benefit. |
+| [Claim items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#claim-items) | Selecting the items of a claim; superseded by the ClaimElements definitions above. |
+| [Explanation of Benefit items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#eob-items) | Selecting the items of an adjudicated response; superseded by the ClaimElements definitions above. |
+| [Mammography claim](https://hl7.org/fhir/us/cql/en/patterns-claim.html#mammography-claim) | A worked example over claim and EoB items, built on the superseded item definitions. |
 | [Coverage status](pattern_coverage.html#coverage-status) | Restricting to active coverage, the only modifier element on the resource. |
 | [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `memberID()` and `policyNumber()`, and the invariant requiring one of them. |
 | [Payer](pattern_coverage.html#payer) | `SDE Payer` for supplemental data reporting, and the status filter it omits. |
@@ -194,6 +196,6 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Present on admission](pattern_billingrelated.html#present-on-admission) | Whether a diagnosis was present at admission, on the claim and in the clinical record; both use the same CMS indicator codes. |
 | [Principal diagnosis](pattern_billingrelated.html#principal-diagnosis) | The diagnosis chiefly responsible for the admission, identified by claim diagnosis type or by encounter diagnosis rank. |
 | [Primary procedure](pattern_billingrelated.html#primary-procedure) | The procedure identified as primary, on the claim and in the clinical record. |
-| [Discharge disposition](pattern_billingrelated.html#discharge-disposition) | Where the patient went after the encounter; the two representations use different code systems and the claim side has an open question. |
+| [Discharge disposition](pattern_billingrelated.html#discharge-disposition) | Where the patient went after the encounter; the two representations use different code systems, so the fallback needs a value set for each. |
+| [Admission source](pattern_billingrelated.html#admission-source) | Where the patient came from; carried as point of origin on the claim and as `admitSource` in the clinical record. |
 {: .grid}
-

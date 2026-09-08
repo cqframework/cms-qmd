@@ -17,7 +17,8 @@ Where a measure is willing to use either the claim or clinical representation, t
 ```cql
 define "<Element> Present":
   [USQualityCore.Encounter] E
-    where if exists (E.claimDiagnosis())
+    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    where if exists (claimDiagnosis)
       then <claim test>
       else <clinical test>
 ```
@@ -28,31 +29,43 @@ The examples below apply this pattern to each element. Two cautions apply throug
 
 In the provider-submitted claim information, the onAdmission indicator is explicitly captured as part of assessment during the billing process by looking at the encounter and related information to make a post-encounter determination about whether the diagnosis was actually present on admission. In addition, this indicator carries explicit information about whether the diagnosis is considered known to be present or not present, versus whether additional information is needed, or a determination cannot be made.
 
-The [claim representation](pattern_claim.html#present-on-admission) is `Claim.diagnosis.onAdmission`, reached with `isDiagnosisPresentOnAdmission()`; the [clinical representation](pattern_encounters.html#present-on-admission) is the `presentOnAdmission` extension on `Encounter.diagnosis`.
+The [claim representation](pattern_claim.html#present-on-admission) is `Claim.diagnosis.onAdmission`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_encounters.html#present-on-admission) is the `presentOnAdmission` extension on `Encounter.diagnosis`.
 
 ```cql
 define "Encounter With Asthma Present On Admission":
   [USQualityCore.Encounter] E
-    where if exists (E.claimDiagnosis())
-      then E.isDiagnosisPresentOnAdmission("Asthma", "Present On Admission Indicators")
+    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    where if exists (claimDiagnosis)
+      then exists (
+        claimDiagnosis CD
+          where CD.diagnosis in "Asthma"
+            and CD.onAdmission in "Present On Admission Positive Indicators"
+      )
       else exists (
         E.diagnosis D
           where D.condition.getCondition().code in "Asthma"
-            and D.presentOnAdmission() in "Present On Admission Indicators"
+            and D.presentOnAdmission() in "Present On Admission Positive Indicators"
       )
 ```
 
 Both representations are bound to the same CMS present-on-admission indicator codes, so a single value set serves both branches.
 
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
+
 ### Principal Diagnosis
 
-The [claim representation](pattern_claim.html#principal-diagnosis) identifies the principal diagnosis by `Claim.diagnosis.type`, reached with `hasPrincipalDiagnosisOf()`; the [clinical representation](pattern_encounters.html#principal-diagnosis) uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1.
+The [claim representation](pattern_claim.html#principal-diagnosis) identifies the principal diagnosis by `Claim.diagnosis.type`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_encounters.html#principal-diagnosis) uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1.
 
 ```cql
 define "Encounter With Principal Diagnosis Of Asthma":
   [USQualityCore.Encounter] E
-    where if exists (E.principalDiagnosis())
-      then E.hasPrincipalDiagnosisOf("Asthma")
+    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    where if exists (claimDiagnosis)
+      then exists (
+        claimDiagnosis CD
+          where CD.diagnosis in "Asthma"
+            and CD.diagnosisType.isPrincipalDiagnosis()
+      )
       else exists (
         E.diagnosis D
           where D.condition.getCondition().code in "Asthma"
@@ -63,17 +76,22 @@ define "Encounter With Principal Diagnosis Of Asthma":
 
 Both branches ultimately test a diagnosis code, so the same value set serves both; what differs is how the principal diagnosis is singled out.
 
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
+
 ### Primary Procedure
 
-The [claim representation](pattern_claim.html#primary-procedure) identifies the primary procedure by `Claim.procedure.type`, reached with `principalProcedure()`; the [clinical representation](pattern_encounters.html#primary-procedure) uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1, where `condition` references a Procedure rather than a Condition.
+The [claim representation](pattern_claim.html#primary-procedure) identifies the primary procedure by `Claim.procedure.type`, accessed through the "Claim Item Procedure" element; the [clinical representation](pattern_encounters.html#primary-procedure) uses `Encounter.diagnosis` with a `use` of billing and a `rank` of 1, where `condition` references a Procedure rather than a Condition.
 
 ```cql
 define "Encounter With Primary Procedure Of Appendectomy":
   [USQualityCore.Encounter] E
-    let PrimaryProcedure: E.principalProcedure()
-    where if PrimaryProcedure is not null
-      then PrimaryProcedure.procedure in "Appendectomy"
-        or PrimaryProcedure.procedure.getProcedure().code in "Appendectomy"
+    let claimProcedure: ("Claim Item Procedure" CIP where CIP.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    where if exists (claimProcedure)
+      then exists (
+        claimProcedure CP
+          where CP.procedure in "Appendectomy"
+            and CP.type.isPrimaryProcedure()
+      )
       else exists (
         E.diagnosis D
           where D.condition.getProcedure().code in "Appendectomy"
@@ -82,7 +100,9 @@ define "Encounter With Primary Procedure Of Appendectomy":
       )
 ```
 
-As with principal diagnosis, both branches test a procedure code, so one value set serves both. Note that `principalProcedure()` returns the claim procedure element rather than a boolean, so the test is against the element itself and must account for `procedure[x]` being either a code or a reference.
+As with principal diagnosis, both branches test a procedure code, so one value set serves both.
+
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
 
 ### Discharge Disposition
 
@@ -94,7 +114,16 @@ define "Encounter With Discharge Disposition To Home":
     where E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
 ```
 
-The fallback pattern is not yet available for this element. The claim representation carries discharge status in `Claim.supportingInfo`, which sits at the root of the Claim while encounter linking happens at the item level, so tying a discharge status to a particular encounter is unresolved &mdash; see the open question in [Claim](pattern_claim.html#discharge-disposition).
+The [claim representation](pattern_claim.html#discharge-disposition) carries discharge status in `Claim.supportingInfo`, reached with `dischargeStatus()` in ClaimCommon. Because `supportingInfo` sits at the root of the Claim while encounter linking happens at the item level, the claim is related to the encounter by billable period rather than by item, so a claim covering more than one encounter cannot attribute a discharge status to a particular one:
+
+```cql
+define "Encounter With Discharge Disposition To Home":
+  "Qualifying Encounter" E
+    let claim: ([FHIR.Claim] C where C.billablePeriod includes E.period and C.isActive() and C.isClaim())
+    where if exists (claim)
+      then exists (claim C where C.dischargeStatus() in "NUBC Home Discharge Status Codes")
+      else E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
+```
 
 Note also that the two representations do not share terminology: the clinical element is bound to the [Clinical Discharge Disposition](https://terminology.hl7.org/7.1.0/en/ValueSet-clinical-discharge-disposition.html) value set, drawn from the HL7 discharge disposition code system, while claims carry NUBC patient discharge status codes. A measure using both would need a value set for each, and a mapping between them.
 
@@ -102,4 +131,15 @@ Note also that the two representations do not share terminology: the clinical el
 
 The [clinical representation](pattern_encounters.html#admission-source) is `Encounter.hospitalization.admitSource`.
 
-The fallback pattern is not yet available for this element. The claim representation carries admission source in `Claim.supportingInfo`, which sits at the root of the Claim, while encounter linking happens at the item level, so tying an admission source to a particular encounter is unresolved &mdash; see the open question in [Claim](pattern_claim.html#admission-source).
+The [claim representation](pattern_claim.html#admission-source) carries admission source in `Claim.supportingInfo`, reached with `pointOfOrigin()` in ClaimCommon. As with discharge disposition, `supportingInfo` sits at the root of the Claim while encounter linking happens at the item level, so the claim is related to the encounter by billable period:
+
+```cql
+define "Encounter With Hospice Admission Source":
+  "Qualifying Encounter" E
+    let claim: ([FHIR.Claim] C where C.billablePeriod includes E.period and C.isActive() and C.isClaim())
+    where if exists (claim)
+      then exists (claim C where C.pointOfOrigin() in "Hospice Admission Source Codes")
+      else E.hospitalization.admitSource in "Hospice Admit Source Codes"
+```
+
+As with discharge disposition, the two representations do not share terminology: the clinical element is bound to the FHIR admit source value set, while claims carry NUBC point of origin codes.

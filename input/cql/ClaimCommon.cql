@@ -38,13 +38,15 @@ codesystem "ClaimStatusCodes": 'http://hl7.org/fhir/fm-status'
 codesystem "ExplanationOfBenefitStatusCodes": 'http://hl7.org/fhir/explanationofbenefit-status'
 codesystem "ClaimUseCodes": 'http://hl7.org/fhir/claim-use'
 codesystem "ClaimTypeCodes": 'http://terminology.hl7.org/CodeSystem/claim-type'
-codesystem "SupportingInfoTypeCodes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType'
 codesystem "DiagnosisTypeCodes": 'http://terminology.hl7.org/CodeSystem/ex-diagnosistype'
 codesystem "ProcedureTypeCodes": 'http://terminology.hl7.org/CodeSystem/ex-procedure-type'
 
 // US Realm: the CARIN Blue Button institutional claim subtype, used to distinguish inpatient from
 // outpatient institutional claims, which share a type of institutional.
 codesystem "InstitutionalClaimSubTypeCodes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBInstitutionalClaimSubType'
+// US Realm: the CARIN Blue Button supporting info type codes, used to identify supporting info
+// in ExplanationOfBenefit profiles in CARIN Blue Button. Also used on the Claim resource here
+codesystem "SupportingInfoTypeCodes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType'
 
 // Claim status codes
 code "claim-active": 'active' from "ClaimStatusCodes" display 'Active'
@@ -77,7 +79,7 @@ code "diagnosistype-discharge": 'discharge' from "DiagnosisTypeCodes" display 'D
 code "proceduretype-primary": 'primary' from "ProcedureTypeCodes" display 'Primary procedure'
 code "proceduretype-secondary": 'secondary' from "ProcedureTypeCodes" display 'Secondary procedure'
 
-// Supporting information type codes, from the CARIN Blue Button code system
+// US Realm: Supporting information type codes, from the CARIN Blue Button code system
 code "discharge-status": 'discharge-status' from "SupportingInfoTypeCodes" display 'Discharge Status'
 code "pointoforigin": 'pointoforigin' from "SupportingInfoTypeCodes" display 'Point Of Origin'
 

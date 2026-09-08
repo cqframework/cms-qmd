@@ -24,7 +24,7 @@ Measure logic should use the verification-status functions defined in FHIRCommon
 
 See [Evidence of diagnosis during an encounter](https://hl7.org/fhir/us/cql/en/patterns-condition.html#evidence-of-diagnosis-during-an-encounter).
 
-Measures have a third source of diagnosis information beyond `Encounter.reasonCode` and `Encounter.reasonReference`: the diagnosis codes captured on a claim. `CQMCommon.encounterDiagnosis()` returns the encounter diagnoses for an encounter, and `CQMCommon.claimDiagnosis()` the claim diagnoses:
+Measures have a third source of diagnosis information beyond `Encounter.reasonCode` and `Encounter.reasonReference`: the diagnosis codes captured on a claim. `CQMCommon.encounterDiagnosis()` returns the encounter diagnoses for an encounter; claim diagnoses come from the `Claim Item Diagnosis` element in the ClaimElements library, documented in [Claim](pattern_claim.html):
 
 ```cql
 define "Encounters With A Diabetes Condition":

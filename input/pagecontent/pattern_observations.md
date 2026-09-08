@@ -96,7 +96,7 @@ define "Hemodialysis Machine Availability":
       and Hemo.value ~ "Equipment type available"
 ```
 
-CQMCommon provides `getCondition()` and `getLocation()` for resolving references, but there is no equivalent for Device, so the example declares one:
+CQMCommon provides `getCondition()`, `getProcedure()`, and `getLocation()` for resolving references, but there is no equivalent for Device, so the example declares one:
 
 ```cql
 define fluent function getDevice(reference FHIR.Reference):

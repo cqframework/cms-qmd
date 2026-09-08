@@ -48,9 +48,53 @@ The ClaimCommon library supplies the predicates that go with them, for the selec
 
 Each status, use, and type predicate has a list-filtering counterpart without the `is` prefix, following the FHIRCommon convention. Claim and ExplanationOfBenefit are both supported; note that they do not share a status code system, though the codes in each are the same.
 
-> NOTE: The status, use, and type predicates are typed to the Claim and ExplanationOfBenefit resources. Each `Claim Item` element carries the claim it came from in a `claim` element, so those predicates apply to the elements as well &mdash; `D.claim.isActive()` &mdash; along with `dischargeStatus()` and `pointOfOrigin()`, which the flattened fields do not carry. The claim-level fields are also projected onto each element directly, so `D.status` remains available where that reads better.
+> NOTE: The status, use, and type predicates are typed to the Claim and ExplanationOfBenefit resources. Each `Claim Item` element carries the claim it came from in a `claim` element, so those predicates apply to the elements as well &mdash; `D.claim.isActive()` &mdash; along with `dischargeStatus()` and `pointOfOrigin()`, which the flattened fields do not carry.
 
 > NOTE: `Claim.diagnosis.diagnosis[x]` and `Claim.procedure.procedure[x]` are choices of a CodeableConcept or a Reference, so logic should handle both if there is an expectation that both will be present in the source data.
+
+### Encounter-related Items
+
+The ClaimElements library defines the "Claim Item Diagnosis" and "Claim Item Procedure" elements that are used to access diagnosis and procedure related claim information. There are multiple potential ways that these items can be related to an encounter:
+
+1. by direct encounter reference, using the `encounter` element
+2. temporally, using the `serviced` element
+3. temporally, using the `claim.billablePeriod` element
+
+```cql
+define "Encounter With Claim Items By Reference":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that D.encounter.references(E)
+```
+
+```cql
+define "Encounter With Claim Items By Serviced Date":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that D.serviced during E.period
+```
+
+```cql
+define "Encounter With Claim Items By Billable Period":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that D.claim.billablePeriod during E.period
+```
+
+The examples throughout this section use the `serviced` element, but authors may need to use another, or even multiple methods, depending on the likelihood of the data being available (billing systems may not have a direct encounter reference, for example).
+
+The most comprehensive approach would be to allow any of the 3 methods to be used:
+
+```cql
+define "Encounter With Claim Items By Billable Period":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that (
+        D.encounter.references(E)
+          or D.serviced.during E.period
+          or D.claim.billablePeriod during E.period
+      )
+```
 
 ### Present on Admission
 
@@ -61,8 +105,6 @@ define "Encounter With Asthma Present On Admission":
   [USQualityCore.Encounter] E
     with "Claim Item Diagnosis" D
       such that D.serviced during E.period
-        and D.claim.isActive()
-        and D.claim.isClaim()
         and D.diagnosis in "Asthma"
         and D.onAdmission in "Present On Admission Positive Indicators"
 ```
@@ -87,8 +129,6 @@ define "Delivery Encounters With Severe Obstetric Complications Diagnosis Or Pro
     where exists (
       "Claim Item Diagnosis" ClaimDiagnosis
         such that ClaimDiagnosis.serviced during TwentyWeeksPlusEncounter.period
-          and ClaimDiagnosis.claim.isActive()
-          and ClaimDiagnosis.claim.isClaim()
           and ClaimDiagnosis.diagnosis in "Severe Maternal Morbidity Diagnoses"
           and ClaimDiagnosis.onAdmission in "Present on Admission is No or Unable To Determined"
     )
@@ -98,6 +138,8 @@ define "Delivery Encounters With Severe Obstetric Complications Diagnosis Or Pro
             and SMMProcedures.performed.toInterval() starts during TwentyWeeksPlusEncounter.hospitalizationWithEDOBTriageObservation()
       )
 ```
+
+> NOTE: `hospitalizationWithEDOBTriageObservation()` is defined in the CMS1028 measure logic, not in a shared library. CQMCommon provides `hospitalization()`, `hospitalizationWithObservation()`, and `hospitalizationWithObservationAndOutpatientSurgeryService()`; this measure extends that family for its own use.
 
 Although the information about whether a diagnosis is present on admission may be available in the encounter representation, the fact that the determination is explicitly made as part of billing results in more accurate data for this element, directly impacting the accuracy of the performance rate for the measure.
 
@@ -120,10 +162,8 @@ define "Encounter With Principal Diagnosis Of Asthma":
   [USQualityCore.Encounter] E
     with "Claim Item Diagnosis" ClaimDiagnosis
       such that ClaimDiagnosis.serviced during E.period
-        and ClaimDiagnosis.claim.isActive()
-        and ClaimDiagnosis.claim.isClaim()
         and ClaimDiagnosis.diagnosis in "Asthma"
-        and ClaimDiagnosis.diagnosisType.isPrincipalDiagnosis()
+        and ClaimDiagnosis.diagnosisType.isPrincipalDiagnosis() // short-hand for .includesCode("Prinicipal Diagnosis")
 ```
 
 For the clinical representation, see [Principal Diagnosis](pattern_encounters.html#principal-diagnosis). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
@@ -137,8 +177,6 @@ define "Encounter With Principal Diagnosis Of Mental Disorder Or Stroke":
   VTE."Encounter With Age Range And Without VTE Diagnosis Or Obstetrical Conditions" QualifyingEncounter
     with "Claim Item Diagnosis" ClaimDiagnosis
       such that ClaimDiagnosis.serviced during QualifyingEncounter.period
-        and ClaimDiagnosis.claim.isActive()
-        and ClaimDiagnosis.claim.isClaim()
         and ClaimDiagnosis.diagnosisType.isPrincipalDiagnosis()
         and (
           ClaimDiagnosis.diagnosis in "Mental Health Diagnoses"
@@ -158,13 +196,11 @@ define "Encounter With Principal Colonoscopy":
   [USQualityCore.Encounter] E
     with "Claim Item Procedure" ClaimProcedure
       such that ClaimProcedure.serviced during E.period
-        and ClaimProcedure.claim.isActive()
-        and ClaimProcedure.claim.isClaim()
         and ClaimProcedure.procedure in "Colonoscopy"
         and ClaimProcedure.procedureType.isPrimaryProcedure()
 ```
 
-> NOTE: This guide uses *primary procedure*, though the term *principal procedure* is often encountered as well. The US CQL guide and the CQMCommon function name both use *principal* for the procedure; the concept is the same.
+> NOTE: This guide uses *primary procedure*, matching the `Primary procedure` code that identifies it, though the term *principal procedure* is often encountered as well &mdash; the US CQL guide uses *principal*. The concept is the same.
 
 For the clinical representation, see [Primary Procedure](pattern_encounters.html#primary-procedure). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
@@ -177,8 +213,6 @@ define "Encounter With Principal Procedure Of Selected Surgery":
   VTE."Encounter With Age Range And Without VTE Diagnosis Or Obstetrical Conditions" QualifyingEncounter
     with "Claim Item Procedure" ClaimProcedure
       such that ClaimProcedure.serviced during QualifyingEncounter.period
-        and ClaimProcedure.claim.isActive()
-        and ClaimProcedure.claim.isClaim()
         and ClaimProcedure.procedureType.isPrimaryProcedure()
         and (
           ClaimProcedure.procedure in "General Surgery"
@@ -202,8 +236,6 @@ define "Encounter With Allowable Discharge Disposition":
   "Qualifying Encounter" Encounter
     with [FHIR.Claim] Claim
       such that Claim.billablePeriod includes Encounter.period
-        and Claim.isActive()
-        and Claim.isClaim()
         and (
           Claim.dischargeStatus() in "Discharge To Acute Care Facility"
             or Claim.dischargeStatus() in "Left Against Medical Advice"
@@ -224,8 +256,6 @@ define "Encounter With Hospice Admission Source":
   "Qualifying Encounter" Encounter
    with [FHIR.Claim] Claim
      such that Claim.billablePeriod includes Encounter.period
-       and Claim.isActive()
-       and Claim.isClaim()
        and Claim.pointOfOrigin() in "Hospice Admission Source Codes"
 ```
 

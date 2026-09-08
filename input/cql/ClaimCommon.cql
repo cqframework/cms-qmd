@@ -34,61 +34,90 @@ include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 // Note that Claim and ExplanationOfBenefit do not share a status code system, though the codes in
 // each are the same. The use and type code systems are shared, but do not share a base: use is
 // defined in the FHIR code system space, type in the terminology space.
-codesystem "ClaimStatusCodes": 'http://hl7.org/fhir/fm-status'
-codesystem "ExplanationOfBenefitStatusCodes": 'http://hl7.org/fhir/explanationofbenefit-status'
-codesystem "ClaimUseCodes": 'http://hl7.org/fhir/claim-use'
-codesystem "ClaimTypeCodes": 'http://terminology.hl7.org/CodeSystem/claim-type'
-codesystem "DiagnosisTypeCodes": 'http://terminology.hl7.org/CodeSystem/ex-diagnosistype'
-codesystem "ProcedureTypeCodes": 'http://terminology.hl7.org/CodeSystem/ex-procedure-type'
+codesystem "Claim Status Codes": 'http://hl7.org/fhir/fm-status'
+codesystem "Explanation Of Benefit Status Codes": 'http://hl7.org/fhir/explanationofbenefit-status'
+codesystem "Claim Use Codes": 'http://hl7.org/fhir/claim-use'
+codesystem "Claim Type Codes": 'http://terminology.hl7.org/CodeSystem/claim-type'
+codesystem "Diagnosis Role Codes": 'http://terminology.hl7.org/CodeSystem/diagnosis-role'
+codesystem "Diagnosis Type Codes": 'http://terminology.hl7.org/CodeSystem/ex-diagnosistype'
+codesystem "Procedure Type Codes": 'http://terminology.hl7.org/CodeSystem/ex-procedure-type'
+codesystem "Present On Admission Indicators": 'https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/HospitalAcqCond/Coding'
 
 // US Realm: the CARIN Blue Button institutional claim subtype, used to distinguish inpatient from
 // outpatient institutional claims, which share a type of institutional.
-codesystem "InstitutionalClaimSubTypeCodes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBInstitutionalClaimSubType'
+codesystem "Institutional Claim Sub Type Codes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBInstitutionalClaimSubType'
 // US Realm: the CARIN Blue Button supporting info type codes, used to identify supporting info
 // in ExplanationOfBenefit profiles in CARIN Blue Button. Also used on the Claim resource here
-codesystem "SupportingInfoTypeCodes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType'
+codesystem "Supporting Info Type Codes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType'
 
 // Claim status codes
-code "claim-active": 'active' from "ClaimStatusCodes" display 'Active'
-code "claim-cancelled": 'cancelled' from "ClaimStatusCodes" display 'Cancelled'
-code "claim-draft": 'draft' from "ClaimStatusCodes" display 'Draft'
-code "claim-entered-in-error": 'entered-in-error' from "ClaimStatusCodes" display 'Entered in Error'
+code "claim-active": 'active' from "Claim Status Codes" display 'Active'
+code "claim-cancelled": 'cancelled' from "Claim Status Codes" display 'Cancelled'
+code "claim-draft": 'draft' from "Claim Status Codes" display 'Draft'
+code "claim-entered-in-error": 'entered-in-error' from "Claim Status Codes" display 'Entered in Error'
 
 // ExplanationOfBenefit status codes
-code "eob-active": 'active' from "ExplanationOfBenefitStatusCodes" display 'Active'
-code "eob-cancelled": 'cancelled' from "ExplanationOfBenefitStatusCodes" display 'Cancelled'
-code "eob-draft": 'draft' from "ExplanationOfBenefitStatusCodes" display 'Draft'
-code "eob-entered-in-error": 'entered-in-error' from "ExplanationOfBenefitStatusCodes" display 'Entered In Error'
+code "eob-active": 'active' from "Explanation Of Benefit Status Codes" display 'Active'
+code "eob-cancelled": 'cancelled' from "Explanation Of Benefit Status Codes" display 'Cancelled'
+code "eob-draft": 'draft' from "Explanation Of Benefit Status Codes" display 'Draft'
+code "eob-entered-in-error": 'entered-in-error' from "Explanation Of Benefit Status Codes" display 'Entered In Error'
 
 // Use codes, shared by Claim and ExplanationOfBenefit
-code "use-claim": 'claim' from "ClaimUseCodes" display 'Claim'
-code "use-preauthorization": 'preauthorization' from "ClaimUseCodes" display 'Preauthorization'
-code "use-predetermination": 'predetermination' from "ClaimUseCodes" display 'Predetermination'
+code "use-claim": 'claim' from "Claim Use Codes" display 'Claim'
+code "use-preauthorization": 'preauthorization' from "Claim Use Codes" display 'Preauthorization'
+code "use-predetermination": 'predetermination' from "Claim Use Codes" display 'Predetermination'
 
 // US Realm: institutional claim subtype codes
-code "subtype-inpatient": 'inpatient' from "InstitutionalClaimSubTypeCodes" display 'Inpatient'
-code "subtype-outpatient": 'outpatient' from "InstitutionalClaimSubTypeCodes" display 'Outpatient'
+code "subtype-inpatient": 'inpatient' from "Institutional Claim Sub Type Codes" display 'Inpatient'
+code "subtype-outpatient": 'outpatient' from "Institutional Claim Sub Type Codes" display 'Outpatient'
 
-// Diagnosis type codes
-code "diagnosistype-principal": 'principal' from "DiagnosisTypeCodes" display 'Principal Diagnosis'
-code "diagnosistype-admitting": 'admitting' from "DiagnosisTypeCodes" display 'Admitting Diagnosis'
-code "diagnosistype-discharge": 'discharge' from "DiagnosisTypeCodes" display 'Discharge Diagnosis'
+// Diagnosis Type Codes codes
+code "diagnosistype-principal": 'principal' from "Diagnosis Type Codes" display 'Principal Diagnosis'
+code "diagnosistype-admitting": 'admitting' from "Diagnosis Type Codes" display 'Admitting Diagnosis'
+code "diagnosistype-discharge": 'discharge' from "Diagnosis Type Codes" display 'Discharge Diagnosis'
 
 // Procedure type codes. Note that there is no principal procedure code; the code identifying the
 // procedure chiefly responsible for the encounter is primary.
-code "proceduretype-primary": 'primary' from "ProcedureTypeCodes" display 'Primary procedure'
-code "proceduretype-secondary": 'secondary' from "ProcedureTypeCodes" display 'Secondary procedure'
+code "proceduretype-primary": 'primary' from "Procedure Type Codes" display 'Primary procedure'
+code "proceduretype-secondary": 'secondary' from "Procedure Type Codes" display 'Secondary procedure'
 
 // US Realm: Supporting information type codes, from the CARIN Blue Button code system
-code "discharge-status": 'discharge-status' from "SupportingInfoTypeCodes" display 'Discharge Status'
-code "pointoforigin": 'pointoforigin' from "SupportingInfoTypeCodes" display 'Point Of Origin'
+code "discharge-status": 'discharge-status' from "Supporting Info Type Codes" display 'Discharge Status'
+code "pointoforigin": 'pointoforigin' from "Supporting Info Type Codes" display 'Point Of Origin'
 
 // Type codes, shared by Claim and ExplanationOfBenefit
-code "type-institutional": 'institutional' from "ClaimTypeCodes" display 'Institutional'
-code "type-oral": 'oral' from "ClaimTypeCodes" display 'Oral'
-code "type-pharmacy": 'pharmacy' from "ClaimTypeCodes" display 'Pharmacy'
-code "type-professional": 'professional' from "ClaimTypeCodes" display 'Professional'
-code "type-vision": 'vision' from "ClaimTypeCodes" display 'Vision'
+code "type-institutional": 'institutional' from "Claim Type Codes" display 'Institutional'
+code "type-oral": 'oral' from "Claim Type Codes" display 'Oral'
+code "type-pharmacy": 'pharmacy' from "Claim Type Codes" display 'Pharmacy'
+code "type-professional": 'professional' from "Claim Type Codes" display 'Professional'
+code "type-vision": 'vision' from "Claim Type Codes" display 'Vision'
+
+// Diagnosis Role Codes
+code "Billing": 'billing' from "Diagnosis Role Codes" display 'Billing'
+
+// Diagnosis Type Codes Codes
+code "Admitting Diagnosis": 'admitting' from "Diagnosis Type Codes" display 'Admitting Diagnosis'
+code "Clinical Diagnosis": 'clinical' from "Diagnosis Type Codes" display 'Clinical Diagnosis'
+code "Differential Diagnosis": 'differential' from "Diagnosis Type Codes" display 'Differential Diagnosis'
+code "Discharge Diagnosis": 'discharge' from "Diagnosis Type Codes" display 'Discharge Diagnosis'
+code "Laboratory Diagnosis": 'laboratory' from "Diagnosis Type Codes" display 'Laboratory Diagnosis'
+code "Nursing Diagnosis": 'nursing' from "Diagnosis Type Codes" display 'Nursing Diagnosis'
+code "Prenatal Diagnosis": 'prenatal' from "Diagnosis Type Codes" display 'Prenatal Diagnosis'
+code "Principal Diagnosis": 'principal' from "Diagnosis Type Codes" display 'Principal Diagnosis'
+code "Radiology Diagnosis": 'radiology' from "Diagnosis Type Codes" display 'Radiology Diagnosis'
+code "Remote Diagnosis": 'remote' from "Diagnosis Type Codes" display 'Remote Diagnosis'
+code "Retrospective Diagnosis": 'retrospective' from "Diagnosis Type Codes" display 'Retrospetive Diagnosis'
+code "Self Diagnosis": 'self' from "Diagnosis Type Codes" display 'Self Diagnosis'
+
+// Procedure Type Codes
+code "Primary procedure": 'primary' from "Procedure Type Codes" display 'Primary procedure'
+
+// Present on admission Codes
+code "POA-Y": 'Y' from "Present On Admission Indicators" display 'POA-Y'
+code "POA-N": 'N' from "Present On Admission Indicators" display 'POA-N'
+code "POA-W": 'W' from "Present On Admission Indicators" display 'POA-W'
+code "POA-1": '1' from "Present On Admission Indicators" display 'POA-1'
+code "POA-U": 'U' from "Present On Admission Indicators" display 'POA-U'
 
 context Patient
 
@@ -345,7 +374,7 @@ define fluent function pointOfOrigin(claim FHIR.Claim):
  */
 
 /*
-@description: Returns true if the given claim diagnosis type identifies a principal diagnosis
+@description: Returns true if the given claim Diagnosis Type Codes identifies a principal diagnosis
 @comment: Claim.diagnosis.type is a list, so this tests for the presence of the principal diagnosis
 code rather than comparing the element directly.
 */
@@ -353,7 +382,7 @@ define fluent function isPrincipalDiagnosis(diagnosisType List<FHIR.CodeableConc
   exists (diagnosisType T where T ~ "diagnosistype-principal")
 
 /*
-@description: Returns true if the given claim diagnosis type identifies an admitting diagnosis
+@description: Returns true if the given claim Diagnosis Type Codes identifies an admitting diagnosis
 */
 define fluent function isAdmittingDiagnosis(diagnosisType List<FHIR.CodeableConcept>):
   exists (diagnosisType T where T ~ "diagnosistype-admitting")

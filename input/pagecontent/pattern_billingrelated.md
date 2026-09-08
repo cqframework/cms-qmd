@@ -34,7 +34,7 @@ The [claim representation](pattern_claim.html#present-on-admission) is `Claim.di
 ```cql
 define "Encounter With Asthma Present On Admission":
   [USQualityCore.Encounter] E
-    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period)
     where if exists (claimDiagnosis)
       then exists (
         claimDiagnosis CD
@@ -59,7 +59,7 @@ The [claim representation](pattern_claim.html#principal-diagnosis) identifies th
 ```cql
 define "Encounter With Principal Diagnosis Of Asthma":
   [USQualityCore.Encounter] E
-    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    let claimDiagnosis: ("Claim Item Diagnosis" CID where CID.serviced during E.period)
     where if exists (claimDiagnosis)
       then exists (
         claimDiagnosis CD
@@ -85,7 +85,7 @@ The [claim representation](pattern_claim.html#primary-procedure) identifies the 
 ```cql
 define "Encounter With Primary Procedure Of Appendectomy":
   [USQualityCore.Encounter] E
-    let claimProcedure: ("Claim Item Procedure" CIP where CIP.serviced during E.period and CID.claim.isActive() and CID.claim.isClaim())
+    let claimProcedure: ("Claim Item Procedure" CIP where CIP.serviced during E.period)
     where if exists (claimProcedure)
       then exists (
         claimProcedure CP
@@ -119,7 +119,7 @@ The [claim representation](pattern_claim.html#discharge-disposition) carries dis
 ```cql
 define "Encounter With Discharge Disposition To Home":
   "Qualifying Encounter" E
-    let claim: ([FHIR.Claim] C where C.billablePeriod includes E.period and C.isActive() and C.isClaim())
+    let claim: ([USQualityCore.Claim] C where C.billablePeriod includes E.period)
     where if exists (claim)
       then exists (claim C where C.dischargeStatus() in "NUBC Home Discharge Status Codes")
       else E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
@@ -136,10 +136,11 @@ The [claim representation](pattern_claim.html#admission-source) carries admissio
 ```cql
 define "Encounter With Hospice Admission Source":
   "Qualifying Encounter" E
-    let claim: ([FHIR.Claim] C where C.billablePeriod includes E.period and C.isActive() and C.isClaim())
+    let claim: ([USQualityCore.Claim] C where C.billablePeriod includes E.period)
     where if exists (claim)
       then exists (claim C where C.pointOfOrigin() in "Hospice Admission Source Codes")
       else E.hospitalization.admitSource in "Hospice Admit Source Codes"
 ```
 
 As with discharge disposition, the two representations do not share terminology: the clinical element is bound to the FHIR admit source value set, while claims carry NUBC point of origin codes.
+

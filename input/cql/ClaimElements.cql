@@ -1,5 +1,7 @@
 library ClaimElements version '0.1.0'
 
+using USQualityCore version '0.5.0'
+using USCore version '6.1.0-derived'
 using FHIR version '4.0.1'
 
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
@@ -16,10 +18,12 @@ should be given to the Claim Item data element, linked to the encounter by date
 */
 define "Claim Encounter Item":
   flatten (
-    [Claim] C
+    [USQualityCore.Claim] C
       let 
         item: C.item,
         encounter: item.encounter
+      where C.isActive()
+        and C.isClaim()
       return
         from item I, encounter E
           return {
@@ -46,7 +50,9 @@ define "Claim Encounter Item":
 */
 define "Claim Item":
   flatten (
-    [Claim] C 
+    [USQualityCore.Claim] C 
+      where C.isActive()
+        and C.isClaim()
       return
         C.item I
           return {
@@ -74,6 +80,8 @@ define "Claim Item":
 define "Claim Diagnosis":
   flatten (
     [Claim] C
+      where C.isActive()
+        and C.isClaim()
       return
         C.diagnosis D
           return {
@@ -106,6 +114,7 @@ define "Claim Item Diagnosis":
             location: I.location,
             bodySite: I.bodySite,
             subSite: I.subSite,
+            encounter: I.encounter,
             diagnosisSequence: DS,
             diagnosis: claimDiagnosis.diagnosis,
             diagnosisType: claimDiagnosis.type,
@@ -119,6 +128,8 @@ define "Claim Item Diagnosis":
 define "Claim Procedure":
   flatten (
     [Claim] C
+      where C.isActive()
+        and C.isClaim()
       return
         C.procedure P
           return {
@@ -151,6 +162,7 @@ define "Claim Item Procedure":
             location: I.location,
             bodySite: I.bodySite,
             subSite: I.subSite,
+            encounter: I.encounter,
             procedureSequence: PS,
             procedureType: claimProcedure.type,
             procedureDate: claimProcedure.date,

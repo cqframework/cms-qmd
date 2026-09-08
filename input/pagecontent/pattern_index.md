@@ -85,7 +85,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Encounters by class](pattern_encounters.html#encounters-by-class) | Filtering by `class`, which is required in US Core and single-cardinality, and why it is the preferred first filter. |
 | [Completed encounters in a period](pattern_encounters.html#completed-encounters-in-a-period) | Filtering on `status` and `period` together. |
 | [Encounters of a certain length](pattern_encounters.html#encounters-with-a-certain-length) | `lengthInDays()` and direct duration calculations, and what an absent period end implies. |
-| [Hospitalization](pattern_encounters.html#hospitalization) | The fourteen CQMCommon functions spanning an inpatient stay and any immediately prior emergency department or observation encounter. |
+| [Hospitalization](pattern_encounters.html#hospitalization) | The thirteen CQMCommon functions spanning an inpatient stay and any immediately prior emergency department or observation encounter. |
 | [Present on admission](pattern_encounters.html#present-on-admission) | The clinical representation, using the `presentOnAdmission` extension on `Encounter.diagnosis`. |
 | [Principal diagnosis](pattern_encounters.html#principal-diagnosis) | The clinical representation, using `Encounter.diagnosis` with a `use` of billing and a `rank` of 1. |
 | [Primary procedure](pattern_encounters.html#primary-procedure) | The clinical representation, where `Encounter.diagnosis.condition` references a Procedure rather than a Condition. |

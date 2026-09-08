@@ -269,3 +269,35 @@ define "Numerator":
 ```
 
 See the [Pattern Index](pattern_index.html) topic in the Refactored Index for a complete index of where data element patterns are documented.
+
+#### Example: Updated Billing Access
+
+In QI Core:
+
+```cql
+define "Encounter With Asthma Present On Admission":
+  [QICore.Encounter] E
+    where E.isDiagnosisPresentOnAdmission("Asthma", "Present On Admission Positive Indicators")
+```
+
+Challenges:
+1. Hides the logic
+2. Doesn't cache (functions don't cache/expressions do)
+3. Relies on direct encounter reference
+
+In US Quality Core:
+
+```cql
+define "Encounter With Asthma Present On Admission":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that (
+        D.encounter.references(E)
+          or D.serviced during E.period
+          or D.claim.billablePeriod includes E.period
+      )
+        and D.claim.isActive()
+        and D.claim.isClaim()
+        and D.diagnosis in "Asthma"
+        and D.onAdmission in "Present On Admission Positive Indicators"
+```

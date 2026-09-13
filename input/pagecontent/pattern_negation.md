@@ -24,7 +24,7 @@ When a reason is required, negation statements cover three use cases. US Quality
 
 Each negation profile records at least: what activity did not occur, an explicit indication that it did not occur (`doNotPerform`, or a `status` of `not-done`, `declined`, `cancelled`, or `rejected`), when the clinician recorded the reason, and the reason itself, bound to the [US Quality Core Negation Reason](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/ValueSet-us-quality-core-negation-reason.html) value set. Because the underlying FHIR resources represent these differently, each profile uses its own combination of constraints and extensions &mdash; see [Using US Quality Core Negation Profiles](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/negation.html#using-us-quality-core-negation-profiles).
 
-> NOTE: ObservationCancelled SHOULD be used to represent negation for *all* of the specific observation profiles, including the US Core vital signs, smoking status, sexual orientation, and pregnancy profiles, as well as the US Quality Core observation profiles.
+> NOTE: The ObservationCancelled profile has been removed in future versions of US Quality Core based on implementer feedback that observations not performed are not captured as Observation resources. If they are recorded at all, observations not performed would be represented with the service prohibited, procedure not done, or task rejected patterns.
 
 ### Extent of negation
 

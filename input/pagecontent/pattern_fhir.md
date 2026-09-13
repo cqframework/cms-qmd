@@ -132,6 +132,30 @@ Direct-reference codes are declared with the code's logical identifier from the 
 ```cql
 code "Venous foot pump, device (physical object)": '442023007' from "SNOMED CT"
 ```
+### Terminology Functions
+
+FHIRCommon includes several functions to faclitate the use of terminology-valued elements in FHIR:
+
+* `.includesCode(code)` - Returns true if a list of CodeableConcepts contains the given code. This is the CQL 1.5 equivalent of the CQL 2.0 `~contains` operator.
+* `.codeOptions()` - Returns the codeOptions value set for a CodeableConcept, if present, null otherwise. See [Negation Patterns](pattern_negation.html) for more information.
+* `.toValueSet()` - Returns the CQL ValueSet representation for a canonical reference
+* `.toActivityExtent()` - Returns the _extent_ of an activity, either a CodeableConcept, or a ValueSet
+
+> NOTE: This section is proposed for inclusion in the Using CQL With FHIR ballot: https://jira.hl7.org/browse/FHIR-59072
+
+### Interval Calculations
+
+See [Interval Values](https://cql.hl7.org/02-authorsguide.html#interval-values) in the Clinical Quality Language Author's Guide for a discussion of intervals and the available operations in CQL generally.
+
+Within FHIR specifically, interval-valued elements are common, and the following helper functions are defined to facilitate access to time-valued elements as intervals and interval components, simplifying the use of FHIR resource elements in CQL timing phrases:
+
+* `.toInterval()` - Converts a choice of FHIR timing types to an `Interval<DateTime>`
+* `.earliest()` - Converts a choice of FHIR timing types to the earliest `DateTime`
+* `.latest()` - Converts a choice of FHIR timing types to the latest `DateTime`
+* `.hasStart()` - Determines whether an interval has a starting boundary
+* `.hasEnd()` - Determines whether an interval has an ending boundary
+
+> NOTE: This section has been proposed for inclusion in the 3.0.0 ballot version of the Using CQL With FHIR IG: https://jira.hl7.org/browse/FHIR-59071
 
 ### Further considerations
 

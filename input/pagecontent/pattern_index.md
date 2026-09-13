@@ -23,6 +23,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, model-qualified type names, and the status functions to apply when accessing a resource. |
 | [References](pattern_fhir.html#references) | Best-practice for dealing with references in FHIR resources. |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
+| [Terminology Functions](pattern_fhir.html#terminology-functions) | Helper functions for dealing with terminology-valued elements in FHIR: `includesCode()`, `codeOptions()`, `toValueSet()`, and `toActivityExtent()` |
 | [Primitives](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
 | [Choices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
 | [Slices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `systolic()` and `diastolic()`. |
@@ -31,7 +32,10 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) | Being explicit about comparison precision, typically `day of`. |
 | [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) | Day-boundary calculations such as "on hospital day 2". |
 | [Time-Valued Quantities](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`). |
-| [Overall Patterns](https://hl7.org/fhir/us/cql/en/patterns-overall.html) | The US CQL treatment of the same element considerations, plus its naming best-practices for shared library declarations. |
+| [Interval Calculation](pattern_fhir.html#interval-calculations) | Helper functions for dealing with interval-valued elements in FHIR, including `toInterval()`, `earliest()`, `latest()`, `hasStart()` and `hasEnd()` |
+| [Organizing Logic Using Layers](pattern_layers.html) | Guidance for organizing logic into layers: Concepts &lt;- Elements &lt;- Inferences &lt;- Criteria |
+| [Fluent Function Guidance](pattern_layers.html#fluent-function-guidance) | When and how to define fluent functions |
+| [Naming Best-Practices](https://hl7.org/fhir/us/cql/en/patterns-overall.html#naming-best-practices) | Conventions and best-practices for naming declarations |
 | [Choosing a negation pattern](pattern_negation.html#choosing-a-negation-pattern) | Absence of evidence versus negation rationale, and when a negation profile is not the right choice. |
 | [Use cases for negation rationale](pattern_negation.html#use-cases-for-negation-rationale) | The three use cases and the ten US Quality Core negation profiles that realize them. |
 | [Extent of negation](pattern_negation.html#extent-of-negation) | Negating a specific activity versus an entire value set, through the `notDoneValueSet` extension. |

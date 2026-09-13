@@ -91,6 +91,12 @@
           <generation value="markdown"/>
         </page>
 
+        <page>
+          <nameUrl value="pattern_layers.html"/>
+          <title value="Logic Layers"/>
+          <generation value="markdown"/>
+        </page>
+
         <!--4.0: Pattern Index-->
         <page>
           <nameUrl value="pattern_index.html"/>

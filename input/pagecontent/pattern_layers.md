@@ -10,6 +10,12 @@ Split logic into four layers, each focusing on answering a specific question. Th
 | Elements | Which records count? | Retrieves plus status / intent / validity filters | Thresholds, encounters, populations |
 | Inferences | What do the records mean? | Clinical classification, correlation, temporal scoping | Population criteria |
 | Measure | Who is in which population? | Population criteria, SDEs | Anything else |
+{: .grid}
+
+<figure>
+  <img src="logic-layers.svg" alt="The four logic layers, each with the question it answers and what it may and may not contain. References always point down, from Measure through Inferences and Elements to Concepts." width="533"/>
+  <figcaption><b>Figure 1.</b> The four logic layers, the question each answers, and the direction of references between them.</figcaption>
+</figure>
 
 #### Concepts Layer
 
@@ -194,4 +200,3 @@ at all.
 
 The ecosystem leans item-level: FHIRCommon 62 item to 26 list, USCoreElements
 25 to 1.
-

@@ -1,0 +1,65 @@
+@startuml logic-layers
+
+' Logic layers for organizing measure logic, summarizing the Logic Layers topic.
+
+skinparam backgroundColor transparent
+skinparam shadowing false
+skinparam defaultFontName "Helvetica, Arial, sans-serif"
+skinparam defaultFontSize 13
+skinparam ArrowColor #44546A
+skinparam ArrowFontColor #44546A
+skinparam ArrowFontSize 11
+skinparam rectangle {
+  BorderColor #44546A
+  BorderThickness 1
+  FontColor #1F2933
+  roundCorner 10
+}
+skinparam note {
+  BackgroundColor #FFFDF5
+  BorderColor #B7A87A
+  FontColor #4A4231
+  FontSize 11
+}
+
+rectangle "== Measure\n//Who is in which population?//\n\n**Contains** population criteria,\nstratifiers, supplemental data\n\n**Must not contain** anything else" as measure #EEF2F7
+rectangle "== Inferences\n//What do the records mean?//\n\n**Contains** clinical classification,\ncorrelation, temporal scoping\n\n**Must not contain** population criteria" as inferences #F7F9FB
+rectangle "== Elements\n//Which records count?//\n\n**Contains** retrieves, status,\nintent and validity filters\n\n**Must not contain** thresholds,\nencounters, populations" as elements #F7F9FB
+rectangle "== Concepts\n//What do we mean?//\n\n**Contains** valueset, code, codesystem,\naccessor functions\n\n**Must not contain** any expression" as concepts #EEF2F7
+
+measure -down-> inferences : references
+inferences -down-> elements : references
+elements -down-> concepts : references
+
+note right of measure
+  The measure's contract.
+  Readable at a glance, so a
+  clinical reviewer can check
+  the measure's //shape// without
+  reading any computation.
+end note
+
+note right of elements
+  **Configuration libraries** hold
+  thresholds, ingredient strengths
+  and similar inputs that are not
+  in the patient record.
+end note
+
+note right of concepts
+  A **Common** library is concepts
+  plus accessors, and no retrieves:
+  FHIRCommon, USCoreCommon,
+  USQualityCoreCommon.
+end note
+
+note as direction #F2F7F2
+  **References always point down.**
+  A lower layer never references a higher one,
+  which is what keeps each layer reviewable
+  on its own.
+end note
+
+concepts -[hidden]down- direction
+
+@enduml

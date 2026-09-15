@@ -1,12 +1,10 @@
 This section provides guidance and best-practice recommendations for authoring Clinical Quality Language (CQL) queries and logic to retrieve patient information from clinical systems using US Quality Core as the primary information model. [Clinical Quality Language(CQL)](https://cql.hl7.org/N1) is a high-level, domain-specific language focused on representing clinical logic and targeted at measure and decision support artifact authors.
 
-For style and naming conventions used in measure logic, refer to the [**Measure Guidance**](measure_guidance.html) section of this guide.
-
-For conformance requirements for measure specifications and logic, refer to the [**Measure Profile**](measure_profile.html) section of this guide.
-
-See the [**Pattern Index**](pattern_index.html) for a complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
-
-For guidance on refactoring QICore-based measures to use US Quality Core, refer to the [**US Quality Core Update Process**](usqc_update_process.html) page, as well as the [**Refactored Index**](refactored_index.html).
+* [**Measure Guidance**](measure_guidance.html) - Style and naming conventions used in measure logic
+* [**Measure Profile**](measure_profile.html) - Conformance requirements for measure specifications and logic
+* [**Pattern Index**](pattern_index.html) - A complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
+* [**US Quality Core Update Process**](usqc_update_process.html) - Guidance on refactoring QICore-based measures to use US Quality Core
+* [**Refactored Index**](refactored_index.html) - An index of where QI Core constructs are in the US Quality Core refactored shared content
 
 Feedback on the patterns, guidance, or recommendations can be provided by submitting a [New Issue](https://github.com/cqframework/cms-qmd/issues/new) to this repository.
 
@@ -27,6 +25,7 @@ For guidance on authoring CQL against FHIR generally, and US Core and US Quality
 | [Modifier elements](pattern_fhir.html#modifier-elements) | Elements whose value changes the meaning of the resource, including modifier extensions and `implicitRules`. |
 | [Authoring against the US Quality Core model](pattern_fhir.html#authoring-against-the-us-quality-core-model) | Derived ModelInfo, the required version on the `using` declaration, and why extensions are reached through fluent functions. |
 | [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, model-qualified type names, and the status functions to apply when accessing a resource. |
+| [Logic Layers](pattern_layers.html) | Organizing logic using four layers: Concepts &lt;- Elements &lt;- Inferences &lt;- Criteria |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
 | [Primitives](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
 | [Choices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
@@ -36,8 +35,6 @@ For guidance on authoring CQL against FHIR generally, and US Core and US Quality
 | [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) | Being explicit about comparison precision, typically `day of`. |
 | [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) | Day-boundary calculations such as "on hospital day 2". |
 | [Time-Valued Quantities](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`). |
-| [Overall Patterns](https://hl7.org/fhir/us/cql/en/patterns-overall.html) | The US CQL treatment of the same element considerations, plus its naming best-practices for shared library declarations. |
-request. |
 {: .grid}
 
 ### Pattern Overview

@@ -12,11 +12,6 @@ Split logic into four layers, each focusing on answering a specific question. Th
 | Measure | Who is in which population? | Population criteria, SDEs | Anything else |
 {: .grid}
 
-<figure>
-  <img src="logic-layers.svg" alt="The four logic layers, each with the question it answers and what it may and may not contain. References always point down, from Measure through Inferences and Elements to Concepts." width="533"/>
-  <figcaption><b>Figure 1.</b> The four logic layers, the question each answers, and the direction of references between them.</figcaption>
-</figure>
-
 #### Concepts Layer
 
 The Concepts layer is focused on identifying and supporting access to the semantics used in artifact logic, i.e. What do we mean? The Concepts layer is identified separately to support:

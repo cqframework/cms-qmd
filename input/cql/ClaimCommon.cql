@@ -25,7 +25,7 @@ of an institutional or professional type - is deliberately not defined here, for
 in MedicationCommon: naming it requires agreement on what it means. For now callers compose the
 predicates, as in `C.isActive() and C.isClaim() and (C.isInstitutional() or C.isProfessional())`.
 */
-library ClaimCommon version '0.1.0'
+library ClaimCommon version '0.2.000'
 
 using FHIR version '4.0.1'
 
@@ -49,6 +49,8 @@ codesystem "Institutional Claim Sub Type Codes": 'http://hl7.org/fhir/us/carin-b
 // US Realm: the CARIN Blue Button supporting info type codes, used to identify supporting info
 // in ExplanationOfBenefit profiles in CARIN Blue Button. Also used on the Claim resource here
 codesystem "Supporting Info Type Codes": 'http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType'
+
+valueset "Present on Admission or Clinically Undetermined": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1147.197'
 
 // Claim status codes
 code "claim-active": 'active' from "Claim Status Codes" display 'Active'

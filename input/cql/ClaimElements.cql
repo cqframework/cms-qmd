@@ -1,4 +1,4 @@
-library ClaimElements version '0.1.0'
+library ClaimElements version '0.2.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -6,7 +6,7 @@ using FHIR version '4.0.1'
 
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 
-include ClaimCommon version '0.1.0' called ClaimCommon
+include ClaimCommon version '0.2.000' called ClaimCommon
 
 context Patient
 
@@ -37,7 +37,7 @@ define "Claim Encounter Item":
             productOrService: I.productOrService,
             modifier: I.modifier,
             programCode: I.programCode,
-            serviced: I.serviced,
+            serviced: I.serviced.toInterval(),
             location: I.location,
             bodySite: I.bodySite,
             subSite: I.subSite,
@@ -66,7 +66,7 @@ define "Claim Item":
             productOrService: I.productOrService,
             modifier: I.modifier,
             programCode: I.programCode,
-            serviced: I.serviced,
+            serviced: I.serviced.toInterval(),
             location: I.location,
             bodySite: I.bodySite,
             subSite: I.subSite,

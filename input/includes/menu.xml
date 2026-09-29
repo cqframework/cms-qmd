@@ -15,6 +15,9 @@
       <li>
         <a href="patterns.html">Authoring Patterns</a>
       </li>
+      <li>
+        <a href="knownissues.html">Known Issues</a>
+      </li>
     </ul>
   </li>
   <li><a href="MADiE.html" class="item">MADiE</a></li>

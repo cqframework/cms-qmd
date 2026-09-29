@@ -5,6 +5,7 @@ This section provides guidance and best-practice recommendations for authoring C
 * [**Pattern Index**](pattern_index.html) - A complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
 * [**US Quality Core Update Process**](usqc_update_process.html) - Guidance on refactoring QICore-based measures to use US Quality Core
 * [**Refactored Index**](refactored_index.html) - An index of where QI Core constructs are in the US Quality Core refactored shared content
+* [**Known Issues**](knownissues.html) - A listing of known issues impacting the expression of US Quality Core measures
 
 Feedback on the patterns, guidance, or recommendations can be provided by submitting a [New Issue](https://github.com/cqframework/cms-qmd/issues/new) to this repository.
 

@@ -215,6 +215,12 @@
           <title value="Refactored Index"/>
           <generation value="markdown"/>
         </page>
+
+        <page>
+          <nameUrl value="knownissues.html"/>
+          <title value="Known Issues"/>
+          <generation value="markdown"/>
+        </page>
 		</page>
 
 	 <!--5: MADiE-->

@@ -25,7 +25,7 @@ of an institutional or professional type - is deliberately not defined here, for
 in MedicationCommon: naming it requires agreement on what it means. For now callers compose the
 predicates, as in `C.isActive() and C.isClaim() and (C.isInstitutional() or C.isProfessional())`.
 */
-library ClaimCommon version '0.2.000'
+library ClaimCommon version '0.3.000'
 
 using FHIR version '4.0.1'
 
@@ -472,3 +472,20 @@ define fluent function isOutpatient(explanationOfBenefit FHIR.ExplanationOfBenef
 define fluent function outpatient(explanationOfBenefitList List<FHIR.ExplanationOfBenefit>):
   explanationOfBenefitList explanationOfBenefit
     where explanationOfBenefit.subType ~ "subtype-outpatient"
+
+/*
+@description: Returns an interval of DateTime covering the possible representations of FHIR.date and FHIR.Period
+@comment: This function is covering a gap in the FHIRCommon.toInterval() in 2.0.0, which does not include FHIR.date
+as a possible representation for the choice. Claim.serviced has possible representations of FHIR.date and FHIR.Period,
+so this function enables serviced.toInterval() to be called on a Claim. Once Using CQL version 3.0.0 is avialable, this
+function will no longer be required.
+*/
+define fluent function toInterval(choice Choice<FHIR.date, FHIR.Period>):
+  case
+    when choice is FHIR.date then
+      Interval[ToDateTime(FHIRHelpers.ToDate(choice as FHIR.date)), ToDateTime(FHIRHelpers.ToDate(choice as FHIR.date))]
+    when choice is FHIR.Period then
+      FHIRHelpers.ToInterval(choice as FHIR.Period)
+    else 
+      null as Interval<DateTime>
+  end

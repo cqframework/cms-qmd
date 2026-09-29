@@ -1,4 +1,4 @@
-library ClaimElements version '0.2.000'
+library ClaimElements version '0.3.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -6,7 +6,7 @@ using FHIR version '4.0.1'
 
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 
-include ClaimCommon version '0.2.000' called ClaimCommon
+include ClaimCommon version '0.3.000' called ClaimCommon
 
 context Patient
 

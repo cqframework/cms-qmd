@@ -24,30 +24,23 @@ Measure logic should use the verification-status functions defined in FHIRCommon
 
 See [Evidence of diagnosis during an encounter](https://hl7.org/fhir/us/cql/en/patterns-condition.html#evidence-of-diagnosis-during-an-encounter).
 
-Measures have a third source of diagnosis information beyond `Encounter.reasonCode` and `Encounter.reasonReference`: the diagnosis codes captured on a claim. `CQMCommon.encounterDiagnosis()` returns the encounter diagnoses for an encounter; claim diagnoses come from the `Claim Item Diagnosis` element in the ClaimElements library, documented in [Claim](pattern_claim.html):
-
-```cql
-define "Encounters With A Diabetes Condition":
-  "Completed Encounters During The Measurement Period" CompletedEncounter
-    where CompletedEncounter.reasonCode in "Diabetes"
-      or CompletedEncounter.encounterDiagnosis().code in "Diabetes"
-```
-
-Not all systems populate both `reasonCode` and `reasonReference`, so logic should allow for either. Where the prevalence period or onset of the condition is needed, `reasonReference` is required, because that information lives on the Condition resource rather than the Encounter.
+In addition to encounter diagnoses, an encounter may specify additional information related to diagnoses, including reason for visit. See the [Encounter Patterns](pattern_encounters.html) for more information.
 
 ### History of a condition
 
 See [Historical conditions](https://hl7.org/fhir/us/cql/en/patterns-condition.html#historical-conditions).
 
-Because US Quality Core profiles problem list items and encounter diagnoses separately, a history query retrieves both:
+Because US Quality Core profiles problem list items and encounter diagnoses separately, a history query can reference the underlying FHIR Condition instead of retrieving both:
 
 ```cql
 define "History Of Diabetes":
-  [USQualityCore.ConditionProblemsHealthConcerns: "Diabetes"]
-    union [USQualityCore.ConditionEncounterDiagnosis: "Diabetes"]
+  [FHIR.Condition: "Diabetes"] C
+    where C.isVerified() // To ensure we are not looking at refuted
 ```
 
-Where measure intent calls for additional filtering, the two arms may need different criteria &mdash; `verificationStatus` for problem list items and health concerns, and the status of the associated encounter for encounter diagnoses.
+Where measure intent calls for additional filtering, the category may be used to separate filtering criteria &mdash; `verificationStatus` for problem list items and health concerns, and the status of the associated encounter for encounter diagnoses.
+
+Note also that if a measure has access to claim information, claims may be used to search for history of a condition as well. See [Claim Patterns](pattern_claim.html) for more information.
 
 ### Onset, abatement, and prevalence period
 
@@ -57,9 +50,9 @@ See [Onset, abatement, and prevalence period](https://hl7.org/fhir/us/cql/en/pat
 
 ### Conditions present on admission and principal diagnoses
 
-Present on admission, principal diagnosis, primary procedure, and discharge disposition are not elements of the Condition resource. Each is a [billing-related element](pattern_billingrelated.html) with more than one representation:
+Whether a diagnosis was present on admission and/or a principal diagnosis is not an element of the Condition resource itself. Each is a [billing-related element](pattern_billingrelated.html) with more than one representation:
 
 * In the **clinical record** they are represented on the Encounter &mdash; on `Encounter.diagnosis` for present on admission, principal diagnosis, and primary procedure, and on `Encounter.hospitalization` for discharge disposition. These are documented in [Encounters](pattern_encounters.html).
 * In **claim information** they are represented on the Claim for provider-submitted claims, and on ExplanationOfBenefit for payer-adjudicated claims, documented in [Claim](pattern_claim.html).
 
-Which representation a measure should use depends on measure intent; see [Billing-related elements](pattern_billingrelated.html) for the trade-off.
+Which representation a measure should use depends on measure intent; see [Billing-related elements](pattern_billingrelated.html) for a discussion of the approaches.

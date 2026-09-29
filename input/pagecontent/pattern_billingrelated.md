@@ -25,6 +25,59 @@ define "<Element> Present":
 
 The examples below apply this pattern to each element. Two cautions apply throughout: First, whether the two representations share terminology varies by element, so check before reusing a value set across both branches. And second, because the fallback is per encounter rather than per measure, a population may end up mixing encounters answered from claims with encounters answered from the clinical record; where that matters, test the two sources separately instead.
 
+### Evidence of Diagnosis during an Encounter
+
+Provider-submitted claim information includes information about the diagnoses that are listed as part of the encounter. Measures that have access to clinical as well as provider-submitted claim information can look in the following places for evidence of diagnosis active during an encounter:
+
+* ConditionEncounterDiagnosis - Linked to the encounter explicitly or temporally
+* ConditionProblemsHealthConcerns - Active (i.e. prevalent) overlapping the encounter period
+* Reason for visit - Stated on the encounter with a code or linked to a condition explicitly
+* Claim diagnoses - Listed on the encounter explicitly or with a service date during the encounter period
+
+```cql
+define "Encounter With Asthma":
+  [USQualityCore.Encounter] E
+    where E.reasonCode in "Asthma"
+      or exists (
+        [FHIR.Condition: "Asthma"] C
+          where C.prevalenceInterval() overlaps E.period
+            or E.reasonReference.references(C)
+            or C.encounter.references(E)
+            or C.recordedDate during E.period
+            or C.assertedDate() during E.period
+      )
+      or exists (
+        "Claim Item Diagnosis" CID
+          where CID.serviced during E.period
+            and CID.diagnosis in "Asthma"
+      )
+```
+
+The [claim representation](pattern_claim.html#evidence-of-diagnosis-during-an-encounter) is `Claim.diagnosis`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) is the ConditionEncounterDiagnosis profile.
+
+### History of a Condition
+
+Provider-submitted claim information can also be used to search for history of a condition. Measures that have access to clinical as well as provider-submitted claim information can look in the following places for history of a condition:
+
+* Conditions - Whether encounter diagnoses or problem list items
+* Reason for visit - Stated on any encounter
+* Claim diagnoses
+
+```cql
+define "History Of Asthma":
+  exists (
+    [FHIR.Condition: "Asthma"] C
+      where C.isVerified() // To ensure we are not looking at refuted
+  )
+    or exists (
+      "Claim Item Diagnosis" D
+        where D.diagnosis in "Asthma"
+    )
+
+```
+
+The [claim representation](pattern_claim.html#history-of-a-condition) is `Claim.diagnosis`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_conditions.html#history-of-a-condition) is the base Condition resource.
+
 ### Present on Admission
 
 In the provider-submitted claim information, the onAdmission indicator is explicitly captured as part of assessment during the billing process by looking at the encounter and related information to make a post-encounter determination about whether the diagnosis was actually present on admission. In addition, this indicator carries explicit information about whether the diagnosis is considered known to be present or not present, versus whether additional information is needed, or a determination cannot be made.
@@ -43,8 +96,9 @@ define "Encounter With Asthma Present On Admission":
       )
       else exists (
         E.diagnosis D
-          where D.condition.getCondition().code in "Asthma"
-            and D.presentOnAdmission() in "Present On Admission Positive Indicators"
+          with [FHIR.Condition: "Asthma"] C
+            such that D.condition.references(C)
+          where D.presentOnAdmission() in "Present On Admission Positive Indicators"
       )
 ```
 
@@ -68,8 +122,9 @@ define "Encounter With Principal Diagnosis Of Asthma":
       )
       else exists (
         E.diagnosis D
-          where D.condition.getCondition().code in "Asthma"
-            and D.use = FHIRCommon."Billing"
+          with [FHIR.Condition: "Asthma"] C
+            such that D.condition.references(C)
+          where D.use = FHIRCommon."Billing"
             and D.rank = 1
       )
 ```
@@ -94,8 +149,9 @@ define "Encounter With Primary Procedure Of Appendectomy":
       )
       else exists (
         E.diagnosis D
-          where D.condition.getProcedure().code in "Appendectomy"
-            and D.use = FHIRCommon."Billing"
+          with [FHIR.Procedure: "Appendectomy"] P
+            such that D.condition.references(P)
+          where D.use = FHIRCommon."Billing"
             and D.rank = 1
       )
 ```

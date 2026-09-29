@@ -96,6 +96,32 @@ define "Encounter With Claim Items By Billable Period":
       )
 ```
 
+### Evidence of Diagnosis on an Encounter
+
+The "Claim Item Diagnosis" element can be used to search for evidence that a given diagnosis was active (i.e. prevalent) during an encounter, the provider submitted claim information may be used:
+
+```cql
+define "Encounter With Asthma":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that D.serviced during E.period
+        and D.diagnosis in "Asthma"
+```
+
+For the clinical representation, see [Evidence of Diagnosis during an Encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
+### History of a Condition
+
+The "Claim Item Diagnosis" element can be used to search for histsory of a given condition:
+
+```cql
+define "History of Asthma":
+  "Claim Item Diagnosis" D
+    where D.diagnosis in "Asthma"
+```
+
+For the clinical representation, see [History of a Condition](pattern_conditions.html#history-of-a-condition). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
 ### Present on Admission
 
 The ClaimElements library defines a "Claim Item Diagnosis" element that represents all the information associated with a diagnosis as it appears on a provider-submitted claim. Whether a diagnosis was present on admission is recorded on this claim diagnosis as an indicator, using the CMS present-on-admission code system:

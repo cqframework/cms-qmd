@@ -112,6 +112,56 @@ define "Encounter With Comfort Measures Performed During Hospitalization":
       such that start of ComfortMeasure.performed.toInterval() during NonElectiveEncounter.hospitalizationWithObservation()
 ```
 
+### Reason for Visit
+
+Reason for visit is represented with `Encounter.reasonCode` and `Encounter.reasonReference`:
+
+```cql
+define "Encounters With Diabetes As Reason For Visit":
+  "Completed Encounters" CompletedEncounter
+    where CompletedEncounter.reasonCode in "Diabetes"
+      or exists (
+        [FHIR.Condition: "Diabetes"] DiabetesCondition
+          where CompletedEncounter.reasonReference.references(DiabetesCondition)
+      )
+```
+
+Not all systems populate both `reasonCode` and `reasonReference`, so logic should allow for either. Where the prevalence period or onset of the condition is needed, `reasonReference` is required, because that information lives on the Condition resource rather than the Encounter.
+
+### Evidence of Diagnosis during an Encounter
+
+If measure intent is to establish whether or not a particular diagnosis was active during an encounter, there are at least three possible sources for that information in the clinical record:
+
+* Encounter Diagnoses - Using the `ConditionEncounterDiagnosis` profile linked to the encounter
+* Problem Item - Using the `ConditionProblemHealthConcern` profile active (i.e. prevalent) during the encounter
+* Reason for Visit - Using the `reasonCode` element of the encounter
+
+The following pattern illustrates searching for all three potential sources:
+
+```cql
+define "Encounters With Diabetes":
+  "Completed Encounters" CompletedEncounter
+    where CompletedEncounter.reasonCode in "Diabetes"
+      or exists (
+        [FHIR.Condition: "Diabetes"] DiabetesCondition
+          where DiabetesCondition.prevalenceInterval() overlaps CompletedEncounter.period
+            or CompletedEncounter.reasonReference.references(DiabetesCondition)
+            or DiabetesCondition.encounter.references(CompletedEncounter)
+            or DiabetesCondition.recordedDate during CompletedEncounter.period
+            or DiabetesCondition.assertedDate() during CompletedEncounter.period
+      )
+
+// TODO: Consider whether this fluent function makes sense?
+define fluent function activeDuring(condition Condition, encounter Encounter):
+  condition.prevalenceInterval() overlaps encounter.period
+    or encounter.reasonReference.references(condition)
+    or condition.encounter.references(encounter)
+    or condition.recordedDate during encounter.period
+    or condition.assertedDate() during encounter.period
+```
+
+In addition, if the measure has access to claim information, consider searching for claim diagnoses as described in the [Claim Patterns](pattern_claim.html).
+
 ### Present on Admission
 
 Present on admission is an indication of whether or not the diagnosis was present when the patient was admitted (as opposed to a condition that developed during the encounter). This is not the same as the _admitting diagnosis_.
@@ -125,12 +175,13 @@ define "Encounter With Asthma Present On Admission":
   [Encounter] E
     where exists (
       E.diagnosis D
-        where D.condition.getCondition().code in "Asthma"
-          and D.presentOnAdmission() in "Present On Admission Indicators"
+        with [FHIR.Condition: "Asthma"] C
+          such that D.condition.references(C)
+        where D.presentOnAdmission() in "Present On Admission Indicators"
     )
 ```
 
-> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use `ConditionEncounterDiagnosis` profile, as well as the `Encounter.reasonCode` and `Encounter.reasonReference` elements to document reason for visit, so this representation is not likely to be available in data sourced from US Core implementations.
 
 For the claim representation, see [Present on Admission](pattern_claim.html#present-on-admission). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
@@ -143,13 +194,14 @@ define "Encounter With Principal Diagnosis Of Asthma":
   [Encounter] E
     where exists (
       E.diagnosis D
-        where D.condition.getCondition().code in "Asthma"
-          and D.use = FHIRCommon."Billing"
+        with [FHIR.Condition: "Asthma"] C
+          such that D.condition.references(C)
+        where D.use = FHIRCommon."Billing"
           and D.rank = 1
     )
 ```
 
-> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the `Encounter.reasonCode` and `Encounter.reasonReference` elements, as well as the  `ConditionEncounterDiagnosis` profile, so this representation is not likely to be available in data sourced from US Core implementations.
+> Note that the `Encounter.diagnosis` element is _not_ profiled in the US Core Encounter profile in any version. Encounter diagnoses in US Core use the  `ConditionEncounterDiagnosis` profile, as well as `reasonCode` and `reasonReference` to document reason for visit, so this representation is not likely to be available in data sourced from US Core implementations.
 
 For the claim representation, see [Principal Diagnosis](pattern_claim.html#principal-diagnosis). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
 
@@ -162,8 +214,9 @@ define "Encounter With Primary Procedure Of Appendectomy":
   [Encounter] E
     where exists (
       E.diagnosis D
-        where D.condition.getProcedure().code in "Appendectomy"
-          and D.use = FHIRCommon."Billing"
+        with [FHIR.Procedure: "Appendectomy"] P
+          such that D.condition.references(P)
+        where D.use = FHIRCommon."Billing"
           and D.rank = 1
     )
 ```

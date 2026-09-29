@@ -48,7 +48,7 @@ This topic will use CMS125: Breast Cancer Screening as a running example
 
 ### Step 1: Update Models
 
-To facilitate reuse across models, the `USQualityCore 0.1.0` and `USCore 6.1.0-derived` models provide model information for CQL that provides a "derived" view of FHIR profiles.
+To facilitate reuse across models, the `USQualityCore 0.5.0` and `USCore 6.1.0-derived` models provide model information for CQL that provides a "derived" view of FHIR profiles.
 
 For example, in QI Core 6.0.0, a QI Core Encounter is effectively a _base_ class. However, in US Quality Core, a US Quality Core Encounter is a _derived_ class, derived from a US Core Encounter, which is in turn derived from a FHIR Encounter:
 
@@ -77,7 +77,7 @@ using QICore version '6.0.0'
 US Quality Core:
 
 ```cql
-using USQualityCore version '0.1.0-cibuild'
+using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
 using FHIR version '4.0.1'
 ```
@@ -100,35 +100,33 @@ using FHIR
 context Patient // This resolves as USQualityCore.Patient
 ```
 
-> NOTE: This repository is still using 0.1.0-cibuild because there is still active discrepancy testing happening on the content and so there is a content freeze while that testing is being completed. Once that freeze is lifted, these measures will be updated to the published 0.5.0 US Quality Core IG.
-
 ### Step 2: Update Libraries
 
 Once the models have been updated, we need to update the shared library references:
 
 | Library | QI Core version | US Quality Core version |
 |----|----|----|
-| AdultOutpatientEncounters | 4.19.000 | 5.1.000 |
-| AdvancedIllnessandFrailty | 1.27.000 | 2.1.000 |
-| AHAOverall | 4.1.000 | 5.1.000 |
-| AlaraCommonFunctions | 1.10.000 | 2.1.000 |
-| Antibiotic | 1.11.000 | 2.1.000 |
-| CQMCommon | 4.1.000 | 5.1.000 |
-| CumulativeMedicationDuration | 6.0.000 | hl7.fhir.us.cql.CumulativeMedicationDuration version 2.0.0-ballot |
+| AdultOutpatientEncounters | 4.19.000 | 5.2.000 |
+| AdvancedIllnessandFrailty | 1.27.000 | 2.2.000 |
+| AHAOverall | 4.1.000 | 5.2.000 |
+| AlaraCommonFunctions | 1.10.000 | 2.2.000 |
+| Antibiotic | 1.11.000 | 2.2.000 |
+| CQMCommon | 4.1.000 | 5.2.000 |
+| CumulativeMedicationDuration | 6.0.000 | hl7.fhir.us.cql.CumulativeMedicationDuration version 2.0.0 |
 | FHIRHelpers | 4.4.000 | hl7.fhir.uv.cql.FHIRHelpers version 4.0.1 |
 | FHIRCommon | - | hl7.fhir.uv.cql.FHIRCommon version 2.0.0 |
-| Hospice | 6.18.000 | 7.1.000 |
-| NHSNHelpers | 0.1.000 | 1.1.000 |
-| PalliativeCare | 1.18.000 | 2.1.000 |
-| PCMaternal | 5.25.000 | 6.1.000 |
+| Hospice | 6.18.000 | 7.2.000 |
+| NHSNHelpers | 0.1.000 | 1.2.000 |
+| PalliativeCare | 1.18.000 | 2.2.000 |
+| PCMaternal | 5.25.000 | 6.2.000 |
 | QICoreCommon | 4.0.000 | (refactored into FHIRCommon, USCoreCommon, and USQualityCoreCommon) |
-| Status | 1.15.000 | 2.1.000 |
-| SupplementalDataElements | 5.1.000 | 6.1.000 |
-| TJCOverall | 8.25.000 | 9.1.000 |
-| VTE | 8.18.000 | 9.1.000 |
-| USCoreCommon | - | hl7.fhir.us.cql.USCoreCommon version 2.0.0-ballot |
-| USCoreElements | - | hl7.fhir.us.cql.USCoreElements version 2.0.0-ballot |
-| USQualityCoreCommon | - | USQualityCoreCommon version 0.1.0-cibuild |
+| Status | 1.15.000 | 2.2.000 |
+| SupplementalDataElements | 5.1.000 | 6.2.000 |
+| TJCOverall | 8.25.000 | 9.2.000 |
+| VTE | 8.18.000 | 9.2.000 |
+| USCoreCommon | - | hl7.fhir.us.cql.USCoreCommon version 2.0.0 |
+| USCoreElements | - | hl7.fhir.us.cql.USCoreElements version 2.0.0 |
+| USQualityCoreCommon | - | USQualityCoreCommon version 0.5.0 |
 {: .grid}
 
 For example, the following snippet is the includes section of the CMS125 QI Core 6.0.0 Breast Cancer Screening measure:
@@ -149,16 +147,16 @@ And the equivalent section for the CMS125 US Quality Core Breast Cancer Screenin
 ```cql
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1' called FHIRHelpers
 include hl7.fhir.uv.cql.FHIRCommon version '2.0.0' called FHIRCommon
-include hl7.fhir.us.cql.USCoreCommon version '2.0.0-ballot' called USCoreCommon
-include hl7.fhir.us.cql.USCoreElements version '2.0.0-ballot' called USCoreElements
+include hl7.fhir.us.cql.USCoreCommon version '2.0.0' called USCoreCommon
+include hl7.fhir.us.cql.USCoreElements version '2.0.0' called USCoreElements
 
-include USQualityCoreCommon version '0.1.0-cibuild' called USQualityCoreCommon
-include SupplementalDataElements version '6.1.000' called SDE
-include Status version '2.1.000' called Status
-include AdultOutpatientEncounters version '5.1.000' called AdultOutpatientEncounters
-include AdvancedIllnessandFrailty version '2.1.000' called AIFrailLTCF
-include Hospice version '7.1.000' called Hospice
-include PalliativeCare version '2.1.000' called PalliativeCare
+include USQualityCoreCommon version '0.5.0' called USQualityCoreCommon
+include SupplementalDataElements version '6.2.000' called SDE
+include Status version '2.2.000' called Status
+include AdultOutpatientEncounters version '5.2.000' called AdultOutpatientEncounters
+include AdvancedIllnessandFrailty version '2.2.000' called AIFrailLTCF
+include Hospice version '7.2.000' called Hospice
+include PalliativeCare version '2.2.000' called PalliativeCare
 ```
 
 ### Step 3: Update Types

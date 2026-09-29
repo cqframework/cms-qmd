@@ -4,7 +4,9 @@ This topic provides an index of the shared libraries used in QICore and USQualit
 
 This index lists all the shared libraries used by measures. Note that for QICore measures, all shared libraries were developed and published in MADiE, whereas for US Quality Core measures, a core set of shared libraries are published as part of HL7 or ONC implementation guides and made available through the NPM packages for those implementation guides. Libraries available in published implementation guides are listed in the table below with the namespace and name of the library, and linked to the published content for that library.
 
-The remaining libraries are expected to still be developed in MADiE, but are included in the proposed set of refactored measures for reference, testing, and to support the development of this guidance. A third group &mdash; ClaimCommon, ClaimElements, and MedicationCommon &mdash; is drafted in this guide itself, supplying functions that no published library provides yet; the status, use, and type functions in ClaimCommon and all of MedicationCommon are intended for proposal to FHIRCommon. The version numbers of those libraries are suggested based on both a Major and Minor version increment for each library (for example, AdultOutpatientEncounters in QICore is version 4.19.000, whereas the suggested refactoring is 5.1.000). The content for these libraries is suggested, and it is expected that these libraries will be developed in MADiE once full US Quality Core support is available. Measure developers can use the content as a starting point for that development if desired.
+The remaining libraries are expected to still be developed in MADiE, but are included in the proposed set of refactored measures for reference, testing, and to support the development of this guidance. A third group &mdash; ClaimCommon, ClaimElements, and MedicationCommon &mdash; is drafted in this guide itself, supplying functions that no published library provides yet; the status, use, and type functions in ClaimCommon and all of MedicationCommon are intended for proposal to FHIRCommon. The version numbers of those libraries are suggested based on both a Major and Minor version increment for each library (for example, AdultOutpatientEncounters in QICore is version 4.19.000, whereas the suggested refactoring is 5.1.000). The content for these libraries is suggested, and it is expected that these libraries will be developed in MADiE once full US Quality Core support is available. Measure developers can use the content as a starting point for that development if desired. 
+
+Note also that the [dqm-content-cms-2026](https://github.com/cqframework/dqm-content-cms-2026) repository has minor increments for each of these libraries as well with the full update to the 0.5.0 published release. Those increments will be pulled into the cms-2025 repository once discrepancy testing has completed.
 
 | Library | QI Core version | US Quality Core version |
 |----|----|----|
@@ -13,9 +15,12 @@ The remaining libraries are expected to still be developed in MADiE, but are inc
 | AHAOverall | [4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AHAOverall.cql) | [5.1.000](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/AHAOverall.cql) _proposed draft content in Github; needs review and authoring in MADiE_ |
 | AlaraCommonFunctions | [1.10.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AlaraCommonFunctions.cql) | [2.1.000](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/AlaraCommonFunctions.cql) _proposed draft content in Github; needs review and authoring in MADiE_ |
 | Antibiotic | [1.11.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/Antibiotic.cql) | [2.1.000](https://github.com/cqframework/dqm-content-cms-2025/blob/main/input/cql/Antibiotic.cql) _proposed draft content in Github; needs review and authoring in MADiE_ |
-| ClaimCommon | - | [0.1.0](https://github.com/cqframework/cms-qmd/blob/main/input/cql/ClaimCommon.cql) _draft content in this guide; needs review and authoring in MADiE_ |
-| ClaimElements | - | [0.1.0](https://github.com/cqframework/cms-qmd/blob/main/input/cql/ClaimElements.cql) _draft content in this guide; needs review and authoring in MADiE_ |
-| CQMCommon | [4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CQMCommon.cql) | [5.1.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMCommon.cql) _proposed draft content in this guide, originally in cms-2025 repository; needs review and authoring in MADiE_ |
+| ClaimCommon | - | [0.3.000-draft](https://github.com/cqframework/cms-qmd/blob/main/input/cql/ClaimCommon.cql) _draft content in this guide; 0.2.000 currently published in MADiE_ |
+| ClaimElements | - | [0.3.000-draft](https://github.com/cqframework/cms-qmd/blob/main/input/cql/ClaimElements.cql) _draft content in this guide; 0.2.000 currently published in MADiE_ |
+| CQMCommon | [4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CQMCommon.cql) | [5.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMCommon.cql) _5.2.000 currently published in MADiE_ |
+| CQMConcepts | - | [0.2.000-draft](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) _0.1.000 currently published in MADiE; part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ |
+| CQMElements | - | [0.2.000-draft](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMElements.cql) _0.1.000 currently published in MADiE; part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ |
+| CQMInferences | - | [0.2.000-draft](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMInferences.cql) _0.1.000 currently published in MADiE; part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ |
 | CumulativeMedicationDuration | [6.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CumulativeMedicationDuration.cql) | [hl7.fhir.us.cql.CumulativeMedicationDuration version '2.0.0'](https://hl7.org/fhir/us/cql/Library-CumulativeMedicationDuration.html) |
 | FHIRHelpers | [4.4.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/FHIRHelpers.cql) | [hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
 | FHIRCommon | - | [hl7.fhir.uv.cql.FHIRCommon version '2.0.0'](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
@@ -110,7 +115,7 @@ QICoreCommon is deprecated. Its functions are now distributed across three libra
 
 ### Extension Index
 
-This index lists every element that QI Core STU6 and US Quality Core 0.5.0 represent as an *extension* rather than as a core FHIR element, and shows where each one landed in the refactor. Extensions reach these profiles from three places: **inherited from US Core 6.1.0**, **defined by the IG itself**, or **borrowed from base FHIR and SDC**. Each is covered below.
+This index lists every element that QI Core STU6 and US Quality Core 0.5.0 represent as an *extension* rather than as a core FHIR element, and shows where each one landed in the refactor. Extensions reach these profiles from three places: **inherited from US Core 6.1.0**, **defined by the IG itself**, or **borrowed from base FHIR and SDC**. Each is covered below. For the remaining slices &mdash; those discriminated by value or pattern rather than by extension URL &mdash; see the [Slice Index](#slice-index).
 
 Profile names map one-to-one between the two IGs: `QICore<Name>` in QI Core STU6 becomes `USQualityCore<Name>` in US Quality Core 0.5.0. Both IGs publish 57 profiles and 8 extension definitions, and every extension slice is at the same element path with the same slice name in both. The profile column below gives the US Quality Core name; prefix it with `QICore` instead of `USQualityCore` for the QI Core STU6 equivalent.
 
@@ -244,3 +249,103 @@ Notes on the above content:
 3. &#9888; **`abatement()` and `severity()` do not resolve in 0.5.0.** Both are declared against `hl7.org/fhir/StructureDefinition/familymemberhistory-*` &mdash; the `http://` scheme is missing, so the URL will not match the extension on the instance. The profile slices themselves are correct. In addition, **`doNotPerform()`** does not resolve against a DeviceRequest, it is only defined for the DeviceNotRequested profile. These issues have all been addressed by adding overloads for these functions to the CQMCommon library, and tickets to address these issues in the source content are being filed.
 4. **`individualSex()` targets an extension US Core 6.1.0 does not define.** [USCoreCommon](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) reads `us-core-individual-sex`, which was introduced after 6.1.0. It coalesces with `us-core-sex`, so it still resolves against 6.1.0 data; `sex()` itself is marked `@deprecated` in favor of it.
 5. **`sexParameterForClinicalUse()` reads a base FHIR extension that no profile slices.** It targets `http://hl7.org/fhir/StructureDefinition/patient-sexParameterForClinicalUse`, which is not part of US Core 6.1.0 and is not declared on any QI Core or US Quality Core profile.
+
+### Slice Index
+
+The Extension Index above covers every element that the profiles represent as an *extension*. This index covers the remaining slices &mdash; the value- and pattern-discriminated slices on `category`, `identifier`, `class`, `component`, and `code.coding`. They follow exactly the same story as the extensions: the profiles are unchanged, but the model info no longer surfaces the slice as an element.
+
+Every non-extension slice in QI Core STU6 is present at the same element path with the same slice name in US Quality Core 0.5.0. Nothing was added, removed, or renamed at the profile level. The difference is entirely in the model info: the QICore 6.0.0 model info was profile-informed, so it flattened each slice into a *named model element*, and CQL could write `Coverage.memberid` or `Observation.VSCat` directly. Neither the USQualityCore 0.5.0 model info nor the USCore 6.1.0-derived model info it builds on declares a single slice element &mdash; no element in either one carries a slice target. All slice access is now through **fluent functions**. Where no published library supplies one, a function is drafted in [CQMConcepts](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) in this guide, annotated with the library it is being proposed for; those are marked *proposed* in the tables below.
+
+Note that most of these slice names are not valid CQL identifiers and had to be quoted (`Condition."us-core"`). Note also that, apart from `VSCat`, none of them carried a navigation target in the QICore 6.0.0 model info either, so in practice the QI Core expression resolved to a path named after the slice rather than to the sliced content. For those elements the refactor did not remove working access so much as remove the appearance of it.
+
+**Category slices**
+
+| Profile | Slice | Accessor in US Quality Core |
+|----|----|----|
+| [ConditionEncounterDiagnosis](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-condition-encounter-diagnosis.html) | `Condition.category:us-core` | [isEncounterDiagnosis()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [ConditionProblemsHealthConcerns](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-condition-problems-health-concerns.html) | `Condition.category:us-core` | [isProblemListItem()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [isHealthConcern()](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) |
+| &nbsp; | `Condition.category:screening-assessment` | [isScreeningAssessment()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+| [LaboratoryResultObservation](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-observation-lab.html) | `Observation.category:us-core` | [isLaboratory()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [ObservationClinicalResult](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-observation-clinical-result.html) | `Observation.category:us-core` | [hasCategory(Observation, Code)](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [SimpleObservation](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-simple-observation.html) | `Observation.category:us-core` | [hasCategory(Observation, Code)](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [ObservationScreeningAssessment](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-observation-screening-assessment.html) | `Observation.category:survey` | [isSurvey()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| &nbsp; | `Observation.category:screening-assessment` | [isScreeningAssessment()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+| [MedicationRequest](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-medicationrequest.html) | `MedicationRequest.category:us-core` | [isCommunity()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [isDischarge()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [hasCategory(MedicationRequest, Code)](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [MedicationNotRequested](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-medicationnotrequested.html) | `MedicationRequest.category:us-core` | [isCommunity()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [isDischarge()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [hasCategory(MedicationRequest, Code)](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [CarePlan](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-careplan.html) | `CarePlan.category:AssessPlan` | [isAssessPlan()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)*, [hasCategory(CarePlan, Code)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for FHIRCommon)* |
+| [DiagnosticReportLab](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-diagnosticreport-lab.html) | `DiagnosticReport.category:LaboratorySlice` | [isLaboratory(DiagnosticReport)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for FHIRCommon)* |
+| [DiagnosticReportNote](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-diagnosticreport-note.html) | `DiagnosticReport.category:us-core` | [hasCategory(DiagnosticReport, Code)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for FHIRCommon)* |
+| [ServiceRequest](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-servicerequest.html) | `ServiceRequest.category:us-core` | [hasCategory(ServiceRequest, Code)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for FHIRCommon)* |
+| [ServiceNotRequested](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-servicenotrequested.html) | `ServiceRequest.category:us-core` | [hasCategory(ServiceRequest, Code)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for FHIRCommon)* |
+{: .grid}
+
+**Identifier and class slices**
+
+| Profile | Slice | Accessor in US Quality Core |
+|----|----|----|
+| [Coverage](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-coverage.html) | `Coverage.identifier:memberid` | [memberID()](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) |
+| &nbsp; | `Coverage.class:group` | [groupNumber()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreElements)* |
+| &nbsp; | `Coverage.class:plan` | [planNumber()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreElements)* |
+| [Organization](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-organization.html) | `Organization.identifier:NPI` | [npi(Organization)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreElements)* |
+| &nbsp; | `Organization.identifier:CLIA` | [clia()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreElements)* |
+| &nbsp; | `Organization.identifier:NAIC` | [naic()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreElements)* |
+| &nbsp; | `Organization.identifier:ccn` | [ccn()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USQualityCoreCommon)* |
+| &nbsp; | `Organization.identifier:ein` | [ein(Organization)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USQualityCoreCommon)* |
+| [Practitioner](https://fhir.org/guides/onc/us-quality-core/StructureDefinition-us-quality-core-practitioner.html) | `Practitioner.identifier:NPI` | [npi(Practitioner)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreElements)* |
+| &nbsp; | `Practitioner.identifier:ein` | [ein(Practitioner)](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USQualityCoreCommon)* |
+{: .grid}
+
+`ccn` and `ein` are QI Core additions carried into US Quality Core; the rest are inherited from US Core 6.1.0. [USCoreElements](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) also supplies `memberID()`, `policyNumber()`, and `medicalRecordNumber()`, which read identifiers by `type` rather than by `system`.
+
+**Slices on US Core profiles used directly**
+
+Neither QI Core nor US Quality Core profiles the US Core vital signs, occupation, or smoking status profiles &mdash; they are used as published. The QICore 6.0.0 model info flattened them in anyway (as `USCoreBloodPressureProfile` and so on) and exposed their slices; the USCore 6.1.0-derived model info does not.
+
+| US Core 6.1.0 profile | Slice | Accessor |
+|----|----|----|
+| [us-core-vital-signs](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-vital-signs.html) and the 12 profiles derived from it | `Observation.category:VSCat` | [isVitalSign()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [us-core-blood-pressure](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-blood-pressure.html) | `Observation.component:systolic` | [systolic()](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) |
+| &nbsp; | `Observation.component:diastolic` | [diastolic()](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) |
+| [us-core-pulse-oximetry](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-pulse-oximetry.html) | `Observation.code.coding:PulseOx` | [isPulseOximetry()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+| &nbsp; | `Observation.code.coding:O2Sat` | [isPulseOximetry()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+| &nbsp; | `Observation.component:FlowRate` | [flowRate()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+| &nbsp; | `Observation.component:Concentration` | [concentration()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+| [us-core-smokingstatus](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-smokingstatus.html) | `Observation.category:SocialHistory` | [isSocialHistory()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [us-core-observation-pregnancystatus](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-observation-pregnancystatus.html) | `Observation.category:SocialHistory` | [isSocialHistory()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [us-core-observation-pregnancyintent](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-observation-pregnancyintent.html) | `Observation.category:SocialHistory` | [isSocialHistory()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| [us-core-observation-occupation](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-observation-occupation.html) | `Observation.category:socialhistory` | [isSocialHistory()](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
+| &nbsp; | `Observation.component:industry` | [industry()](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) *(CQMConcepts, proposed for USCoreCommon)* |
+{: .grid}
+
+**Notes on accessing slices from CQL**
+
+Use the named function for the slice. The functions marked *proposed* follow the shape the published libraries already use for the equivalent slices - a `hasCategory()` overload and an `is` prefixed predicate for category slices, following FHIRCommon, and a `singleton from` accessor for component slices, following the USCoreCommon `systolic()` and `diastolic()` functions. Each one filters the unsliced element on the slice discriminator, matching what the profile declares:
+
+```cql
+codesystem "USCoreCarePlanCategoryCodes": 'http://hl7.org/fhir/us/core/CodeSystem/careplan-category'
+code "Assess and Plan": 'assess-plan' from "USCoreCarePlanCategoryCodes" display 'Assess and Plan'
+
+// CarePlan.category:AssessPlan - pattern discriminator on a fixed coding, so the predicate tests the
+// category for that coding, exactly as the FHIRCommon isProblemListItem() and isVitalSign() predicates do
+define fluent function hasCategory(carePlan FHIR.CarePlan, category Code):
+  exists (carePlan.category C
+    where C ~ category
+  )
+
+define fluent function isAssessPlan(carePlan FHIR.CarePlan):
+  carePlan.hasCategory("Assess and Plan")
+
+// Organization.identifier:NPI - pattern discriminator on identifier.system. The slice is 0..*, so the
+// accessor returns a list; the 0..1 identifier slices (ccn, ein) use singleton from instead
+define fluent function npi(organization FHIR.Organization):
+  organization.identifier I
+    where I.system = 'http://hl7.org/fhir/sid/us-npi'
+    return I.value
+```
+
+Notes on the above content:
+
+1. **No `hasCategory()` overload exists upstream for CarePlan, DiagnosticReport, or ServiceRequest.** [FHIRCommon](http://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) defines `hasCategory()` only for `Condition`, `Observation`, and `MedicationRequest`. The overloads for the other three, and the `isLaboratory(DiagnosticReport)` predicate, are drafted in [CQMConcepts](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) and proposed for FHIRCommon, since none of them is US-specific.
+2. **No accessors exist upstream for the identifier slices.** Neither [USCoreCommon](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) nor [USCoreElements](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) provides `npi()`, `clia()`, `naic()`, `ccn()`, or `ein()`, so measures that identified a provider or facility by `Practitioner.NPI` or `Organization.ccn` under QI Core must filter `identifier` by system. Those functions are drafted in [CQMConcepts](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql); `npi()`, `clia()`, and `naic()` are proposed for USCoreElements, while `ccn()` and `ein()` are proposed for USQualityCoreCommon, because those two slices are QI Core additions rather than US Core content.
+3. **Some slice types survive in the model info but are orphaned.** `USQualityCore."Coverage.Class.group"` and `"Coverage.Class.plan"` are still declared, as are `USCore."Observation.Component.systolic"`, `".diastolic"`, `".FlowRate"`, `".Concentration"`, and `".industry"`, but no element in either model info has those types &mdash; all 22 `component` elements in the USCore 6.1.0-derived model info are plain `USCore."Observation.Component"`. The types are inert; they cannot be reached by navigation.
+4. **Choice-type slices were never exposed as elements.** `Observation.value[x]:valueCodeableConcept` on NonPatientObservation, ObservationCancelled, and SimpleObservation, and the `effective[x]` slices on the occupation and smoking status profiles, are type slices on a choice element. Neither model info surfaces them as named elements; use the usual choice-type handling described in the [uv/cql patterns page](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html).

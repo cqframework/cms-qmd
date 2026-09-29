@@ -1,3 +1,12 @@
+/*
+@description: Claim element expressions that simplify access to the various
+aspects of a FHIR Claim resource by flattening the repeating elements into a
+more table-like structure. This flattening is done first for the `item` 
+element, and then using that as a basis, the flattening is provided for the
+`diagnosis` and `procedure` elements.
+@comment: Similar element expressions could be defined for the ExplanationOfBenefit
+resource to simplify access to the various aspects.
+*/
 library ClaimElements version '0.3.000-draft'
 
 using USQualityCore version '0.5.0'

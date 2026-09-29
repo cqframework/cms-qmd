@@ -9,18 +9,19 @@ to get wrong.
 This library supplies those functions, following the conventions used in FHIRCommon: an `is` prefixed
 predicate that operates on a single resource, and an unprefixed function of the same meaning that
 filters a list. With one exception the functions here are universal realm, so the intent is to
-propose them for inclusion in FHIRCommon; the library lives in this guide only until that happens.
-See MedicationCommon for the equivalent proposal covering the medication resources.
+propose them for inclusion in FHIRCommon; the library lives in MADiE, with a convenience copy in this 
+guide only until that happens. See MedicationCommon for the equivalent proposal covering the medication 
+resources.
 
 The exception is isInpatient and isOutpatient, which test the CARIN Blue Button institutional claim
 subtype and are therefore US Realm specific. They are grouped separately at the end of the library
 and would need to be left behind, or rehomed in a US Realm library, if the rest is proposed upstream.
 
-@comment: Element-level access to claim items, diagnoses, procedures, and supporting information is
+Element-level access to claim items, diagnoses, procedures, and supporting information is
 in the ClaimElements library. This library is only concerned with selecting which Claim or
 ExplanationOfBenefit resources should be considered in the first place.
 
-@comment: An aggregate helper for the recurring combination - an active claim, with a use of claim,
+An aggregate helper for the recurring combination - an active claim, with a use of claim,
 of an institutional or professional type - is deliberately not defined here, for the same reason as
 in MedicationCommon: naming it requires agreement on what it means. For now callers compose the
 predicates, as in `C.isActive() and C.isClaim() and (C.isInstitutional() or C.isProfessional())`.

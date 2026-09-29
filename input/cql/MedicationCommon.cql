@@ -12,14 +12,14 @@ prefixed predicate that operates on a single resource, and an unprefixed functio
 that filters a list. Nothing here is US-specific, so the intent is to propose these for inclusion in
 FHIRCommon; the library lives in this guide only until that happens.
 
-@comment: Aggregate helpers are deliberately not defined here. Two combinations recur in CMS measure
+Aggregate helpers are deliberately not defined here. Two combinations recur in CMS measure
 logic - `{ 'active', 'completed' }` for a MedicationRequest that is in force or was filled, and
 `{ 'in-progress', 'completed', 'on-hold' }` for any positive dispensing event - but naming them
 requires agreement on what they mean, so for now callers compose the individual predicates, as in
 `MR.isActive() or MR.isCompleted()`. Establishing whether those aggregates are worth naming, and what
 to call them, is part of what the upstream proposal should settle.
 */
-library MedicationCommon version '0.1.0'
+library MedicationCommon version '0.1.000'
 
 using FHIR version '4.0.1'
 

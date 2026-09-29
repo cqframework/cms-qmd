@@ -55,6 +55,31 @@ define "Encounter With Asthma":
 
 The [claim representation](pattern_claim.html#evidence-of-diagnosis-during-an-encounter) is `Claim.diagnosis`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) is the ConditionEncounterDiagnosis profile.
 
+#### Examples
+
+##### CMS1218
+
+The following example illustrates the searching for evidence of Neuromuscular Disorder during an encounter using clinical and claims data:
+
+```cql
+define "Encounter With Neuromuscular Disorder":
+  "Encounter With Surgery" E
+    where E.reasonCode in "Neuromuscular Disorder"
+      or exists (
+        [USQualityCore.ConditionEncounterDiagnosis: "Neuromuscular Disorder"] D
+          where D.encounter.references(E)
+      )
+      or exists (
+        "Claim Item Diagnosis" C
+          where (
+            C.encounter.references(E)
+              or C.serviced during E.period
+              or C.claim.billablePeriod during E.period
+          )
+            and C.diagnosis in "Neuromuscular Disorder"
+      )
+```
+
 ### History of a Condition
 
 Provider-submitted claim information can also be used to search for history of a condition. Measures that have access to clinical as well as provider-submitted claim information can look in the following places for history of a condition:

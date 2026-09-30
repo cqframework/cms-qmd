@@ -26,7 +26,7 @@ of an institutional or professional type - is deliberately not defined here, for
 in MedicationCommon: naming it requires agreement on what it means. For now callers compose the
 predicates, as in `C.isActive() and C.isClaim() and (C.isInstitutional() or C.isProfessional())`.
 */
-library ClaimCommon version '0.3.000-draft'
+library ClaimCommon version '0.3.000'
 
 using FHIR version '4.0.1'
 

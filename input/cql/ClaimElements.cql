@@ -7,7 +7,7 @@ element, and then using that as a basis, the flattening is provided for the
 @comment: Similar element expressions could be defined for the ExplanationOfBenefit
 resource to simplify access to the various aspects.
 */
-library ClaimElements version '0.3.000-draft'
+library ClaimElements version '0.3.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -15,7 +15,7 @@ using FHIR version '4.0.1'
 
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 
-include ClaimCommon version '0.3.000-draft' called ClaimCommon
+include ClaimCommon version '0.3.000' called ClaimCommon
 
 context Patient
 

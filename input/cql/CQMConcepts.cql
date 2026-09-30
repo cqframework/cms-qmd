@@ -23,7 +23,7 @@ is drafted for them. Use the `hasCategory()` overload with the specific code ins
 `screening-assessment` slices are also value set discriminated, but the value set itself carries the
 meaning, so `isScreeningAssessment()` is drafted for those.
 */
-library CQMConcepts version '0.2.000-draft'
+library CQMConcepts version '0.2.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -41,18 +41,21 @@ valueset "Outpatient Surgery Service": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.1
 
 // Terminology for the slice accessors below. The discriminator for each slice is given in the
 // description of the function that reads it.
-valueset "US Core Screening Assessment Condition Category": 'http://hl7.org/fhir/us/core/ValueSet/us-core-screening-assessment-condition-category'
-valueset "US Core Screening Assessment Observation Category": 'http://hl7.org/fhir/us/core/ValueSet/us-core-screening-assessment-observation-category'
+// NOTE: Leaving these out for now to avoid the dependency on these value sets
+//valueset "US Core Screening Assessment Condition Category": 'http://hl7.org/fhir/us/core/ValueSet/us-core-screening-assessment-condition-category'
+//valueset "US Core Screening Assessment Observation Category": 'http://hl7.org/fhir/us/core/ValueSet/us-core-screening-assessment-observation-category'
 
 codesystem "LOINC": 'http://loinc.org'
-codesystem "DiagnosticServiceSectionCodes": 'http://terminology.hl7.org/CodeSystem/v2-0074'
-codesystem "CoverageClassCodes": 'http://terminology.hl7.org/CodeSystem/coverage-class'
-codesystem "USCoreCarePlanCategoryCodes": 'http://hl7.org/fhir/us/core/CodeSystem/careplan-category'
+//codesystem "DiagnosticServiceSectionCodes": 'http://terminology.hl7.org/CodeSystem/v2-0074'
 
-code "Laboratory Service Section": 'LAB' from "DiagnosticServiceSectionCodes" display 'Laboratory'
-code "Coverage Class Group": 'group' from "CoverageClassCodes" display 'Group'
-code "Coverage Class Plan": 'plan' from "CoverageClassCodes" display 'Plan'
-code "Assess and Plan": 'assess-plan' from "USCoreCarePlanCategoryCodes" display 'Assess and Plan'
+// NOTE: Leaving these out for now to avoid the dependency on these code systems
+//codesystem "CoverageClassCodes": 'http://terminology.hl7.org/CodeSystem/coverage-class'
+//codesystem "USCoreCarePlanCategoryCodes": 'http://hl7.org/fhir/us/core/CodeSystem/careplan-category'
+//code "Coverage Class Group": 'group' from "CoverageClassCodes" display 'Group'
+//code "Coverage Class Plan": 'plan' from "CoverageClassCodes" display 'Plan'
+//code "Assess and Plan": 'assess-plan' from "USCoreCarePlanCategoryCodes" display 'Assess and Plan'
+
+//code "Laboratory Service Section": 'LAB' from "DiagnosticServiceSectionCodes" display 'Laboratory'
 code "Oxygen Saturation in Arterial Blood by Pulse Oximetry": '59408-5' from "LOINC" display 'Oxygen saturation in Arterial blood by Pulse oximetry'
 code "Oxygen Saturation in Arterial Blood": '2708-6' from "LOINC" display 'Oxygen saturation in Arterial blood'
 code "Inhaled Oxygen Flow Rate": '3151-8' from "LOINC" display 'Inhaled oxygen flow rate'
@@ -130,11 +133,13 @@ discriminates `DiagnosticReport.category:LaboratorySlice` in US Core. This is th
 counterpart of the FHIRCommon `isLaboratory(Observation)` predicate, and the coding is base FHIR
 terminology rather than US Core terminology.
 Proposed for inclusion in FHIRCommon.
+
+NOTE: Leaving this out for now, submit a CQLIT ticket if this is required for measure logic
 */
-define fluent function isLaboratory(diagnosticReport FHIR.DiagnosticReport):
-  exists (diagnosticReport.category C
-    where C ~ "Laboratory Service Section"
-  )
+//define fluent function isLaboratory(diagnosticReport FHIR.DiagnosticReport):
+//  exists (diagnosticReport.category C
+//    where C ~ "Laboratory Service Section"
+//  )
 
 /*
 @description: Returns true if the given care plan is an assessment and plan of treatment
@@ -143,9 +148,11 @@ define fluent function isLaboratory(diagnosticReport FHIR.DiagnosticReport):
 `CarePlan.category:AssessPlan`. The slice is 1..1 in US Core, so every conforming CarePlan satisfies
 this predicate; it is defined for logic that reads CarePlan resources that may not be US Core conformant.
 Proposed for inclusion in USCoreCommon.
+
+NOTE: Leaving this out for now. If this function is required for measure logic, submit a CQLIT ticket.
 */
-define fluent function isAssessPlan(carePlan FHIR.CarePlan):
-  carePlan.hasCategory("Assess and Plan")
+//define fluent function isAssessPlan(carePlan FHIR.CarePlan):
+//  carePlan.hasCategory("Assess and Plan")
 
 /*
 @description: Returns true if the given condition is a screening or assessment condition
@@ -154,11 +161,14 @@ the discriminator for `Condition.category:screening-assessment`. This is the cou
 FHIRCommon `isProblemListItem()` and `isEncounterDiagnosis()` predicates and the USCoreCommon
 `isHealthConcern()` predicate, which together cover the remaining Condition category slices.
 Proposed for inclusion in USCoreCommon.
+
+NOTE: Leaving this out for now to avoid dependency on US Core value sets. Submit a CQLIT issue if
+this function is needed in measure logic.
 */
-define fluent function isScreeningAssessment(condition FHIR.Condition):
-  exists (condition.category C
-    where C in "US Core Screening Assessment Condition Category"
-  )
+//define fluent function isScreeningAssessment(condition FHIR.Condition):
+//  exists (condition.category C
+//    where C in "US Core Screening Assessment Condition Category"
+//  )
 
 /*
 @description: Returns true if the given observation is a screening or assessment observation
@@ -166,11 +176,14 @@ define fluent function isScreeningAssessment(condition FHIR.Condition):
 the discriminator for `Observation.category:screening-assessment`. The other category slice on that
 profile, `Observation.category:survey`, is covered by the FHIRCommon `isSurvey()` predicate.
 Proposed for inclusion in USCoreCommon.
+
+NOTE: Leaving this out for now to avoid dependency on US Core value sets. Submit a CQLIT issue if
+this function is needed in measure logic.
 */
-define fluent function isScreeningAssessment(observation FHIR.Observation):
-  exists (observation.category C
-    where C in "US Core Screening Assessment Observation Category"
-  )
+//define fluent function isScreeningAssessment(observation FHIR.Observation):
+//  exists (observation.category C
+//    where C in "US Core Screening Assessment Observation Category"
+//  )
 
 // Observation component and code accessors
 //
@@ -246,12 +259,14 @@ define fluent function isPulseOximetry(observation FHIR.Observation):
 `http://terminology.hl7.org/CodeSystem/coverage-class#group` on `Coverage.class.type`. The slice is
 0..1, so this returns a single value or `null`.
 Proposed for inclusion in USCoreElements.
+
+NOTE: Leaving this out for now. If this function is required for measure logic, submit a CQLIT ticket.
 */
-define fluent function groupNumber(coverage FHIR.Coverage):
-  singleton from (
-    coverage."class" C
-      where C.type ~ "Coverage Class Group"
-  ).value
+//define fluent function groupNumber(coverage FHIR.Coverage):
+//  singleton from (
+//    coverage."class" C
+//      where C.type ~ "Coverage Class Group"
+//  ).value
 
 /*
 @description: Returns the plan identifier of the given coverage
@@ -260,12 +275,14 @@ define fluent function groupNumber(coverage FHIR.Coverage):
 0..1, so this returns a single value or `null`. Note that this is distinct from the USCoreElements
 `policyNumber()` function, which reads `Coverage.identifier` by type rather than `Coverage.class`.
 Proposed for inclusion in USCoreElements.
+
+NOTE: Leaving this out for now. If this function is required for measure logic, submit a CQLIT ticket.
 */
-define fluent function planNumber(coverage FHIR.Coverage):
-  singleton from (
-    coverage."class" C
-      where C.type ~ "Coverage Class Plan"
-  ).value
+//define fluent function planNumber(coverage FHIR.Coverage):
+//  singleton from (
+//    coverage."class" C
+//      where C.type ~ "Coverage Class Plan"
+//  ).value
 
 /*
 @description: Returns the National Provider Identifiers of the given organization

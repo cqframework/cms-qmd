@@ -27,11 +27,19 @@ Note that for NutritionOrder specifically, the lack of a "primaryCodePath" in th
 
 **Workaround**:
 
-Specify the code path explicitly in the retrieve:
+For both NutritionOrder and ImmunizationRecommendation, the translator does not allow qualified code paths to be used in the retrieve (see the feature request [#1853](https://github.com/cqframework/clinical_quality_language/issues/1853)). Until that is implemented, use a where clause rather than a terminology-based retrieve:
 
 ```cql
 define "Immunization Recommendations":
-  [USQualityCore.ImmunizationRecommendation: recommendation.vaccineCode in "Influenza Vaccine Codes"]
+  [ImmunizationRecommendation] IR
+    where exists (
+        IR.recommendation R
+            where R.vaccineCode in "Vaccine Codes"
+    )
+
+define "Oral Diet Nutrition Orders":
+  [NutritionOrder] O
+    where O.type in "Oral Diet Types"
 ```
 
 **Retrievable types that correctly have no primary code path**

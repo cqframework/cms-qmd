@@ -128,6 +128,21 @@ define "Encounters With Diabetes As Reason For Visit":
 
 Not all systems populate both `reasonCode` and `reasonReference`, so logic should allow for either. Where the prevalence period or onset of the condition is needed, `reasonReference` is required, because that information lives on the Condition resource rather than the Encounter.
 
+> TODO: Consider whether a .reasonForVisit(Encounter) fluent function is appropriate:
+
+```cql
+define fluent function isReasonForVisit(condition FHIR.Condition, encounter FHIR.Encounter):
+  encounter.reasonReference.references(condition)
+
+define "Encounters With Diabetes As Reason For Visit":
+  "Completed Encounters" CompletedEncounter
+    where CompletedEncounter.reasonCode in "Diabetes"
+      or exists (
+        [FHIR.Condition: "Diabetes"] DiabetesCondition
+          where DiabetesCondition.isReasonForVisit(CompletedEncounter)
+      )
+```
+
 ### Evidence of Diagnosis during an Encounter
 
 If measure intent is to establish whether or not a particular diagnosis was active during an encounter, there are at least three possible sources for that information in the clinical record:
@@ -141,24 +156,19 @@ The following pattern illustrates searching for all three potential sources:
 ```cql
 define "Encounters With Diabetes":
   "Completed Encounters" CompletedEncounter
-    where CompletedEncounter.reasonCode in "Diabetes"
+    where CompletedEncounter.reasonCode in "Diabetes Diagnosis Codes"
       or exists (
-        [FHIR.Condition: "Diabetes"] DiabetesCondition
-          where DiabetesCondition.prevalenceInterval() overlaps CompletedEncounter.period
-            or CompletedEncounter.reasonReference.references(DiabetesCondition)
+        [USQualityCore.ConditionEncounterDiagnosis: "Diabetes Diagnosis Codes"] DiabetesCondition
+          where DiabetesCondition.isReasonForVisit(CompletedEncounter)
             or DiabetesCondition.encounter.references(CompletedEncounter)
-            or DiabetesCondition.recordedDate during CompletedEncounter.period
-            or DiabetesCondition.assertedDate() during CompletedEncounter.period
       )
-
-// TODO: Consider whether this fluent function makes sense?
-define fluent function activeDuring(condition Condition, encounter Encounter):
-  condition.prevalenceInterval() overlaps encounter.period
-    or encounter.reasonReference.references(condition)
-    or condition.encounter.references(encounter)
-    or condition.recordedDate during encounter.period
-    or condition.assertedDate() during encounter.period
+      or exists (
+        [USQualityCore.ConditionProblemsHealthConcerns: "Diabetes Diagnosis Codes"] DiabetesCondition
+          where DiabetesCondition.prevalenceInterval() overlaps CompletedEncounter.period
+      )
 ```
+
+> Note that this approach is explicitly looking for prevalence interval in the case of problem list items, versus an encounter link for encounter diagnoses. Both these approaches have the potential to miss some information because neither the explicit encounter link for ConditionEncounterDiagnosis, nor the onset and abatement information for ConditionProblemsHealthConcerns are required. Applications may need to fall back to the recorded and/or asserted date elements of the condition to determine the relationship to the encounter.
 
 In addition, if the measure has access to claim information, consider searching for claim diagnoses as described in the [Claim Patterns](pattern_claim.html).
 

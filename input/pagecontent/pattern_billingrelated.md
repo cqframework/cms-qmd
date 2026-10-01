@@ -39,12 +39,12 @@ define "Encounter With Asthma":
   [USQualityCore.Encounter] E
     where E.reasonCode in "Asthma"
       or exists (
-        [FHIR.Condition: "Asthma"] C
+        [USQualityCore.ConditionEncounterDiagnosis: "Asthma"] C
+          where C.encounter.references(E)
+      )
+      or exists (
+        [USQualityCore.ConditionProblemsHealthConcerns: "Asthma"] C
           where C.prevalenceInterval() overlaps E.period
-            or E.reasonReference.references(C)
-            or C.encounter.references(E)
-            or C.recordedDate during E.period
-            or C.assertedDate() during E.period
       )
       or exists (
         "Claim Item Diagnosis" CID
@@ -52,6 +52,8 @@ define "Encounter With Asthma":
             and CID.diagnosis in "Asthma"
       )
 ```
+
+> Note that this approach is explicitly looking for prevalence interval in the case of problem list items, versus an encounter link for encounter diagnoses. Both these approaches have the potential to miss some information because neither the explicit encounter link for ConditionEncounterDiagnosis, nor the onset and abatement information for ConditionProblemsHealthConcerns are required. Applications may need to fall back to the recorded and/or asserted date elements of the condition to determine the relationship to the encounter.
 
 The [claim representation](pattern_claim.html#evidence-of-diagnosis-during-an-encounter) is `Claim.diagnosis`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) is the ConditionEncounterDiagnosis profile.
 
@@ -80,6 +82,8 @@ define "Encounter With Neuromuscular Disorder":
       )
 ```
 
+> Note that this example is explicitly omitting the problem list item conditions, and is only looking for reason for visit or encounter diagnoses from the clinical record, coupled with claim item diagnoses in the provider-submitted claim information.
+
 ### History of a Condition
 
 Provider-submitted claim information can also be used to search for history of a condition. Measures that have access to clinical as well as provider-submitted claim information can look in the following places for history of a condition:
@@ -98,7 +102,6 @@ define "History Of Asthma":
       "Claim Item Diagnosis" D
         where D.diagnosis in "Asthma"
     )
-
 ```
 
 The [claim representation](pattern_claim.html#history-of-a-condition) is `Claim.diagnosis`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_conditions.html#history-of-a-condition) is the base Condition resource.

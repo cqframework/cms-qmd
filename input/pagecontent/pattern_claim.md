@@ -96,6 +96,8 @@ define "Encounter With Claim Items By Billable Period":
       )
 ```
 
+> TODO: Consider .isRelatedTo(Encounter) fluent function for Claim Item Diagnosis elements that captures the condition in the above relationship.
+
 ### Evidence of Diagnosis on an Encounter
 
 The "Claim Item Diagnosis" element can be used to search for evidence that a given diagnosis was active (i.e. prevalent) during an encounter, the provider submitted claim information may be used:

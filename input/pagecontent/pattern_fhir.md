@@ -50,9 +50,9 @@ define "Antithrombotics Administered":
   [USQualityCore.MedicationAdministration: "Antithrombotic Therapy"]
 ```
 
-Under derived ModelInfo, the retrievable type name is the computable name of the profile with the model prefix removed, so the `USQualityCoreMedicationAdministration` profile is retrieved as `MedicationAdministration`. US Quality Core 0.5.0 defines 57 retrievable types on this basis. Qualifying the type with the model name is optional but recommended, both because it makes the source of the type explicit and because some patterns need to reach types the guide does not profile, such as `[USCore.SmokingStatusProfile]`.
+Under derived ModelInfo, the retrievable type name is the computable name of the profile with the model prefix removed, so the `USQualityCoreMedicationAdministration` profile is retrieved as `MedicationAdministration`. When multiple models are included in a library, qualifying the name of the type with the model name is a best-practice, both because it makes the source of the type explicit and because some patterns need to reach types the guide does not profile, such as `[USCore.SmokingStatusProfile]`.
 
-As described under [Modifier elements](#modifier-elements), status elements must be considered whenever data is accessed. FHIRCommon provides fluent functions for the common cases, in both a singleton predicate form (e.g. `Allergy.isActive()`) and a list-filtering form (e.g. `Allergies.active()`):
+As described under [Modifier elements](#modifier-elements), status elements must be considered whenever data is accessed. The various common libraries provide fluent functions for the common cases, in both a singleton predicate form (e.g. `Allergy.isActive()`) and a list-filtering form (e.g. `Allergies.active()`):
 
 ```cql
 define "Active Confirmed Allergies and Intolerances":

@@ -4,13 +4,85 @@ This page documents known issues in the current authoring technical stack for FH
 * US Core version 6.1.0-derived
 * US Quality Core version 0.5.0
 
-### Missing Primary Code Paths
+### Incorrect or Missing Primary Code Paths
 
-The published model info specifications for US Core 6.1.0-derived and US Quality Core 0.5.0 are missing some primary code path designators, resulting in warnings at compile-time, and potentially errors at run-time:
+The published model info specifications for US Core 6.1.0-derived and US Quality Core 0.5.0 have some known issues with primary code path designators, resulting in warnings at compile-time, and potentially errors at run-time.
+
+For US Core 6.1.0, the following types are affected:
+
+| US Core 6.1.0-derived type | Base FHIR type | Suggested primary code path | QI Core 6.0.0 |
+|----|----|----|----|
+| [CarePlanProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-careplan.html) | `CarePlan` | `category` | `category` |
+{: .grid}
+
+For US Quality Core 0.5.0, the following types are affected:
+
+| US Quality Core 0.5.0 type | Base FHIR type | Suggested primary code path |
+|----|----|----|
+| [NutritionOrder](https://fhir.org/guides/onc/us-quality-core/en/StructureDefinition-us-quality-core-nutritionorder.html) | `NutritionOrder` | Any of:\n\n* oralDiet.type\n* supplement.Type\n* enteralFormula.baseFormulaType |
+| [ImmunizationRecommendation](https://fhir.org/guides/onc/us-quality-core/en/StructureDefinition-us-quality-core-immunizationrecommendation.html) | `ImmunizationRecommendation` | `recommendation.vaccineCode` |
+{: .grid}
+
+Note that for NutritionOrder specifically, the lack of a "primaryCodePath" in the model is deliberate because there is no justification for choosing any particular code path in the general case.
+
+**Workaround**:
+
+Specify the code path explicitly in the retrieve:
 
 ```cql
-// TODO:
+define "Immunization Recommendations":
+  [USQualityCore.ImmunizationRecommendation: recommendation.vaccineCode in "Influenza Vaccine Codes"]
 ```
+
+**Retrievable types that correctly have no primary code path**
+
+The following retrievable types also have no primary code path, but this is not a defect: the base FHIR resource does not define one either, because the resource has no element that serves as a primary code.
+
+| Model | Type | Base FHIR type |
+|----|----|----|
+| USCore 6.1.0-derived | [PatientProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-patient.html) | `Patient` |
+| USCore 6.1.0-derived | [PractitionerProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-practitioner.html) | `Practitioner` |
+| USCore 6.1.0-derived | [Provenance](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-provenance.html) | `Provenance` |
+| USCore 6.1.0-derived | [QuestionnaireResponseProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-questionnaireresponse.html) | `QuestionnaireResponse` |
+| USQualityCore 0.5.0 | `NutritionOrder` | `NutritionOrder` |
+| USQualityCore 0.5.0 | `Patient` | `Patient` |
+| USQualityCore 0.5.0 | `Practitioner` | `Practitioner` |
+| USQualityCore 0.5.0 | `QuestionnaireResponse` | `QuestionnaireResponse` |
+{: .grid}
+
+#### Vital-signs Profiles
+
+All the specific vital-sign profiles in US Core (such as BMIProfile, BloodPressureProfile) deliberately omit a primary code path because the profile fixes the code, so no terminology filter is required:
+
+```cql
+// US Core 6.1.0-derived declares BloodPressureProfile as retrievable, and does not declare a
+// primary code path for it because the profile fixes the code to the LOINC code for BloodPressure, 
+// so no terminology filter is required:
+define "Blood Pressure Readings":
+  [USCore.BloodPressureProfile]
+```
+
+The following vital-signs profiles in US Core 6.1.0 do not specify a primary code path because the profile constrains the code:
+
+| US Core 6.1.0-derived type |
+|----|
+| [BMIProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-bmi.html) |
+| [BloodPressureProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-blood-pressure.html) |
+| [BodyHeightProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-body-height.html) |
+| [BodyTemperatureProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-body-temperature.html) |
+| [BodyWeightProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-body-weight.html) |
+| [HeadCircumferenceProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-head-circumference.html) |
+| [HeartRateProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-heart-rate.html) |
+| [ObservationPregnancyIntentProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-observation-pregnancyintent.html) |
+| [ObservationPregnancyStatusProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-observation-pregnancystatus.html) |
+| [ObservationSexualOrientationProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-observation-sexual-orientation.html) |
+| [PediatricBMIforAgeObservationProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-pediatric-bmi-for-age.html) |
+| [PediatricHeadOccipitalFrontalCircumferencePercentileProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-head-occipital-frontal-circumference-percentile.html) |
+| [PediatricWeightForHeightObservationProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-pediatric-weight-for-height.html) |
+| [PulseOximetryProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-pulse-oximetry.html) |
+| [RespiratoryRateProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-respiratory-rate.html) |
+| [SmokingStatusProfile](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-smokingstatus.html) |
+{: .grid}
 
 ### Cannot Resolve Fluent Functions on Choices
 

@@ -30,3 +30,20 @@ define "Reason for No Polio Immunization":
 ```
 
 Where the statement is that no vaccine in a value set was administered, rather than that one specific vaccine was not, the value set is carried on the `vaccineCode` element through the `notDoneValueSet` extension. `vaccineCode()` in USQualityCoreCommon returns the negated activity extent in either form; see [Extent of negation](pattern_negation.html#extent-of-negation).
+
+### Immunization recommendations
+
+US Quality Core defines the [US Quality Core ImmunizationRecommendation](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-immunizationrecommendation.html) profile to represent immunization recommendations for a patient:
+
+```cql
+define "Immunization Recommendations":
+  [ImmunizationRecommendation] IR
+    where exists (
+        IR.recommendation R
+            where R.vaccineCode in "Vaccine Codes"
+    )
+```
+
+> Because the `vaccineCode` element is a child of the `recommendation` element, it is not possible for the retrieve to specify a terminology path, since it would require a qualified identifier: `recommendation.vaccineCode`. This is a known issue with [qualified primary code paths](knownissues.html#incorrect-or-missing-primary-code-paths).
+
+> Note that the ImmunizationRecommendation profile is not identified as supporting any USCDI+ Quality data elements, and so is not likely to be available for use in measure specifications.

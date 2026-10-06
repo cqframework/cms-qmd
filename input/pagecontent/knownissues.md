@@ -39,7 +39,7 @@ define "Immunization Recommendations":
 
 define "Oral Diet Nutrition Orders":
   [NutritionOrder] O
-    where O.type in "Oral Diet Types"
+    where O.oralDiet.type in "Oral Diet Types"
 ```
 
 **Retrievable types that correctly have no primary code path**

@@ -129,6 +129,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Procedure not ordered](pattern_procedures.html#procedure-not-ordered) | Distinguishing a prohibition from the rejection of a proposal. |
 | [Imaging procedures](pattern_procedures.html#imaging-procedures) | How far to look for evidence of an imaging procedure across order, procedure, report, and study. |
 | [Mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography) | A worked example spanning the resources that may record a mammogram. |
+| [Nutrition orders](pattern_procedures.html#nutrition-orders) | Documentation of nutrition orders for a patient. |
 {: .grid}
 
 ### Medications
@@ -162,6 +163,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 |----|----|
 | [Immunization performed](pattern_immunizations.html#immunization-performed) | Retrieving an administered immunization by `vaccineCode`. |
 | [Immunization not performed](pattern_immunizations.html#immunization-not-performed) | Documenting the reason an immunization was not administered. |
+| [Immunization recommendations](pattern_immunizations.html#immunization-recommendations) | Recommended immunizations for a patient. |
 {: .grid}
 
 ### Communication

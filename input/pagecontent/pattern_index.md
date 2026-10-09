@@ -95,6 +95,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Primary procedure](pattern_encounters.html#primary-procedure) | The clinical representation, where `Encounter.diagnosis.condition` references a Procedure rather than a Condition. |
 | [Discharge disposition](pattern_encounters.html#discharge-disposition) | The clinical representation, using `Encounter.hospitalization.dischargeDisposition`. |
 | [Admission source](pattern_encounters.html#admission-source) | The clinical representation, using `Encounter.hospitalization.admitSource`. |
+| [Encounter priority and elective encounters](pattern_encounters.html#encounter-priority-and-elective-encounters) | Determining whether a given encounter is elective |
 {: .grid}
 
 ### Observations

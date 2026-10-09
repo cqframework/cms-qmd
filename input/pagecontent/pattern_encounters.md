@@ -264,3 +264,12 @@ define "Encounter With Admission From Emergency Department":
 > NOTE: The clinical terminology for this element does not currently have hospice as an admission source. A UTG ticket has been submitted to add hospice to this terminology: https://jira.hl7.org/browse/UP-865 
 
 For the claim representation see [Admission Source](pattern_claim.html#admission-source). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+
+### Encounter Priority and Elective Encounters
+
+Although the FHIR Encounter resource does define a "priority" element, it is not profiled as part of the US Quality Core Encounter and is typically not exchanged as part of encounter information in the US Realm. As such, it is not recommended for use in Measure specifications expected to be used in the US Realm. As an alternative, measure specifications typically use value sets to filter on the  `Encounter.type` element with encounter type codes that indicate elective encounters. Other potential sources for this determination include:
+
+* `Encounter.class` - May be used to indicate _emergent_ and _acute_ vs _non-acute_
+* `Encounter.hospitalization.admitSource` - May potentially be used to indicate whether the admission was from an emergency department 
+* `Procedure.code` - For procedures associated with the encounter to understand the nature of the procedures performed, whether they are urgent, emergent, elective, etc.
+

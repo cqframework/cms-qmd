@@ -272,4 +272,5 @@ Although the FHIR Encounter resource does define a "priority" element, it is not
 * `Encounter.class` - May be used to indicate _emergent_ and _acute_ vs _non-acute_
 * `Encounter.hospitalization.admitSource` - May potentially be used to indicate whether the admission was from an emergency department 
 * `Procedure.code` - For procedures associated with the encounter to understand the nature of the procedures performed, whether they are urgent, emergent, elective, etc.
+* [`ServiceRequest.priority`](pattern_procedures.html#procedcure-priority) - For orders associated with procedures or services performed during the encounter, whether they are routine, urgent, emergent, etc.
 

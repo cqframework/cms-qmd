@@ -131,6 +131,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Imaging procedures](pattern_procedures.html#imaging-procedures) | How far to look for evidence of an imaging procedure across order, procedure, report, and study. |
 | [Mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography) | A worked example spanning the resources that may record a mammogram. |
 | [Nutrition orders](pattern_procedures.html#nutrition-orders) | Documentation of nutrition orders for a patient. |
+| [Procedure or order priority](pattern_procedures.html#procedcure-priority) | The priority of an order or procedure (e.g. routine, urgent, emergent, etc.) |
 {: .grid}
 
 ### Medications

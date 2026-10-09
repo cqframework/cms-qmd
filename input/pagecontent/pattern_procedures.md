@@ -132,3 +132,10 @@ define "Oral Diet Nutrition Orders":
 > Because there are several candidate elements for the "primary" code path for a nutrition order, the profile does not define a primary code path. In addition, because all the candidate elements are qualified paths, it is not possible for the retrieve to specify a terminology path : e.g. `oralDiet.type`. This is a known issue with [qualified primary code paths](knownissues.html#incorrect-or-missing-primary-code-paths).
 
 > Note that the NutritionOrder profile is not identified as supporting any USCDI+ Quality data elements, and so is not likely to be available for use in measure specifications.
+
+### Procedure Priority
+
+Although the Procedure itself does not have a discrete priority element, the priority of a procedure may be able to be determined by looking at:
+
+* `Procedure.code` - The type of the procedure performed to determine the nature of the procedure
+* `ServiceRequest.priority` - The priority element of the order associated with the procedure, to determine the relative priority of the procedure (e.g. routine, urgent, etc.)

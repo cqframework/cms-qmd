@@ -102,34 +102,9 @@ context Patient // This resolves as USQualityCore.Patient
 
 ### Step 2: Update Libraries
 
-Once the models have been updated, we need to update the shared library references:
+Once the models have been updated, we need to update the shared library references. See the [Library Index](refactored_index.html#library-index) for an index of all shared libraries and what the latest versions are.
 
-| Library | QI Core version | US Quality Core version |
-|----|----|----|
-| AdultOutpatientEncounters | 4.19.000 | 5.2.000 |
-| AdvancedIllnessandFrailty | 1.27.000 | 2.2.000 |
-| AHAOverall | 4.1.000 | 5.2.000 |
-| AlaraCommonFunctions | 1.10.000 | 2.2.000 |
-| Antibiotic | 1.11.000 | 2.2.000 |
-| CQMCommon | 4.1.000 | 5.2.000 |
-| CumulativeMedicationDuration | 6.0.000 | hl7.fhir.us.cql.CumulativeMedicationDuration version 2.0.0 |
-| FHIRHelpers | 4.4.000 | hl7.fhir.uv.cql.FHIRHelpers version 4.0.1 |
-| FHIRCommon | - | hl7.fhir.uv.cql.FHIRCommon version 2.0.0 |
-| Hospice | 6.18.000 | 7.2.000 |
-| NHSNHelpers | 0.1.000 | 1.2.000 |
-| PalliativeCare | 1.18.000 | 2.2.000 |
-| PCMaternal | 5.25.000 | 6.2.000 |
-| QICoreCommon | 4.0.000 | (refactored into FHIRCommon, USCoreCommon, and USQualityCoreCommon) |
-| Status | 1.15.000 | 2.2.000 |
-| SupplementalDataElements | 5.1.000 | 6.2.000 |
-| TJCOverall | 8.25.000 | 9.2.000 |
-| VTE | 8.18.000 | 9.2.000 |
-| USCoreCommon | - | hl7.fhir.us.cql.USCoreCommon version 2.0.0 |
-| USCoreElements | - | hl7.fhir.us.cql.USCoreElements version 2.0.0 |
-| USQualityCoreCommon | - | USQualityCoreCommon version 0.5.0 |
-{: .grid}
-
-For example, the following snippet is the includes section of the CMS125 QI Core 6.0.0 Breast Cancer Screening measure:
+As an example, the following snippet is the includes section of the CMS125 QI Core 6.0.0 Breast Cancer Screening measure:
 
 ```cql
 include FHIRHelpers version '4.4.000' called FHIRHelpers

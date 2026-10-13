@@ -124,15 +124,17 @@ include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1' called FHIRHelpers
 include hl7.fhir.uv.cql.FHIRCommon version '2.0.0' called FHIRCommon
 include hl7.fhir.us.cql.USCoreCommon version '2.0.0' called USCoreCommon
 include hl7.fhir.us.cql.USCoreElements version '2.0.0' called USCoreElements
+include fhir.onc."us-quality-core".USQualityCoreCommon version '0.5.0' called USQualityCoreCommon
 
-include USQualityCoreCommon version '0.5.0' called USQualityCoreCommon
-include SupplementalDataElements version '6.2.000' called SDE
+include SupplementalDataElements version '6.1.000' called SDE
 include Status version '2.2.000' called Status
 include AdultOutpatientEncounters version '5.2.000' called AdultOutpatientEncounters
 include AdvancedIllnessandFrailty version '2.2.000' called AIFrailLTCF
 include Hospice version '7.2.000' called Hospice
 include PalliativeCare version '2.2.000' called PalliativeCare
 ```
+
+> NOTE: The above example is provided for illustration purposes only, see the [Library Index](refactored_index.html#library-index) for the most current versions of shared libraries.
 
 ### Step 3: Update Types
 

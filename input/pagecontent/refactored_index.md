@@ -8,11 +8,11 @@ The remaining libraries are expected to still be developed in MADiE, but are inc
 
 The [dqm-content-cms-2026](https://github.com/cqframework/dqm-content-cms-2026) repository has minor increments for each of these libraries as well with the full update to the 0.5.0 published release. Those increments will be pulled into the cms-2025 repository once discrepancy testing has completed.
 
-Where shared libraries have been updated to US Quality Core 0.5.0 in MADiE, the Published column provides the version available in MADiE.
+Where shared libraries have been updated to US Quality Core 0.5.0 in MADiE, the Published column provides the version available in MADiE as of 2026-10-13.
 
 In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/pull/1/changes) branch of the dqm-content-cms-2026 repository has the content that is available in MADiE for easy comparison against the proposed draft content.
 
-| Library | QI Core version | US Quality Core version (Proposed) | Published (as of 2026-10-13) |
+| Library | QI Core version | US Quality Core version (Proposed) | Published (_as of 2026-10-13_) |
 |----|----|----|----|
 | AdultOutpatientEncounters | [4.19.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AdultOutpatientEncounters.cql) | [5.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AdultOutpatientEncounters.cql) | [4.20.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/AdultOutpatientEncounters.cql) |
 | AdvancedIllnessandFrailty | [1.27.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AdvancedIllnessandFrailty.cql) | [2.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AdvancedIllnessandFrailty.cql) | - |

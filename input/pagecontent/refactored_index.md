@@ -49,20 +49,6 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 
 This index lists functions from the QICore-based library versions and where they are now following the refactor.
 
-| Library | Prior version or name | New version or location |
-|----|----|----|
-| **CQMCommon** | 4.1.000 | 5.1.000 |
-| **QICoreCommon** | deprecated | [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html), [USCoreCommon](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html), or [USQualityCoreCommon](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html) |
-| **CumulativeMedicationDuration** | 6.0.000 | hl7.fhir.us.cql.CumulativeMedicationDuration 2.0.0 |
-| **Status** | 1.15.000 | 2.1.000 |
-{: .grid}
-
-Notes on the libraries above:
-
-* **CQMCommon** &mdash; The deprecated "ED Visit" and "Hospitalization" expression definitions have been removed; use the `edVisit()` and `hospitalization()` fluent functions instead. The claim navigation functions have moved to ClaimCommon and ClaimElements.
-* **CumulativeMedicationDuration** &mdash; No changes.
-* **Status** &mdash; verified() (consider deprecating); FHIRCommon verified() should be used instead.
-
 #### QICoreCommon function locations
 
 QICoreCommon is deprecated. Its functions are now distributed across three libraries:

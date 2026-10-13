@@ -156,7 +156,7 @@ define "Delivery Encounters With Severe Obstetric Complications Diagnosis Or Pro
   "Delivery Encounters At Greater Than Or Equal To 20 Weeks Gestation" TwentyWeeksPlusEncounter
     where exists (
       "Claim Item Diagnosis" ClaimDiagnosis
-        such that ClaimDiagnosis.serviced during TwentyWeeksPlusEncounter.period
+        where ClaimDiagnosis.serviced during TwentyWeeksPlusEncounter.period
           and ClaimDiagnosis.diagnosis in "Severe Maternal Morbidity Diagnoses"
           and ClaimDiagnosis.onAdmission in "Present on Admission is No or Unable To Determined"
     )

@@ -25,9 +25,9 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 | CQMConcepts | - | [0.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMConcepts.cql) | 0.2.000 _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ |
 | CQMElements | - | [0.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMElements.cql) | 0.2.000 _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ |
 | CQMInferences | - | [0.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMInferences.cql) | 0.2.000 _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ |
-| CumulativeMedicationDuration | [6.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CumulativeMedicationDuration.cql) | - | [hl7.fhir.us.cql.CumulativeMedicationDuration version '2.0.0'](https://hl7.org/fhir/us/cql/Library-CumulativeMedicationDuration.html) |
-| FHIRHelpers | [4.4.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/FHIRHelpers.cql) | - | [hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
-| FHIRCommon | - | - | [hl7.fhir.uv.cql.FHIRCommon version '2.0.0'](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
+| CumulativeMedicationDuration | [6.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CumulativeMedicationDuration.cql) | - | [`hl7.fhir.us.cql.CumulativeMedicationDuration version '2.0.0'`](https://hl7.org/fhir/us/cql/Library-CumulativeMedicationDuration.html) |
+| FHIRHelpers | [4.4.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/FHIRHelpers.cql) | - | [`hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
+| FHIRCommon | - | - | [`hl7.fhir.uv.cql.FHIRCommon version '2.0.0'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
 | Hospice | [6.18.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/Hospice.cql) | [7.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/Hospice.cql) | [6.18.000 _draft_](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/Hospice.cql) |
 | MedicationCommon | - | - | [0.1.0](https://github.com/cqframework/cms-qmd/blob/main/input/cql/MedicationCommon.cql) |
 | NHSNHelpers | [0.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/NHSNHelpers.cql) | - | Refactored to FHIRCommon and USQualityCoreCommon, no longer required |
@@ -38,9 +38,9 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 | SupplementalDataElements | [5.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/SupplementalDataElements.cql) | [6.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/SupplementalDataElements.cql) | [6.1.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/SupplementalDataElements.cql) |
 | TJCOverall | [8.25.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/TJCOverall.cql) | [9.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/TJCOverall.cql) | [JCCommon 8.34.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/JCCommon.cql) |
 | VTE | [8.18.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/VTE.cql) | [9.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/VTE.cql) | - |
-| USCoreCommon | - | - | [hl7.fhir.us.cql.USCoreCommon version '2.0.0'](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) |
-| USCoreElements | - | - | [hl7.fhir.us.cql.USCoreElements version '2.0.0'](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) |
-| USQualityCoreCommon | - | - | [fhir.onc."us-quality-core".USQualityCoreCommon version '0.5.0'](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html) |
+| USCoreCommon | - | - | [`hl7.fhir.us.cql.USCoreCommon version '2.0.0'`](https://hl7.org/fhir/us/cql/Library-USCoreCommon.html) |
+| USCoreElements | - | - | [`hl7.fhir.us.cql.USCoreElements version '2.0.0'`](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) |
+| USQualityCoreCommon | - | - | [`fhir.onc."us-quality-core".USQualityCoreCommon version '0.5.0'`](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html) |
 {: .grid}
 
 ### Function Index

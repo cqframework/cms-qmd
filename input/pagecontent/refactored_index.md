@@ -43,6 +43,8 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 | USQualityCoreCommon | - | - | [`fhir.onc."us-quality-core".USQualityCoreCommon version '0.5.0'`](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html) |
 {: .grid}
 
+> NOTE: There is a USQualityCoreCommon published in MADiE, but this should not be used, use the published USQualityCoreCommon by including that in your library with the following declaration: `include fhir.onc."us-quality-core".USQualityCoreCommon version '0.5.0'`
+
 ### Function Index
 
 This index lists functions from the QICore-based library versions and where they are now following the refactor.

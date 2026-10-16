@@ -10,7 +10,9 @@ For AllergyIntolerance, see also [modifier elements](https://hl7.org/fhir/us/cql
 
 See [Current allergies](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#current-allergies).
 
-Quality measures are evaluated retrospectively, against the data that exists at the time of evaluation rather than during the measurement period. Because `isActive()` tests the *current* `clinicalStatus`, it should not be used to establish that an allergy was active during the measurement period. Use the prevalence interval instead, as described in [Onset, abatement, and prevalence interval](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#onset-abatement-and-prevalence-interval); `prevalenceInterval()` accounts for `resolutionAge` as well as `abatement`.
+Quality measures are evaluated retrospectively, against the data that exists at the time of evaluation rather than during the measurement period. Because `isActive()` tests the *current* `clinicalStatus`, it may not be able to be used to establish that an allergy was active during the measurement period. If onset and abatement are available, the prevalence interval is a more reliable way to determine historical status, as described in [Onset, abatement, and prevalence interval](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#onset-abatement-and-prevalence-interval); `prevalenceInterval()` accounts for `resolutionAge` as well as `abatement`.
+
+However, if onset, abatement, or resolution are not available, which is often the case for allergy/intolerance information, measures can fall back to the `recordedDate` element as an approximation of active status. Alternatively, for allergy/intolerances that are not expected to abate, the use of `clinicalStatus` and `verificationStatus` directly may be the most reliable indicators.
 
 ### No Known Allergies
 

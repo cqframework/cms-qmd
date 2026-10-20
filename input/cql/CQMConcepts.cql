@@ -23,10 +23,14 @@ is drafted for them. Use the `hasCategory()` overload with the specific code ins
 `screening-assessment` slices are also value set discriminated, but the value set itself carries the
 meaning, so `isScreeningAssessment()` is drafted for those.
 
-NOTE: This library is currently being developed in the http://github.com/cqframework/dqm-content-cms-2026 
+NOTE: This library is currently released in MADiE; this is a documentation copy
+https://madie.cms.gov/cql-libraries/6ad7e87bbf531c0659c86b73/edit/details
+
+NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
 repository; this is a convenience copy only, do not make changes in this library.
+
 */
-library CQMConcepts version '0.3.000-draft'
+library CQMConcepts version '0.3.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -390,3 +394,9 @@ define fluent function ein(practitioner FHIR.Practitioner):
       where I.system = 'urn:oid:2.16.840.1.113883.4.4'
   ).value
 
+/*
+@description: Returns true if the given condition is referenced as a reason for the given encounter
+@comment: This function is a candidate for promotion to FHIRCommon.
+*/
+define fluent function isReasonForVisit(condition FHIR.Condition, encounter FHIR.Encounter):
+  encounter.reasonReference.references(condition)

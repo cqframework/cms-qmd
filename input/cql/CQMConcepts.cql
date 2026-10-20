@@ -22,8 +22,11 @@ category slices on DiagnosticReport and ServiceRequest - have no single meaning 
 is drafted for them. Use the `hasCategory()` overload with the specific code instead. The
 `screening-assessment` slices are also value set discriminated, but the value set itself carries the
 meaning, so `isScreeningAssessment()` is drafted for those.
+
+NOTE: This library is currently being developed in the http://github.com/cqframework/dqm-content-cms-2026 
+repository; this is a convenience copy only, do not make changes in this library.
 */
-library CQMConcepts version '0.2.000'
+library CQMConcepts version '0.3.000-draft'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -66,6 +69,14 @@ code "History of Occupation Industry": '86188-0' from "LOINC" display 'History o
 // than a coded element, so those systems are compared as string literals in the functions themselves
 // rather than declared as terminology here.
 
+codesystem "HSLOC": 'https://www.cdc.gov/nhsn/cdaportal/terminology/codesystem/hsloc.html'
+codesystem "ActCode": 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+codesystem "RoleCode": 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'
+
+code "EMER": 'EMER' from "ActCode" display 'emergency'
+code "Emergency room": 'ER' from "RoleCode" display 'Emergency room'
+code "Emergency trauma unit": 'ETU' from "RoleCode" display 'Emergency trauma unit'
+
 context Patient
 
 /*
@@ -74,9 +85,19 @@ context Patient
 and end values of the input date-time interval. Note that using a precision specifier such as `day of`
 as part of a timing phrase is preferred to communicate intent to perform day-level comparison, as well
 as for general readability.
+
+An unknown boundary (an open null boundary, for which `start of` or `end of` returns null) stays unknown
+in the result. An interval selector always has fixed closedness, so constructing the result with closed
+boundaries would turn an unknown boundary into an unbounded one.
 */
 define fluent function toDateInterval(period Interval<DateTime>):
-  Interval[date from start of period, date from end of period]
+  case
+    when period is null then null
+    when start of period is null and end of period is null then Interval(null as Date, null as Date)
+    when start of period is null then Interval(null as Date, date from end of period]
+    when end of period is null then Interval[date from start of period, null as Date)
+    else Interval[date from start of period, date from end of period]
+  end
 
 /*
 @description: Calculates the difference in calendar days between the start and end of the given interval.
@@ -368,3 +389,4 @@ define fluent function ein(practitioner FHIR.Practitioner):
     practitioner.identifier I
       where I.system = 'urn:oid:2.16.840.1.113883.4.4'
   ).value
+

@@ -6,6 +6,8 @@ For AllergyIntolerance, see also [modifier elements](https://hl7.org/fhir/us/cql
 
 > NOTE: Retrieves in the US CQL patterns are written against the US Core model (`[USCore.AllergyIntolerance]`). In CMS dQMs they are written against US Quality Core (`[USQualityCore.AllergyIntolerance]`). The element-level guidance is otherwise the same. The shared definitions in [USCoreElements](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) &mdash; `All Allergies and Intolerances`, `Active Confirmed Allergies and Intolerances`, and their variants &mdash; retrieve US Core-conformant instances, so measures requiring US Quality Core conformance should retrieve against US Quality Core directly.
 
+> NOTE: In addition, some systems capture "noted", as when the allergy/intolerance was first noted. An extension has been proposed to capture this information: https://jira.hl7.org/browse/FHIR-59668
+
 ### Current Allergies
 
 See [Current allergies](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#current-allergies).

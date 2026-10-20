@@ -12,7 +12,7 @@ Where shared libraries have been updated to US Quality Core 0.5.0 in MADiE, the 
 
 In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/pull/1/changes) branch of the dqm-content-cms-2026 repository has the content that is available in MADiE for easy comparison against the proposed draft content.
 
-| Library | QI Core version | US Quality Core version (Proposed) | Published or In MADiE (_as of 2026-10-13_) |
+| Library | QI Core version | US Quality Core version (Proposed) | Published or In MADiE (_as of 2026-10-20_) |
 |----|----|----|----|
 | AdultOutpatientEncounters | [4.19.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AdultOutpatientEncounters.cql) | [5.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AdultOutpatientEncounters.cql) | [4.20.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/AdultOutpatientEncounters.cql) |
 | AdvancedIllnessandFrailty | [1.27.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AdvancedIllnessandFrailty.cql) | [2.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AdvancedIllnessandFrailty.cql) | - |
@@ -27,6 +27,7 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 | CQMInferences - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | [0.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMInferences.cql) | 0.2.000 |
 | CumulativeMedicationDuration | [6.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CumulativeMedicationDuration.cql) | - | [`hl7.fhir.us.cql.CumulativeMedicationDuration version '2.0.0'`](https://hl7.org/fhir/us/cql/Library-CumulativeMedicationDuration.html) |
 | FHIRHelpers | [4.4.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/FHIRHelpers.cql) | - | [`hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
+| FHIRBuilders | - | - | [0.1.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/FHIRBuilders.cql) |
 | FHIRCommon | - | - | [`hl7.fhir.uv.cql.FHIRCommon version '2.0.0'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
 | Hospice | [6.18.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/Hospice.cql) | [7.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/Hospice.cql) | [6.18.000 _draft_](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/Hospice.cql) |
 | MedicationCommon | - | - | [0.1.0](https://github.com/cqframework/cms-qmd/blob/main/input/cql/MedicationCommon.cql) |

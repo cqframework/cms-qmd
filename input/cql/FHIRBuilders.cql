@@ -1,12 +1,15 @@
 /*
-@description: Builder functions to help construct FHIR values and resources as
+@description: Builder functions to help construct FHIR values and resources in
 expressions in CQL.
 @comment:
 
-NOTE: This library is currently being developed in the http://github.com/cqframework/dqm-content-cms-2026 
+NOTE: This library is currently released in MADiE; this is a documentation copy
+https://madie.cms.gov/cql-libraries/6ad7ddacbf531c0659c86b71/edit/details
+
+NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
 repository; this is a convenience copy only, do not make changes in this library.
 */
-library FHIRBuilders version '0.1.000-draft'
+library FHIRBuilders version '0.1.000'
 
 using FHIR version '4.0.1'
 

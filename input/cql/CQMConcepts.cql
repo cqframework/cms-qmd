@@ -28,7 +28,6 @@ https://madie.cms.gov/cql-libraries/6ad7e87bbf531c0659c86b73/edit/details
 
 NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
 repository; this is a convenience copy only, do not make changes in this library.
-
 */
 library CQMConcepts version '0.3.000'
 

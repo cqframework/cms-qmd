@@ -25,8 +25,14 @@ An aggregate helper for the recurring combination - an active claim, with a use 
 of an institutional or professional type - is deliberately not defined here, for the same reason as
 in MedicationCommon: naming it requires agreement on what it means. For now callers compose the
 predicates, as in `C.isActive() and C.isClaim() and (C.isInstitutional() or C.isProfessional())`.
+
+NOTE: This library is currently released in MADiE; this is a documentation copy
+https://madie.cms.gov/cql-libraries/6ad8c979bf531c0659c86b75/edit/details
+
+NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
+repository; this is a convenience copy only, do not make changes in this library.
 */
-library ClaimCommon version '0.4.000-draft'
+library ClaimCommon version '0.4.000'
 
 using FHIR version '4.0.1'
 
@@ -475,13 +481,21 @@ define fluent function outpatient(explanationOfBenefitList List<FHIR.Explanation
     where explanationOfBenefit.subType ~ "subtype-outpatient"
 
 /*
-@description: Returns an interval of DateTime covering the possible representations of FHIR.date and FHIR.Period
-@comment: This function is covering a gap in the FHIRCommon.toInterval() in 2.0.0, which does not include FHIR.date
-as a possible representation for the choice. Claim.serviced has possible representations of FHIR.date and FHIR.Period,
-so this function enables serviced.toInterval() to be called on a Claim. Once Using CQL version 3.0.0 is avialable, this
-function will no longer be required.
+@description: Returns the given Claim.item.serviced value as an interval of DateTime
+@comment: Intended only for the serviced element of a claim item, whose possible types are FHIR.date and
+FHIR.Period. A date gives a day-precision interval that starts and ends on that date; a period gives the
+same interval.
+
+This covers a gap in FHIRCommon 2.0.0, whose toInterval() does not accept FHIR.date: it returns null for a
+date. Once FHIRCommon 3.0.0 is available, with a toInterval() that covers FHIR.date, calls to this function
+can be replaced with serviced.toInterval() and this function removed.
+
+It has its own name, rather than being an overload of toInterval(), because a library that includes both
+FHIRCommon and ClaimCommon gets no ambiguity error for a toInterval() call on a serviced element. When
+this function was an overload of toInterval(), ClaimElements (which includes both) got null for every
+serviced date, consistent with the call being resolved to the FHIRCommon definition.
 */
-define fluent function toInterval(choice Choice<FHIR.date, FHIR.Period>):
+define fluent function toServicedInterval(choice Choice<FHIR.date, FHIR.Period>):
   case
     when choice is FHIR.date then
       Interval[ToDateTime(FHIRHelpers.ToDate(choice as FHIR.date)), ToDateTime(FHIRHelpers.ToDate(choice as FHIR.date))]

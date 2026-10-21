@@ -138,7 +138,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 
 | Pattern | Description |
 |----|----|
-| [Medication status and intent](pattern_medications.html#medication-status-and-intent) | The status and intent functions drafted in MedicationCommon, in place of inline code lists. |
+| [Medication status, intent, and category](pattern_medications.html#medication-status-intent-and-category) | The status, intent, and category functions in MedicationCommon, in place of inline code lists. |
 | [Medication ordered](pattern_medications.html#medication-ordered) | Retrieving a medication order, including the guard against a rejected proposal. |
 | [Medication administered](pattern_medications.html#medication-administered) | Retrieving a completed administration. |
 | [Medication dispensed](pattern_medications.html#medication-dispensed) | Retrieving any positive dispensing event. |

@@ -27,12 +27,14 @@ Navigating that structure by hand is verbose, so the ClaimElements library unfol
 | Definition | Returns |
 |----|----|
 | `Claim Item` | One element per claim item, carrying the claim it came from in a `claim` element, the claim-level fields projected directly, and the item's service details |
-| `Claim Encounter Item` | The same, unfolded per referenced encounter |
+| `Claim Encounter Item` | The same, with one element for each encounter an item references; an item that references no encounter is not included |
 | `Claim Diagnosis` | One element per claim diagnosis, with its sequence, type, and present-on-admission indicator |
 | `Claim Item Diagnosis` | Each item joined to the diagnoses its `diagnosisSequence` selects |
 | `Claim Procedure` | One element per claim procedure, with its sequence, type, and date |
 | `Claim Item Procedure` | Each item joined to the procedures its `procedureSequence` selects |
 {: .grid}
+
+In each element, `serviced` is already an `Interval<DateTime>`: `Claim.item.serviced[x]` is a date or a period, and a date becomes a day-precision interval that starts and ends on that date. So elements can be compared directly, as in `D.serviced during E.period`.
 
 The ClaimCommon library supplies the predicates that go with them, for the selection tests that would otherwise be written inline:
 
@@ -44,9 +46,14 @@ The ClaimCommon library supplies the predicates that go with them, for the selec
 | `isPrincipalDiagnosis()`, `isAdmittingDiagnosis()` | Whether a claim diagnosis type identifies a principal or admitting diagnosis |
 | `isPrimaryProcedure()`, `isSecondaryProcedure()` | Whether a claim procedure type identifies a primary or secondary procedure |
 | `dischargeStatus()`, `pointOfOrigin()` | The discharge status and point of origin carried in `supportingInfo` |
+| `toServicedInterval()` | A claim item's `serviced` date or period as an `Interval<DateTime>` |
 {: .grid}
 
 Each status, use, and type predicate has a list-filtering counterpart without the `is` prefix, following the FHIRCommon convention. Claim and ExplanationOfBenefit are both supported; note that they do not share a status code system, though the codes in each are the same.
+
+> NOTE: `toServicedInterval()` covers a gap in FHIRCommon 2.0.0, whose `toInterval()` returns null for a `FHIR.date`. It has its own name, rather than being an overload of `toInterval()`, because a library that includes both FHIRCommon and ClaimCommon gets no ambiguity error for a `toInterval()` call on a `serviced` element, and the call can resolve to the FHIRCommon definition and silently return null for every serviced date. Once FHIRCommon 3.0.0 is available with a `toInterval()` that accepts a date, calls can be replaced with `serviced.toInterval()`.
+
+> NOTE: ClaimCommon and ClaimElements are released in MADiE, so measures can include them directly. Development happens in the [dqm-content-cms-2026](https://github.com/cqframework/dqm-content-cms-2026) repository, and the copies in this guide are convenience copies. The intent is to promote ClaimElements to the Using CQL with FHIR implementation guide, generalized to all claims: its retrieves would become `[FHIR.Claim]` rather than `[USQualityCore.Claim]`. Nothing in the logic depends on the US Quality Core profile.
 
 > NOTE: The status, use, and type predicates are typed to the Claim and ExplanationOfBenefit resources. Each `Claim Item` element carries the claim it came from in a `claim` element, so those predicates apply to the elements as well &mdash; `D.claim.isActive()` &mdash; along with `dischargeStatus()` and `pointOfOrigin()`, which the flattened fields do not carry.
 
@@ -86,17 +93,28 @@ The examples throughout this section use the `serviced` element, but authors may
 The most comprehensive approach would be to allow any of the 3 methods to be used:
 
 ```cql
-define "Encounter With Claim Items By Billable Period":
+define "Encounter With Claim Items By Any Method":
   [USQualityCore.Encounter] E
     with "Claim Item Diagnosis" D
       such that (
         D.encounter.references(E)
-          or D.serviced.during E.period
+          or D.serviced during E.period
           or D.claim.billablePeriod during E.period
       )
 ```
 
-> TODO: Consider .isRelatedTo(Encounter) fluent function for Claim Item Diagnosis elements that captures the condition in the above relationship.
+ClaimElements captures this combination in the `isRelatedTo()` fluent function, defined for `Claim Item Diagnosis` elements:
+
+```cql
+define "Encounter With Related Claim Item Diagnosis":
+  [USQualityCore.Encounter] E
+    with "Claim Item Diagnosis" D
+      such that D.isRelatedTo(E)
+```
+
+`isRelatedTo()` returns false only if all three tests are false. The reference test is never null, but either date test is null when its interval is missing (no `serviced` element, no billable period, or an encounter with no period) or can't be compared at the precision given, such as a `serviced` date on the day the encounter starts. If none of the tests is true and either date test is null, the result is null. As with any CQL expression, the null is propagated rather than treated as false, so `not D.isRelatedTo(E)` is null too. Such an element is neither included as related nor counted as unrelated, which matters when the function is negated.
+
+For `Claim Item Procedure` elements, compose the tests as in the example above.
 
 ### Evidence of Diagnosis on an Encounter
 

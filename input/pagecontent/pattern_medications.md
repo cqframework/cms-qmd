@@ -4,23 +4,32 @@ FHIR defines several medication-related resources, profiled for use in quality i
 
 For MedicationRequest, MedicationAdministration, and MedicationDispense, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-medication.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-medication.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-medication.html#cross-version-considerations) in that guide.
 
-Two considerations apply throughout. `status`, `intent`, and `doNotPerform` are all modifier elements on MedicationRequest, and where a profile does not fix them the expression must account for every value they may take. And each medication profile is characterized by the `medication` element, which may be a code or a reference. The category functions `isCommunity()`, `isDischarge()`, and `hasCategory()` are defined in [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html).
+Two considerations apply throughout. `status`, `intent`, and `doNotPerform` are all modifier elements on MedicationRequest, and where a profile does not fix them the expression must account for every value they may take. And each medication profile is characterized by the `medication` element, which may be a code or a reference. The status, intent, and category functions used in the examples below are defined in the `MedicationCommon` library.
 
-### Medication status and intent
+### Medication status, intent, and category
 
-FHIRCommon defines status functions for observations, conditions, and allergies, but none for the medication resources, so medication logic has had to test `status` and `intent` with inline code lists. This guide defines the missing functions in a `MedicationCommon` library, following the same conventions FHIRCommon uses &mdash; an `is` prefixed predicate over a single resource, and an unprefixed form that filters a list:
+FHIRCommon defines status functions for observations, conditions, and allergies, but none for the medication resources, so medication logic has had to test `status` and `intent` with inline code lists. It defines category functions for MedicationRequest only, and only for some of its categories. The `MedicationCommon` library supplies the missing functions, following the same conventions FHIRCommon uses &mdash; an `is` prefixed predicate over a single resource, and an unprefixed form that filters a list:
 
 | Resource | Functions |
 |----|----|
 | MedicationRequest status | `isActive()`, `isOnHold()`, `isCompleted()`, `isCancelled()`, `isStopped()`, `isDraft()`, `isEnteredInError()`, and the list forms `active()`, `onHold()`, `completed()` |
 | MedicationRequest intent | `isOrder()`, `isPlan()`, `isProposal()`, and `isOrderIntent()` for any of the order intents, with the list form `orderIntent()` |
+| MedicationRequest category | `hasCategory()`, `isInpatient()`, `isOutpatient()`, `isCommunity()`, `isDischarge()`, and the list forms `inpatient()`, `outpatient()`, `community()`, `discharge()` |
+| MedicationRequest selection | `mostRecent()`, the request in a list with the latest `authoredOn` |
 | MedicationAdministration status | `isCompleted()`, `isInProgress()`, `isOnHold()`, `isStopped()`, `isNotDone()`, `isEnteredInError()`, and the list form `completed()` |
+| MedicationAdministration category | `hasCategory()`, `isInpatient()`, `isOutpatient()`, `isCommunity()`, and the list forms `inpatient()`, `outpatient()`, `community()` |
 | MedicationDispense status | `isCompleted()`, `isInProgress()`, `isPreparation()`, `isOnHold()`, `isCancelled()`, `isStopped()`, `isDeclined()`, `isEnteredInError()`, and the list form `completed()` |
 {: .grid}
 
 `isOrderIntent()` covers `order`, `original-order`, `reflex-order`, `filler-order`, and `instance-order`, which is the set used by the `Active Medication Orders` expression in USCoreElements; it distinguishes an actual order from a proposal, plan, or option.
 
-> NOTE: Nothing in `MedicationCommon` is US-specific, so the intent is to propose these functions for inclusion in FHIRCommon. Until that happens, measure developers who want to use them can add them to CQMCommon; this guidance will be updated if and when they are available in that library. Note also that no aggregate helpers are defined for the recurring `active` or `completed` and `in-progress`, `completed` or `on-hold` combinations, because naming them requires agreement on what they mean &mdash; for now the examples below compose the individual predicates.
+The category functions use the [medicationrequest-category](http://terminology.hl7.org/CodeSystem/medicationrequest-category) and [medication-admin-category](http://terminology.hl7.org/CodeSystem/medication-admin-category) code systems respectively. The two are distinct, so the MedicationRequest `inpatient` code does not match a MedicationAdministration category, and MedicationAdministration has no `discharge` category. `MedicationRequest.category` is a list, and a request has a category if any of its categories matches; `MedicationAdministration.category` has at most one value. `mostRecent()` sorts by `authoredOn`, so a request with no `authoredOn` is only returned if none of the requests has one.
+
+> NOTE: MedicationCommon is released in MADiE, so measures can include it directly. Development happens in the [dqm-content-cms-2026](https://github.com/cqframework/dqm-content-cms-2026) repository, and the copy in this guide is a convenience copy. Nothing in it is US-specific, so the intent is to promote the library as a whole to the Using CQL with FHIR implementation guide ([FHIR-58912](https://jira.hl7.org/browse/FHIR-58912)), alongside FHIRCommon, as the home for medication-specific functions.
+
+> NOTE: FHIRCommon 2.0.0 already defines `hasCategory()`, `isCommunity()`, `isDischarge()`, and `mostRecent()` for MedicationRequest. MedicationCommon defines them again, with the same signatures and meaning, so that the category functions for the medication resources are together; the FHIRCommon definitions would be removed as part of the promotion. Until then, a library that includes both resolves these calls to one of the two definitions without reporting an ambiguity, so either can be relied on.
+
+> NOTE: No aggregate helpers are defined for the recurring `active` or `completed` and `in-progress`, `completed` or `on-hold` combinations, because naming them requires agreement on what they mean &mdash; for now the examples below compose the individual predicates.
 
 ### Medication ordered
 
@@ -84,8 +93,10 @@ US Quality Core defines the [US Quality Core MedicationAdministration](https://f
 define "Antithrombotic Therapy Administration":
   [USQualityCore.MedicationAdministration: "Antithrombotic Therapy Anticoagulant"] VTEMedication
     where VTEMedication.isCompleted()
-      and VTEMedication.category ~ FHIRCommon."Inpatient"
+      and VTEMedication.isInpatient()
 ```
+
+`isInpatient()` here is the MedicationAdministration overload, which tests the `inpatient` code from the medication-admin-category code system. FHIRCommon's `"Inpatient"` code is from the medicationrequest-category code system, so comparing an administration's category to it does not match.
 
 ### Medication not administered
 
@@ -94,7 +105,7 @@ US Quality Core defines the [US Quality Core MedicationAdministration Not Done](
 ```cql
 define "Antithrombotic Therapy Not Administered":
   [USQualityCore.MedicationAdministrationNotDone: "Antithrombotic Therapy Anticoagulant"] VTEMedication
-    where VTEMedication.category ~ FHIRCommon."Inpatient"
+    where VTEMedication.isInpatient()
       and (VTEMedication.reasonCode in "Medical Reason For Not Providing Treatment"
         or VTEMedication.reasonCode in "Patient Declined")
 ```

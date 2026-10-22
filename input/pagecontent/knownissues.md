@@ -19,7 +19,7 @@ For US Quality Core 0.5.0, the following types are affected:
 
 | US Quality Core 0.5.0 type | Base FHIR type | Suggested primary code path |
 |----|----|----|
-| [NutritionOrder](https://fhir.org/guides/onc/us-quality-core/en/StructureDefinition-us-quality-core-nutritionorder.html) | `NutritionOrder` | Any of:\n\n* oralDiet.type\n* supplement.Type\n* enteralFormula.baseFormulaType |
+| [NutritionOrder](https://fhir.org/guides/onc/us-quality-core/en/StructureDefinition-us-quality-core-nutritionorder.html) | `NutritionOrder` | Any of: `oralDiet.type`, `supplement.Type`, `enteralFormula.baseFormulaType` |
 | [ImmunizationRecommendation](https://fhir.org/guides/onc/us-quality-core/en/StructureDefinition-us-quality-core-immunizationrecommendation.html) | `ImmunizationRecommendation` | `recommendation.vaccineCode` |
 {: .grid}
 
@@ -263,7 +263,7 @@ As a result, the result of `prevalenceInterval()` for an inactive condition with
 
 To address this issue, we are proposing: 
 
-* Define a Period function that allows for the creation of a DateTime interval with an optionally closed ending boundary:
+* Define a `Period` function that allows for the creation of a DateTime interval with an optionally closed ending boundary:
 
 ```cql
 define function Period(start System.DateTime, end System.DateTime, endClosed System.Boolean):
@@ -273,7 +273,7 @@ define function Period(start System.DateTime, end System.DateTime, endClosed Sys
     Interval[start, end)
 ```
 
-* Define a prevlaencePeriod() function that makes use of this Period function:
+* Define a `prevalencePeriod()` function that makes use of this `Period` function:
 
 ```cql
 define fluent function prevalencePeriod(condition Condition):

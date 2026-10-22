@@ -212,7 +212,7 @@ This should be able to done either in the artifact logic directly, or as part of
 
 ### Prevalence Interval Issue:
 
-When an inactive condition does not have an abatement date, the `prevalenceInterval()` function defined in [FHIRCommon version 2.0.0](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html#:~:text=define%20fluent%20function-,prevalenceInterval,-(condition%20Condition) incorrectly returns `null`, rather than `Interval[onset, null)`.
+When an inactive condition does not have an abatement date, the `prevalenceInterval()` function defined in [FHIRCommon version 2.0.0](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html#:~:text=define%20fluent%20function-,prevalenceInterval,-%28condition%20Condition) incorrectly returns `null`, rather than `Interval[onset, null)`.
 
 The current definition is:
 

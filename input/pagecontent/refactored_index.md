@@ -28,7 +28,7 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 | CumulativeMedicationDuration | [6.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CumulativeMedicationDuration.cql) | - | [`hl7.fhir.us.cql.CumulativeMedicationDuration version '2.0.0'`](https://hl7.org/fhir/us/cql/Library-CumulativeMedicationDuration.html) |
 | FHIRHelpers | [4.4.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/FHIRHelpers.cql) | - | [`hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
 | FHIRBuilders | - | - | [0.1.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/FHIRBuilders.cql) |
-| FHIRCommon | - | - | [`hl7.fhir.uv.cql.FHIRCommon version '2.0.0'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
+| FHIRCommon | - | - | [`hl7.fhir.uv.cql.FHIRCommon version '2.0.0'`](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) |
 | Hospice | [6.18.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/Hospice.cql) | [7.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/Hospice.cql) | [6.18.000 _draft_](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/Hospice.cql) |
 | MedicationCommon | - | - | [0.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/MedicationCommon.cql) |
 | NHSNHelpers - _Refactored to FHIRCommon and USQualityCoreCommon, no longer required_ | [0.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/NHSNHelpers.cql) | N/A | N/A |

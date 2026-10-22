@@ -212,7 +212,56 @@ This should be able to done either in the artifact logic directly, or as part of
 
 ### Prevalence Interval Issue:
 
-When an inactive condition does not have an abatement date, the prevalenceInterval function incorrectly returns `null`, rather than `Interval[onset, null)`. To address this issue, we are proposing: 
+When an inactive condition does not have an abatement date, the `prevalenceInterval()` function defined in [FHIRCommon version 2.0.0](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html#:~:text=define%20fluent%20function-,prevalenceInterval,-(condition%20Condition) incorrectly returns `null`, rather than `Interval[onset, null)`.
+
+The current definition is:
+
+```cql
+define fluent function prevalenceInterval(condition Condition):
+if condition.clinicalStatus ~ "active"
+  or condition.clinicalStatus ~ "recurrence"
+  or condition.clinicalStatus ~ "relapse" then
+  Interval[start of condition.onset.toInterval(), end of condition.abatementInterval()]
+else
+  (end of condition.abatementInterval()) abatementDate
+    return 
+	  if abatementDate is null then
+        Interval[start of condition.onset.toInterval(), abatementDate)
+      else
+        Interval[start of condition.onset.toInterval(), abatementDate]
+```
+
+The root of the issue is in the `else` logic:
+
+```cql
+  (end of condition.abatementInterval()) abatementDate
+    ...
+```
+
+This construct is setting up a "singleton query", which is a useful way to introduce a calculation and then refer to it multiple times. In this case, rather than repeating the `abatementDate` calculation, the logic uses the query to refer to the result multiple times:
+
+```cql
+	  if abatementDate is null then
+        Interval[start of condition.onset.toInterval(), abatementDate)
+      else
+        Interval[start of condition.onset.toInterval(), abatementDate]
+```
+
+However, the CQL specification is clear (in [1.3.10 Non-Retrieve Queries](https://cql.hl7.org/03-developersguide.html#non-retrieve-queries)), that when the source of a query is null, the result is null, following standard null propagation rules:
+
+```cql
+define NullObjectQuery:
+  (null as FHIR.CodeableConcept) X
+    return Concept {
+      codes: X.coding C return FHIRHelpers.ToCode(C)
+    }
+```
+
+As a result, the result of `prevalenceInterval()` for an inactive condition with no abatement date is `null`, rather than the expected interval value with a null ending boundary.
+
+**Workaround:**
+
+To address this issue, we are proposing: 
 
 * Define a Period function that allows for the creation of a DateTime interval with an optionally closed ending boundary:
 

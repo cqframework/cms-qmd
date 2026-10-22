@@ -209,3 +209,33 @@ define fluent function isCommunity(medicationRequest FHIR.MedicationRequest):
 ```
 
 This should be able to done either in the artifact logic directly, or as part of a shared library that is included ahead of the library in which the conflicting fluent functions are defined. If the inclusion results in a compile-time ambiguity, use a more specific name for the fluent-function (e.g.: `isCommunityRequest`).
+
+### Prevalence Interval Issue:
+
+When an inactive condition does not have an abatement date, the prevalenceInterval function incorrectly returns `null`, rather than `Interval[onset, null)`. To address this issue, we are proposing: 
+
+* Define a Period function that allows for the creation of a DateTime interval with an optionally closed ending boundary:
+
+```cql
+define function Period(start System.DateTime, end System.DateTime, endClosed System.Boolean):
+  if endClosed or end is not null then
+    Interval[start, end]
+  else
+    Interval[start, end)
+```
+
+* Define a prevlaencePeriod() function that makes use of this Period function:
+
+```cql
+define fluent function prevalencePeriod(condition Condition):
+  Period(
+    start of condition.onset.toInterval(), 
+    end of condition.abatementInterval(), 
+    condition.isActive()
+  )
+```
+
+This change corrects the logic, and will be included in the next release of Using CQL With FHIR (STU 3). Until that release is available, this logic will be provided in the CQMConcepts library (version 0.4.000+ (not yet available in MADiE as of 10/22/2026)).
+
+This is a known issue with the `prevalenceInterval` function in FHIRCommon 2.0.0. See: https://jira.hl7.org/browse/FHIR-59708 
+

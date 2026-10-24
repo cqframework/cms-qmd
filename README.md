@@ -10,4 +10,3 @@ Summary
 This IG is built upon the FHIR Quality Measure Implementation Guide (QM IG) and provides CMS specific guidance to be used in the developmental of CMS FHIR-based measures. It is intended to support technical applications and authors.
 
 
-

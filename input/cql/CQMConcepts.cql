@@ -23,13 +23,13 @@ is drafted for them. Use the `hasCategory()` overload with the specific code ins
 `screening-assessment` slices are also value set discriminated, but the value set itself carries the
 meaning, so `isScreeningAssessment()` is drafted for those.
 
-NOTE: This library is currently released in MADiE; this is a documentation copy
-https://madie.cms.gov/cql-libraries/6ad7e87bbf531c0659c86b73/edit/details
+NOTE: This library is developed in the dqm-content-cms-2026 repository:
+https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/CQMConcepts.cql
 
-NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
-repository; this is a convenience copy only, do not make changes in this library.
+NOTE: This library is currently released in MADiE; this is the development copy
+https://madie.cms.gov/cql-libraries/6add150147322f9f948a3dce/edit/details
 */
-library CQMConcepts version '0.3.000'
+library CQMConcepts version '0.4.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -399,3 +399,120 @@ define fluent function ein(practitioner FHIR.Practitioner):
 */
 define fluent function isReasonForVisit(condition FHIR.Condition, encounter FHIR.Encounter):
   encounter.reasonReference.references(condition)
+
+/*
+@description: Returns a DateTime interval from start to end, with active (i.e. ongoing) semantics 
+as determined by the active parameter.
+@comment: The interval returned will be closed unless isActive is false and the end date is null.
+These semantics ensure that an unknown ending boundary is preserved. Note that this is not possible
+to represent in FHIR so conversion of an interval with an unknown ending boundary (i.e. null and 
+open) to a FHIR.Period should raise an error, not silently fail.
+
+As well, if isActive is true, the end date is ignored, as an "active" period is one that is ongoing.
+
+NOTE: This function is being promoted to FHIRCommon in 3.0.0
+*/
+define function Period(start System.DateTime, end System.DateTime, isActive System.Boolean):
+  if isActive or end is not null then
+    Interval[start, if isActive then null else end]
+  else
+    Interval[start, end)
+
+/*
+@description: Returns an interval representing the normalized prevalence period of a given Condition resource.
+@comment: Uses the toInterval and abatementInterval functions to determine the widest potential interval from
+onset to abatement as specified in the given Condition.
+
+NOTE: The prevalenceInterval function in FHIRCommon 2.0.0 has a known issue (https://jira.hl7.org/browse/FHIR-59708). 
+This function addresses that issue. The correction to prevalenceInterval is being added to FHIRCommon 3.0.0.
+*/
+define fluent function prevalencePeriod(condition FHIR.Condition):
+  Period(
+    start of condition.onset.toInterval(),
+    end of condition.abatementInterval(),
+    condition.isActive()
+  )
+
+/*
+@description: Relevant date for a condition, either the onset, asserted date, or recorded date, whichever is available
+@comment: This function returns the _relevant date_ for a given condition, which is determined by the first available date of:
+
+* earliest onset date
+* asserted date
+* recorded date
+
+NOTE: This function is being promoted to FHIRCommon in 3.0.0
+*/
+define fluent function relevantDate(condition FHIR.Condition):
+  Coalesce(
+    start of condition.onset.toInterval(),
+    condition.assertedDate(),
+    condition.recordedDate
+  )
+
+/*
+@description: Returns the relevant period for a condition, from relevant date through abatement
+@comment: This function returns a date time interval from the condition relevant date (as determined
+using the `relevantDate()` function) through the end of the condition abatement interval (as 
+determined using the `abatementInterval()` function). The resulting interval will have an open
+ending boundary only if the condition is not active (as determined by the `isActive()` function)
+and the abatement end date is null.
+
+NOTE: This function is being promoted to FHIRCommon in 3.0.0
+*/
+define fluent function relevantPeriod(condition FHIR.Condition):
+  Period(
+    condition.relevantDate(),
+    end of condition.abatementInterval(),
+    condition.isActive()
+  )
+
+/*
+@description: Returns an interval representing the normalized prevalence period of a given AllergyIntolerance resource.
+@comment: Uses the toInterval and abatementInterval functions to determine the widest potential interval from
+onset to abatement as specified in the given AllergyIntolerance.
+
+NOTE: The prevalenceInterval function in FHIRCommon 2.0.0 has a known issue (https://jira.hl7.org/browse/FHIR-59708). 
+This function addresses that issue. The correction to prevalenceInterval is being added to FHIRCommon 3.0.0.
+*/
+define fluent function prevalencePeriod(allergyIntolerance FHIR.AllergyIntolerance):
+  Period(
+    start of allergyIntolerance.onset.toInterval(),
+    end of allergyIntolerance.abatementInterval(),
+    allergyIntolerance.isActive()
+  )
+
+/*
+@description: Relevant date for an allergy/intolerance, either the onset, asserted date, or recorded date, whichever is available
+@comment: This function returns the _relevant date_ for a given allergy/intolerance, which is determined by the first available date of:
+
+* earliest onset date
+* asserted date
+* recorded date
+
+NOTE: This function is being promoted to FHIRCommon in 3.0.0
+*/
+define fluent function relevantDate(allergyIntolerance FHIR.AllergyIntolerance):
+  Coalesce(
+    start of allergyIntolerance.onset.toInterval(),
+    allergyIntolerance.assertedDate(),
+    allergyIntolerance.recordedDate
+  )
+
+/*
+@description: Returns the relevant period for an allergy/intolerance, from relevant date through abatement
+@comment: This function returns a date time interval from the allergy/intolerance relevant date (as determined
+using the `relevantDate()` function) through the end of the allergy/intolerance abatement interval (as 
+determined using the `abatementInterval()` function). The resulting interval will have an open
+ending boundary only if the allergy/intolerance is not active (as determined by the `isActive()` function)
+and the abatement end date is null.
+
+NOTE: This function is being promoted to FHIRCommon in 3.0.0
+*/
+define fluent function relevantPeriod(allergyIntolerance FHIR.AllergyIntolerance):
+  Period(
+    allergyIntolerance.relevantDate(),
+    end of allergyIntolerance.abatementInterval(),
+    allergyIntolerance.isActive()
+  )
+

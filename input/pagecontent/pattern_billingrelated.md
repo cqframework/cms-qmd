@@ -41,19 +41,22 @@ define "Encounter With Asthma":
       or exists (
         [USQualityCore.ConditionEncounterDiagnosis: "Asthma"] C
           where C.encounter.references(E)
+            or C.isReasonForVisit(E)
       )
       or exists (
         [USQualityCore.ConditionProblemsHealthConcerns: "Asthma"] C
-          where C.prevalenceInterval() overlaps E.period
+          where C.prevalencePeriod() overlaps E.period
       )
       or exists (
         "Claim Item Diagnosis" CID
-          where CID.serviced during E.period
+          where CID.isRelatedTo(E)
             and CID.diagnosis in "Asthma"
       )
 ```
 
-> Note that this approach is explicitly looking for prevalence interval in the case of problem list items, versus an encounter link for encounter diagnoses. Both these approaches have the potential to miss some information because neither the explicit encounter link for ConditionEncounterDiagnosis, nor the onset and abatement information for ConditionProblemsHealthConcerns are required. Applications may need to fall back to the recorded and/or asserted date elements of the condition to determine the relationship to the encounter.
+> Note that this approach is explicitly looking for prevalence period in the case of problem list items, versus an encounter link for encounter diagnoses. Both these approaches have the potential to miss some information because neither the explicit encounter link for ConditionEncounterDiagnosis, nor the onset and abatement information for ConditionProblemsHealthConcerns are required. Applications may need to fall back to the asserted and/or recorded date elements of the condition to determine the relationship to the encounter, which can be done by using [relevantPeriod()](pattern_conditions.html#diagnosis-date-and-relevant-period) in place of `prevalencePeriod()`.
+
+> KNOWN ISSUE: This example uses `prevalencePeriod()` from CQMConcepts 0.4.000, rather than `prevalenceInterval()` from FHIRCommon 2.0.0, because of a known issue with the `prevalenceInterval` function for Condition. See [Prevalence Interval Issue](knownissues.html#prevalence-interval-issue).
 
 The [claim representation](pattern_claim.html#evidence-of-diagnosis-during-an-encounter) is `Claim.diagnosis`, accessed through the "Claim Item Diagnosis" element; the [clinical representation](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) is the ConditionEncounterDiagnosis profile.
 

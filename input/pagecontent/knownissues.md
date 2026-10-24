@@ -212,7 +212,7 @@ This should be able to done either in the artifact logic directly, or as part of
 
 ### Prevalence Interval Issue:
 
-When an inactive condition does not have an abatement date, the `prevalenceInterval()` function defined in [FHIRCommon version 2.0.0](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html#:~:text=define%20fluent%20function-,prevalenceInterval,-%28condition%20Condition) incorrectly returns `null`, rather than `Interval[onset, null)`.
+When an inactive condition or allergy/intolerance does not have an abatement date, the `prevalenceInterval()` function defined in [FHIRCommon version 2.0.0](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html#:~:text=define%20fluent%20function-,prevalenceInterval,-%28condition%20Condition) incorrectly returns `null`, rather than `Interval[onset, null)`.
 
 The current definition is:
 
@@ -261,19 +261,19 @@ As a result, the result of `prevalenceInterval()` for an inactive condition with
 
 **Workaround:**
 
-To address this issue, we are proposing: 
+To address this issue, the CQMConcepts 0.4.000 library: 
 
-* Define a `Period` function that allows for the creation of a DateTime interval with an optionally closed ending boundary:
+* Defines a `Period` function that allows for the creation of a DateTime interval with an optionally closed ending boundary:
 
 ```cql
-define function Period(start System.DateTime, end System.DateTime, endClosed System.Boolean):
-  if endClosed or end is not null then
-    Interval[start, end]
+define function Period(start System.DateTime, end System.DateTime, isActive System.Boolean):
+  if isActive or end is not null then
+    Interval[start, if isActive then null else end]
   else
     Interval[start, end)
 ```
 
-* Define a `prevalencePeriod()` function that makes use of this `Period` function:
+* Defines a `prevalencePeriod()` function that makes use of this `Period` function:
 
 ```cql
 define fluent function prevalencePeriod(condition Condition):
@@ -284,7 +284,9 @@ define fluent function prevalencePeriod(condition Condition):
   )
 ```
 
-This change corrects the logic, and will be included in the next release of Using CQL With FHIR (STU 3). Until that release is available, this logic will be provided in the CQMConcepts library (version 0.4.000+ (not yet available in MADiE as of 10/22/2026)).
+* An analogous function is defined for AllergyIntolerance to correct the issue there as well.
+
+This change corrects the logic, and will be included in the next release of Using CQL With FHIR (STU 3). Until that release is available, this logic will be provided in the CQMConcepts library (version 0.4.000+, available in MADiE as of 10/24/2026; see the [Refactored Index](refactored_index.html)).
 
 This is a known issue with the `prevalenceInterval` function in FHIRCommon 2.0.0. See: https://jira.hl7.org/browse/FHIR-59708 
 

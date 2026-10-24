@@ -12,6 +12,12 @@ Where shared libraries have been updated to US Quality Core 0.5.0 in MADiE, the 
 
 In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/pull/1/changes) branch of the dqm-content-cms-2026 repository has the content that is available in MADiE for easy comparison against the proposed draft content.
 
+> NOTE: CQMCommon is being refactored into CQMConcepts, CQMElements, and CQMInferences. Measure developers should consider whether to adopt the new approach in these refactored libraries, versus keeping the existing CQMCommon:
+> * 0.3.000 Versions: Introduce hospitalization event logic to improve hospitalization handling (especially of overlapping encounter periods prior to the inpatient encounter)
+> * 0.4.000 Versions: Introduce prevalencePeriod(), relevantDate(), and relevantPeriod() functions for Condition and AllergyIntolerance resources
+
+Per discussions with measure developers the week of 10/19, 0.3.000 is the current best-practice, with 0.4.000 being suggested as part of Round 1 review. Measure developers may pre-adopt 0.4.000. 
+
 | Library | QI Core version | US Quality Core version (Proposed) | Published or In MADiE (_as of 2026-10-20_) |
 |----|----|----|----|
 | AdultOutpatientEncounters | [4.19.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AdultOutpatientEncounters.cql) | [5.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AdultOutpatientEncounters.cql) | [4.20.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/AdultOutpatientEncounters.cql) |
@@ -19,12 +25,12 @@ In addition, the [in-madie](https://github.com/cqframework/dqm-content-cms-2026/
 | AHAOverall | [4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AHAOverall.cql) | [5.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AHAOverall.cql) | AHAOverallUSQualityPrototype 0.1.000 |
 | AlaraCommonFunctions | [1.10.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/AlaraCommonFunctions.cql) | [2.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AlaraCommonFunctions.cql) | [1.12.000 (_draft_)](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/AlaraCommonFunctions.cql)  |
 | Antibiotic | [1.11.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/Antibiotic.cql) | [2.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/Antibiotic.cql) | - |
-| ClaimCommon | - | - | 0.4.000 |
-| ClaimElements | - | - | 0.4.000 |
-| CQMCommon | [4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CQMCommon.cql) | [5.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMCommon.cql) | 5.2.000 |
-| CQMConcepts - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | - | 0.3.000  |
-| CQMElements - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | - | 0.3.000 |
-| CQMInferences - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | - | 0.3.000 |
+| ClaimCommon | - | - | [0.4.000](https://madie.cms.gov/cql-libraries/6ad8c979bf531c0659c86b75/edit/details) |
+| ClaimElements | - | - | [0.4.000](https://madie.cms.gov/cql-libraries/6ad8cc29bf531c0659c86b76/edit/details) |
+| CQMCommon | [4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CQMCommon.cql) | [5.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/CQMCommon.cql) | [5.2.000](https://madie.cms.gov/cql-libraries/6aaa9b2c520594208bf77b16/edit/details) |
+| CQMConcepts - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | - | [0.3.000](https://madie.cms.gov/cql-libraries/6ad7e87bbf531c0659c86b73/edit/details)<br/>[0.4.000](https://madie.cms.gov/cql-libraries/6add150147322f9f948a3dce/edit/details)  |
+| CQMElements - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | - | [0.3.000](https://madie.cms.gov/cql-libraries/6ad7ed9abf531c0659c86b74/edit/details)<br/>[0.4.000](https://madie.cms.gov/cql-libraries/6add14ea47322f9f948a3dcd/edit/details) |
+| CQMInferences - _part of the layer-based replacement for CQMCommon &mdash; measure developers should consider whether to adopt these libraries or keep the CQMCommon shared library_ | - | - | [0.3.000](https://madie.cms.gov/cql-libraries/6ad8d1c1bf531c0659c86b7a/edit/details)<br/>[0.4.000](https://madie.cms.gov/cql-libraries/6add150747322f9f948a3dcf/edit/details) |
 | CumulativeMedicationDuration | [6.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CumulativeMedicationDuration.cql) | - | [`hl7.fhir.us.cql.CumulativeMedicationDuration version '2.0.0'`](https://hl7.org/fhir/us/cql/Library-CumulativeMedicationDuration.html) |
 | FHIRHelpers | [4.4.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/FHIRHelpers.cql) | - | [`hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'`](https://hl7.org/fhir/uv/cql/Library-FHIRHelpers.html) |
 | FHIRBuilders | - | - | [0.1.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/FHIRBuilders.cql) |

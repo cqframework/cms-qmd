@@ -88,7 +88,7 @@ define "Encounter With Claim Items By Billable Period":
       such that D.claim.billablePeriod during E.period
 ```
 
-The examples throughout this section use the `serviced` element, but authors may need to use another, or even multiple methods, depending on the likelihood of the data being available (billing systems may not have a direct encounter reference, for example).
+Authors may need to use multiple methods to relate claim data to an encounter, depending on the likelihood of the data being available (billing systems may not have a direct encounter reference, for example).
 
 The most comprehensive approach would be to allow any of the 3 methods to be used:
 
@@ -118,13 +118,13 @@ For `Claim Item Procedure` elements, compose the tests as in the example above.
 
 ### Evidence of Diagnosis on an Encounter
 
-The "Claim Item Diagnosis" element can be used to search for evidence that a given diagnosis was active (i.e. prevalent) during an encounter, the provider submitted claim information may be used:
+The "Claim Item Diagnosis" element can be used to search for diagnoses related to an encounter in provider-submitted claim information. For example, the following expression searches for an Asthma diagnosis on any provider-submitted claim related to a given encounter:
 
 ```cql
 define "Encounter With Asthma":
   [USQualityCore.Encounter] E
     with "Claim Item Diagnosis" D
-      such that D.serviced during E.period
+      such that D.isRelatedTo(E)
         and D.diagnosis in "Asthma"
 ```
 

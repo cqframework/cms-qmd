@@ -63,7 +63,8 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Current allergies](pattern_allergies.html#current-allergies) | Retrieving allergies to a substance, and why `isActive()` is unsafe for the retrospective evaluation a measure performs. |
 | [No known allergies](pattern_allergies.html#no-known-allergies) | The confirmed and not-asked forms of a no-known-allergy assertion, and which one a measure should use. |
 | [Clinical and verification status](pattern_allergies.html#verified-allergies) | The FHIRCommon verification-status functions, in place of re-declaring them locally. |
-| [Onset, abatement, and prevalence interval](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#onset-abatement-and-prevalence-interval) | Computing a prevalence interval from onset, abatement, and resolution age &mdash; the reliable way to establish that an allergy was active during a period. |
+| [Onset, abatement, and prevalence period](pattern_allergies.html#onset-abatement-and-prevalence-period) | Computing a prevalence period from onset, abatement, and resolution age &mdash; the reliable way to establish that an allergy was active during a period. |
+| [Allergy date and relevant period](pattern_allergies.html#allergy-date-and-relevant-period) | `relevantDate()` (onset, falling back to asserted or recorded date) and `relevantPeriod()` functions. |
 | [Allergy examples](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#examples) | Worked examples for contrast dye, egg, and nut allergies. |
 {: .grid}
 
@@ -74,7 +75,8 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Active conditions](pattern_conditions.html#active-conditions) | Retrieving active conditions, the category functions that distinguish problem list items from encounter diagnoses, and the retrospective caveat on `isActive()`. |
 | [Verified conditions](pattern_conditions.html#verified-conditions) | Excluding refuted and entered-in-error conditions using the FHIRCommon verification-status functions. |
 | [History of a condition](pattern_conditions.html#history-of-a-condition) | Unioning the two condition profiles, since US Quality Core profiles problem list items and encounter diagnoses separately. |
-| [Onset, abatement, and prevalence period](pattern_conditions.html#onset-abatement-and-prevalence-period) | `prevalenceInterval()` and `abatementInterval()`, and why they are preferred over `clinicalStatus` for a question about a period. |
+| [Onset, abatement, and prevalence period](pattern_conditions.html#onset-abatement-and-prevalence-period) | `prevalenceInterval()` and `abatementInterval()`, and why they are preferred over `clinicalStatus` for a question about a period; `prevalencePeriod()` as the workaround for the [prevalence interval known issue](knownissues.html#prevalence-interval-issue). |
+| [Diagnosis date and relevant period](pattern_conditions.html#diagnosis-date-and-relevant-period) | `relevantDate()` (i.e. diagnosis date) and `relevantPeriod()` functions. |
 | [Diagnosis during an encounter](pattern_conditions.html#encounters-with-a-condition) | Establishing that a diagnosis was active during an encounter across `reasonCode`, `reasonReference`, and claim diagnoses. |
 | [Condition category](https://hl7.org/fhir/us/cql/en/patterns-condition.html#category) | Distinguishing problem list items, health concerns, and encounter diagnoses. |
 | [Relevant condition](https://hl7.org/fhir/us/cql/en/patterns-condition.html#relevant-condition) | Taking the condition from workflow context rather than searching for it. |

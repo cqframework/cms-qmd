@@ -92,16 +92,10 @@ US Quality Core defines a [US Quality Core NonPatient Observation](https://fhir.
 ```cql
 define "Hemodialysis Machine Availability":
   [USQualityCore.NonPatientObservation: "Hemodialysis"] Hemo
-    where Hemo.subject.getDevice().type ~ "Hemodialysis machine, device (physical object)"
-      and Hemo.value ~ "Equipment type available"
+    with [USQualityCore.Device] HemodialysisMachine
+      such that Hemo.subject.references(HemodialysisMachine)
+        and HemodialysisMachine.type ~ "Hemodialysis machine, device (physical object)"
+    where Hemo.value ~ "Equipment type available"
 ```
 
-CQMCommon provides `getCondition()`, `getProcedure()`, and `getLocation()` for resolving references, but there is no equivalent for Device, so the example declares one:
-
-```cql
-define fluent function getDevice(reference FHIR.Reference):
-  singleton from (
-    [USQualityCore.Device] Device
-      where reference.references(Device)
-  )
-```
+The referenced Device is resolved with a retrieve and the `references()` function from FHIRCommon. The reference-resolving functions in the QICore-based CQMCommon (`getCondition()`, `getLocation()`, and `getMedicationCode()`) have been removed in favor of this approach; see the [Function Index](refactored_index.html#cqmcommon-function-locations).

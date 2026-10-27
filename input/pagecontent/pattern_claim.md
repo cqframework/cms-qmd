@@ -128,7 +128,7 @@ define "Encounter With Asthma":
         and D.diagnosis in "Asthma"
 ```
 
-For the clinical representation, see [Evidence of Diagnosis during an Encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter). See also the [Billing-related Elements](pattern_billingrelated.html) discussion.
+For the clinical representation, see [Evidence of Diagnosis during an Encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter). See also the [Billing-related Elements](pattern_billingrelated.html#evidence-of-diagnosis-during-an-encounter) discussion.
 
 ### History of a Condition
 

@@ -404,19 +404,25 @@ define fluent function isReasonForVisit(condition FHIR.Condition, encounter FHIR
 @description: Returns a DateTime interval from start to end, with active (i.e. ongoing) semantics 
 as determined by the active parameter.
 @comment: The interval returned will be closed unless isActive is false and the end date is null.
-These semantics ensure that an unknown ending boundary is preserved. Note that this is not possible
-to represent in FHIR so conversion of an interval with an unknown ending boundary (i.e. null and 
-open) to a FHIR.Period should raise an error, not silently fail.
+These semantics ensure that an unknown ending boundary is preserved. 
+
+Note that the CQL Interval that this function returns differs from the 
+FHIR.Period datatype in that CQL intervals may have open boundaries while 
+a FHIR.Period always has closed boundaries.
 
 As well, if isActive is true, the end date is ignored, as an "active" period is one that is ongoing.
 
 NOTE: This function is being promoted to FHIRCommon in 3.0.0
+
+NOTE: This function has two minor differences that are included in the FHIRCommon 3.0.0
+version, but have not been applied to the 0.4.000 version of this Library. These will be
+included in the next release of CQMConcepts.
 */
 define function Period(start System.DateTime, end System.DateTime, isActive System.Boolean):
   if isActive or end is not null then
     Interval[start, if isActive then null else end]
   else
-    Interval[start, end)
+    Interval[start, null)
 
 /*
 @description: Returns an interval representing the normalized prevalence period of a given Condition resource.

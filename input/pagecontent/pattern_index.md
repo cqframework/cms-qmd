@@ -91,6 +91,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Encounters by class](pattern_encounters.html#encounters-by-class) | Filtering by `class`, which is required in US Core and single-cardinality, and why it is the preferred first filter. |
 | [Completed encounters in a period](pattern_encounters.html#completed-encounters-in-a-period) | Filtering on `status` and `period` together. |
 | [Encounters of a certain length](pattern_encounters.html#encounters-with-a-certain-length) | `lengthInDays()` and direct duration calculations, and what an absent period end implies. |
+| [Evidence of diagnosis during an encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) | Establishing that a diagnosis was active during an encounter across `reasonCode`, `reasonReference` |
 | [Hospitalization](pattern_encounters.html#hospitalization) | The CQMElements and CQMInferences expressions and functions that treat an inpatient stay and any immediately prior emergency department, observation, or outpatient surgery encounters as a single hospitalization event. |
 | [Present on admission](pattern_encounters.html#present-on-admission) | The clinical representation, using the `presentOnAdmission` extension on `Encounter.diagnosis`. |
 | [Principal diagnosis](pattern_encounters.html#principal-diagnosis) | The clinical representation, using `Encounter.diagnosis` with a `use` of billing and a `rank` of 1. |
@@ -203,6 +204,8 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 |----|----|
 | [Billing-related elements](pattern_billingrelated.html) | Why these elements have several representations, and how to choose between the clinical record, the claim, and the adjudicated response. |
 | [Preferring claim information](pattern_billingrelated.html#preferring-claim-information) | The shape for using claim information when it is present and falling back on the clinical record when it is not. |
+| [Evidence of diagnosis during an encounter](pattern_billingrelated.html#evidence-of-diagnosis-during-an-encounter) | Establishing that a diagnosis was active during an encounter across `reasonCode`, `reasonReference` |
+| [History of a condition](pattern_billingrelated.html#history-of-a-condition) | Establishing history of a condition. |
 | [Present on admission](pattern_billingrelated.html#present-on-admission) | Whether a diagnosis was present at admission, on the claim and in the clinical record; both use the same CMS indicator codes. |
 | [Principal diagnosis](pattern_billingrelated.html#principal-diagnosis) | The diagnosis chiefly responsible for the admission, identified by claim diagnosis type or by encounter diagnosis rank. |
 | [Primary procedure](pattern_billingrelated.html#primary-procedure) | The procedure identified as primary, on the claim and in the clinical record. |

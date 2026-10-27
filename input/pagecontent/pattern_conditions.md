@@ -22,7 +22,7 @@ Measure logic should use the verification-status functions defined in FHIRCommon
 
 ### Encounters with a condition
 
-See [Evidence of diagnosis during an encounter](https://hl7.org/fhir/us/cql/en/patterns-condition.html#evidence-of-diagnosis-during-an-encounter).
+See [Evidence of diagnosis during an encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter).
 
 In addition to encounter diagnoses, an encounter may specify additional information related to diagnoses, including reason for visit. See the [Encounter Patterns](pattern_encounters.html) for more information.
 

@@ -54,7 +54,7 @@ Per discussions with measure developers the week of 10/19, 0.3.000 is the curren
 
 ### Function Index
 
-This index lists functions from the QICore-based library versions and where they are now following the refactor.
+This index lists functions from the QICore-based library versions, and from the CQMCommon library being refactored, and where they are now following the refactor.
 
 #### QICoreCommon function locations
 
@@ -110,6 +110,54 @@ QICoreCommon is deprecated. Its functions are now distributed across three libra
 | ServiceNotRequested.code() | USQualityCoreCommon |
 | TaskRejected.code() | USQualityCoreCommon |
 | isHealthConcern() | USCoreCommon |
+{: .grid}
+
+#### CQMCommon function locations
+
+The QICore-based [CQMCommon 4.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/CQMCommon.cql) is being refactored into CQMConcepts, CQMElements, and CQMInferences (see the note in the [Library Index](#library-index)), with claim-related content moving to ClaimCommon and ClaimElements. Its definitions are distributed as follows:
+
+| CQMCommon definition | New location |
+|----|----|
+| "Measurement Period" parameter | CQMInferences |
+| DiagnosisRole code system | ClaimCommon, as "Diagnosis Role Codes" |
+| "Diagnosis Type" code system | ClaimCommon, as "Diagnosis Type Codes" |
+| "Procedure Type" code system | ClaimCommon, as "Procedure Type Codes" |
+| "Present On Admission Indicators" code system | ClaimCommon |
+| "Emergency Department Visit" value set | CQMConcepts |
+| "Encounter Inpatient" value set | CQMConcepts |
+| "Intensive Care Unit" value set | CQMConcepts |
+| "Observation Services" value set | CQMConcepts |
+| "Outpatient Surgery Service" value set | CQMConcepts |
+| "Present on Admission or Clinically Undetermined" value set | ClaimCommon |
+| "Billing" code | ClaimCommon (also FHIRCommon) |
+| Diagnosis type codes: "Admitting Diagnosis", "Clinical Diagnosis", "Differential Diagnosis", "Discharge Diagnosis", "Laboratory Diagnosis", "Nursing Diagnosis", "Prenatal Diagnosis", "Principal Diagnosis", "Radiology Diagnosis", "Remote Diagnosis", "Retrospective Diagnosis", "Self Diagnosis" | ClaimCommon |
+| "Primary procedure" code | ClaimCommon |
+| Present on admission codes: "POA-Y", "POA-N", "POA-W", "POA-1", "POA-U" | ClaimCommon |
+| "Inpatient Encounter" | CQMElements |
+| "ToDateInterval" / toDateInterval() | CQMConcepts |
+| "LengthInDays" / lengthInDays() | CQMConcepts |
+| "ED Visit" / edVisit() | CQMElements |
+| "Hospitalization" / hospitalization() | CQMElements |
+| "Hospitalization Locations" / hospitalizationLocations() | CQMElements |
+| "Hospitalization Length of Stay" / hospitalizationLengthOfStay() | CQMElements |
+| "Hospital Admission Time" / hospitalAdmissionTime() | CQMElements |
+| "Hospital Discharge Time" / hospitalDischargeTime() | CQMElements |
+| "Hospital Arrival Time" / hospitalArrivalTime() | CQMElements |
+| "Hospital Departure Time" / hospitalDepartureTime() | CQMElements |
+| "Emergency Department Arrival Time" / emergencyDepartmentArrivalTime() | CQMElements |
+| "HospitalizationWithObservationAndOutpatientSurgeryService" / hospitalizationWithObservationAndOutpatientSurgeryService() | Replaced by `"Hospitalization Encounters"()` (CQMElements), applied to the inpatient, observation, and outpatient surgery encounters, then `hospitalization()` |
+| "HospitalizationWithObservation" / hospitalizationWithObservation() | Replaced by `"Hospitalization Encounters"()` (CQMElements), applied to the inpatient and observation encounters, then `hospitalization()` |
+| "HospitalizationWithObservationLengthofStay" / hospitalizationWithObservationLengthofStay() | Replaced by `hospitalizationLengthOfStay()` (CQMElements) on an encounter returned by `"Hospitalization Encounters"()` |
+| "FirstInpatientIntensiveCareUnit" / firstInpatientIntensiveCareUnit() | CQMElements |
+| "EncounterDiagnosis" / encounterDiagnosis() | Removed; use `references()` (FHIRCommon) and `isReasonForVisit()` (CQMConcepts) as in the [Evidence of Diagnosis during an Encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) pattern. Note that despite its description, the 4.1.000 function used `reasonReference`, not `diagnosis` |
+| "GetCondition" / getCondition() | Removed; use a retrieve (or an element expression that contains one) with `references()` (FHIRCommon) |
+| "PrincipalDiagnosis" / principalDiagnosis() | Replaced by `"Claim Item Diagnosis"` (ClaimElements) with `isPrincipalDiagnosis()` (ClaimCommon); see the [Principal Diagnosis](pattern_billingrelated.html#principal-diagnosis) pattern |
+| claimDiagnosis() | Replaced by `"Claim Item Diagnosis"` (ClaimElements) with `isRelatedTo()` (ClaimElements) |
+| hasPrincipalDiagnosisOf() | Replaced by `"Claim Item Diagnosis"` (ClaimElements) with `isPrincipalDiagnosis()` (ClaimCommon), testing the diagnosis against the value set; see the [Principal Diagnosis](pattern_billingrelated.html#principal-diagnosis) pattern |
+| isDiagnosisPresentOnAdmission() | Replaced by `presentOnAdmission()` (USQualityCoreCommon) and the claim `onAdmission` element; see the [Present on Admission](pattern_billingrelated.html#present-on-admission) pattern |
+| "GetLocation" / getLocation() | Removed; use a retrieve (or an element expression that contains one, such as `"All Encounter Locations"` in CQMElements) with `references()` (FHIRCommon) |
+| "GetMedicationCode" / getMedicationCode() | Removed; use a retrieve (or an element expression that contains one) with `references()` (FHIRCommon) |
+| principalProcedure() | Replaced by `"Claim Item Procedure"` (ClaimElements) with `isPrimaryProcedure()` (ClaimCommon); see the [Primary Procedure](pattern_billingrelated.html#primary-procedure) pattern |
 {: .grid}
 
 ### Extension Index

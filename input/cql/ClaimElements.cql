@@ -14,13 +14,10 @@ be generalized to all claims: the US Quality Core and US Core models would be dr
 alone, the retrieves would become `[FHIR.Claim]`, and the row types would use `FHIR.Claim`. Nothing in
 the logic depends on the US Quality Core profile, so no other change should be needed.
 
-NOTE: This library is currently released in MADiE; this is a documentation copy
-https://madie.cms.gov/cql-libraries/6ad8cc29bf531c0659c86b76/edit/details
-
-NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
-repository; this is a convenience copy only, do not make changes in this library.
+NOTE: This library is currently released in MADiE; this is the development copy
+https://madie.cms.gov/cql-libraries/6ae96063420d45ce089c0e75/edit/details
 */
-library ClaimElements version '0.4.000'
+library ClaimElements version '0.5.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -29,7 +26,7 @@ using FHIR version '4.0.1'
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 include hl7.fhir.uv.cql.FHIRCommon version '2.0.0'
 
-include ClaimCommon version '0.4.000' called ClaimCommon
+include ClaimCommon version '0.5.000' called ClaimCommon
 
 context Patient
 

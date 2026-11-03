@@ -27,9 +27,9 @@ NOTE: This library is developed in the dqm-content-cms-2026 repository:
 https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/CQMConcepts.cql
 
 NOTE: This library is currently released in MADiE; this is the development copy
-https://madie.cms.gov/cql-libraries/6add150147322f9f948a3dce/edit/details
+https://madie.cms.gov/cql-libraries/6ae8ffa1420d45ce089c0e71/edit/details
 */
-library CQMConcepts version '0.4.000'
+library CQMConcepts version '0.5.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -521,4 +521,39 @@ define fluent function relevantPeriod(allergyIntolerance FHIR.AllergyIntolerance
     end of allergyIntolerance.abatementInterval(),
     allergyIntolerance.isActive()
   )
+
+/*
+@description: TESTING SUPPORT ONLY
+@comment: This definition exists only to support testing of the Emergency Department Visit value set.
+*/
+define "TESTING SUPPORT: Emergency Department Visit":
+  [Encounter: "Emergency Department Visit"]
+
+/*
+@description: TESTING SUPPORT ONLY
+@comment: This definition exists only to support testing of the Encounter Inpatient value set.
+*/
+define "TESTING SUPPORT: Encounter Inpatient":
+  [Encounter: "Encounter Inpatient"]
+
+/*
+@description: TESTING SUPPORT ONLY
+@comment: This definition exists only to support testing of the Intensive Care Unit value set.
+*/
+define "TESTING SUPPORT: Intensive Care Unit":
+  [Encounter: "Intensive Care Unit"]
+
+/*
+@description: TESTING SUPPORT ONLY
+@comment: This definition exists only to support testing of the Observation Services value set.
+*/
+define "TESTING SUPPORT: Observation Services":
+  [Encounter: "Observation Services"]
+
+/*
+@description: TESTING SUPPORT ONLY
+@comment: This definition exists only to support testing of the Outpatient Surgery Service value set.
+*/
+define "TESTING SUPPORT: Outpatient Surgery Service":
+  [Encounter: "Outpatient Surgery Service"]
 

@@ -6,9 +6,9 @@ NOTE: This library is developed in the dqm-content-cms-2026 repository:
 https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/CQMElements.cql
 
 NOTE: This library is currently released in MADiE; this is the development copy
-https://madie.cms.gov/cql-libraries/6add14ea47322f9f948a3dcd/edit/details
+https://madie.cms.gov/cql-libraries/6ae907ae420d45ce089c0e72/edit/details
 */
-library CQMElements version '0.4.000'
+library CQMElements version '0.5.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -17,7 +17,7 @@ using FHIR version '4.0.1'
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 include hl7.fhir.uv.cql.FHIRCommon version '2.0.0'
 
-include CQMConcepts version '0.4.000'
+include CQMConcepts version '0.5.000'
 include FHIRBuilders version '0.1.000' called Build
 
 context Patient

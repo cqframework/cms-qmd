@@ -26,13 +26,10 @@ of an institutional or professional type - is deliberately not defined here, for
 in MedicationCommon: naming it requires agreement on what it means. For now callers compose the
 predicates, as in `C.isActive() and C.isClaim() and (C.isInstitutional() or C.isProfessional())`.
 
-NOTE: This library is currently released in MADiE; this is a documentation copy
-https://madie.cms.gov/cql-libraries/6ad8c979bf531c0659c86b75/edit/details
-
-NOTE: Development on this library occurs in the http://github.com/cqframework/dqm-content-cms-2026 
-repository; this is a convenience copy only, do not make changes in this library.
+NOTE: This library is currently released in MADiE; this is the development copy
+https://madie.cms.gov/cql-libraries/6ae95f00420d45ce089c0e74/edit/details
 */
-library ClaimCommon version '0.4.000'
+library ClaimCommon version '0.5.000'
 
 using FHIR version '4.0.1'
 
@@ -504,3 +501,10 @@ define fluent function toServicedInterval(choice Choice<FHIR.date, FHIR.Period>)
     else 
       null as Interval<DateTime>
   end
+
+/*
+@description: TESTING SUPPORT ONLY
+@comment: This definition exists only to support testing of the Present on Admission or Clinically Undetermined value set.
+*/
+define "TESTING SUPPORT: Present on Admission or Clinically Undetermined":
+  "POA-Y" in "Present on Admission or Clinically Undetermined"

@@ -6,9 +6,9 @@ NOTE: This library is developed in the dqm-content-cms-2026 repository:
 https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/CQMInferences.cql
 
 NOTE: This library is currently released in MADiE; this is the development copy
-https://madie.cms.gov/cql-libraries/6add150747322f9f948a3dcf/edit/details
+https://madie.cms.gov/cql-libraries/6ae95ce9420d45ce089c0e73/edit/details
 */
-library CQMInferences version '0.4.000'
+library CQMInferences version '0.5.000'
 
 using USQualityCore version '0.5.0'
 using USCore version '6.1.0-derived'
@@ -17,7 +17,7 @@ using FHIR version '4.0.1'
 include hl7.fhir.uv.cql.FHIRHelpers version '4.0.1'
 include hl7.fhir.uv.cql.FHIRCommon version '2.0.0'
 
-include CQMElements version '0.4.000' called CQMElements
+include CQMElements version '0.5.000' called CQMElements
 
 parameter "Measurement Period" Interval<DateTime>
   default Interval[@2026-01-01T00:00:00.000Z, @2027-01-01T00:00:00.000Z)

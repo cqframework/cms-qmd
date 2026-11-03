@@ -7,7 +7,7 @@ This section provides guidance and best-practice recommendations for authoring C
 * [**Refactored Index**](refactored_index.html) - An index of where QI Core constructs are in the US Quality Core refactored shared content
 * [**Known Issues**](knownissues.html) - A listing of known issues impacting the expression of US Quality Core measures
 
-Feedback on the patterns, guidance, or recommendations can be provided by submitting a [New Issue](https://github.com/cqframework/cms-qmd/issues/new) to this repository.
+Feedback on the patterns, guidance, or recommendations can be provided by submitting a new issue to [CQL Issue Tracker](https://oncprojectracking.healthit.gov/support/projects/CQLIT/summary).
 
 ### Model Overview
 

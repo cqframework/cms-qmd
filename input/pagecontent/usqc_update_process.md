@@ -156,7 +156,7 @@ define "Bilateral Mastectomy Procedure":
     where BilateralMastectomyPerformed.performed.toInterval ( ) ends on or before end of "Measurement Period"
 ```
 
-To avoid potential confusion, when using multiple models, type names SHOULD be qualified.
+To avoid potential confusion, type names SHALL be qualified with the model name (see [Model qualifiers](pattern_fhir.html#model-qualifiers)).
 
 > NOTE: A CQL feature request has been submitted ([FHIR-58706](https://jira.hl7.org/browse/FHIR-58706)) to propose the ability to define an "alias" for a type name within a library, so that authors can say "In this library, the identifier "Encounter" always means the USQualityCore Encounter.
 

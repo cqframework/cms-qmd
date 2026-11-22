@@ -31,14 +31,14 @@ For both NutritionOrder and ImmunizationRecommendation, the translator does not 
 
 ```cql
 define "Immunization Recommendations":
-  [ImmunizationRecommendation] IR
+  [USQualityCore.ImmunizationRecommendation] IR
     where exists (
         IR.recommendation R
             where R.vaccineCode in "Vaccine Codes"
     )
 
 define "Oral Diet Nutrition Orders":
-  [NutritionOrder] O
+  [USQualityCore.NutritionOrder] O
     where O.oralDiet.type in "Oral Diet Types"
 ```
 
@@ -98,17 +98,17 @@ The fluent function `FHIRCommon.prevalenceInterval()` can be invoked on `Conditi
 
 ```cql
 define "Asthma Encounter Diagnosis Prevalent During Measurement Period":
-  [ConditionEncounterDiagnosis: "Asthma"] C
+  [USQualityCore.ConditionEncounterDiagnosis: "Asthma"] C
     where C.prevalenceInterval() during "Measurement Period"
 
 define "Asthma Problem List Item Prevalent During Measurement Period":
-  [ConditionProblemsHealthConcerns: "Asthma"] C
+  [USQualityCore.ConditionProblemsHealthConcerns: "Asthma"] C
     where C.prevalenceInterval() during "Measurement Period"
 
 define "Asthma Prevalent During Measurement Period":
   (
-    [ConditionEncounterDiagnosis: "Asthma"]
-      union [ConditionProblemsHealthConcerns: "Asthma"]
+    [USQualityCore.ConditionEncounterDiagnosis: "Asthma"]
+      union [USQualityCore.ConditionProblemsHealthConcerns: "Asthma"]
   ) C
     where C.prevalenceInterval() during "Measurement Period"
 ```
@@ -136,8 +136,8 @@ or perform the tests individually:
 
 ```cql
 define "Asthma Prevalent During Measurement Period":
-  ([ConditionEncounterDiagnosis: "Asthma"] C where C.prevalenceInterval() during "Measurement Period")
-    union ([ConditionProblemsHealthConcerns: "Asthma"] C where C.prevalenceInterval() during "Measurement Period")
+  ([USQualityCore.ConditionEncounterDiagnosis: "Asthma"] C where C.prevalenceInterval() during "Measurement Period")
+    union ([USQualityCore.ConditionProblemsHealthConcerns: "Asthma"] C where C.prevalenceInterval() during "Measurement Period")
 ```
 
 ### Seemingly Ambiguous Type References Are Allowed
@@ -154,7 +154,7 @@ using FHIR version '4.0.1'
 define Procedures: [Procedure]
 ```
 
-As a result, best-practice is to use the qualified name, `USQualityCore.Procedure` when talking about the USQualityCore Procedure profile, and `FHIR.Procedure` when talking about the base FHIR resource. Note that the way the model information files are currently defined, the use of the unqualified `Procedure` does not result in an ambiguous reference. This is because resolution of a type identifier in CQL first looks across all the models for any type that has a `label` with the given identifier. If the identifier can be unambiguously resolved as a label, that is the type that is used. Otherwise, resolution proceeds to looking for a type with the name:
+As a result, type names SHALL be qualified with the model name (see [Model qualifiers](pattern_fhir.html#model-qualifiers)): `USQualityCore.Procedure` when talking about the USQualityCore Procedure profile, and `FHIR.Procedure` when talking about the base FHIR resource. Note that the way the model information files are currently defined, the use of the unqualified `Procedure` does not result in an ambiguous reference. This is because resolution of a type identifier in CQL first looks across all the models for any type that has a `label` with the given identifier. If the identifier can be unambiguously resolved as a label, that is the type that is used. Otherwise, resolution proceeds to looking for a type with the name:
 
 | Model | Type | Label |
 |----|----|----|
@@ -168,7 +168,7 @@ Care should be taken not to rely on this behavior since it is currently inconsis
 
 **Workaround**:
 
-Artifact logic should _always_ use the model qualified name of the type.
+Artifact logic SHALL use the model-qualified name of the type (see [Model qualifiers](pattern_fhir.html#model-qualifiers)).
 
 ### Fluent Function Overloads
 

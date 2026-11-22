@@ -20,7 +20,8 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Must support elements](pattern_fhir.html#must-support-elements) | Restricting logic to elements an implementation is required to provide when it has them. |
 | [Modifier elements](pattern_fhir.html#modifier-elements) | Elements whose value changes the meaning of the resource, including modifier extensions and `implicitRules`. |
 | [Authoring against the US Quality Core model](pattern_fhir.html#authoring-against-the-us-quality-core-model) | Derived ModelInfo, the required version on the `using` declaration, and why extensions are reached through fluent functions. |
-| [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, model-qualified type names, and the status functions to apply when accessing a resource. |
+| [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, and the status functions to apply when accessing a resource. |
+| [Model qualifiers](pattern_fhir.html#model-qualifiers) | Qualifying type names with their model, retrieving by profile, and typing reusable functions against the most general type they need. |
 | [References](pattern_fhir.html#references) | Best-practice for dealing with references in FHIR resources. |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
 | [Terminology Functions](pattern_fhir.html#terminology-functions) | Helper functions for dealing with terminology-valued elements in FHIR: `includesCode()`, `codeOptions()`, `USQualityCoreCommon.toValueSet()`, and `USQualityCoreCommon.toActivityExtent()` |

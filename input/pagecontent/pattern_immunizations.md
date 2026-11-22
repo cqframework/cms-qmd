@@ -37,7 +37,7 @@ US Quality Core defines the [US Quality Core ImmunizationRecommendation](https:/
 
 ```cql
 define "Immunization Recommendations":
-  [ImmunizationRecommendation] IR
+  [USQualityCore.ImmunizationRecommendation] IR
     where exists (
         IR.recommendation R
             where R.vaccineCode in "Vaccine Codes"

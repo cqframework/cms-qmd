@@ -125,7 +125,7 @@ US Quality Core defines the [US Quality Core NutritionOrder](https://fhir.org/gu
 
 ```cql
 define "Oral Diet Nutrition Orders":
-  [NutritionOrder] O
+  [USQualityCore.NutritionOrder] O
     where O.oralDiet.type in "Oral Diet Types"
 ```
 

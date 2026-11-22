@@ -46,7 +46,7 @@ The prohibited-activity profiles constrain `doNotPerform` to a fixed value of `t
 For that reason, logic that tests `doNotPerform` against an unconstrained request should use the `is not true` predicate rather than an equality comparison, so that a missing element and an explicit `false` are treated alike:
 
 ```cql
-[MedicationRequest: "Antithrombotic Therapy"] MR
+[USQualityCore.MedicationRequest: "Antithrombotic Therapy"] MR
   where MR.doNotPerform is not true
 ```
 
@@ -58,7 +58,7 @@ Because a rejecting Task may be recorded against any request, logic that looks f
 
 ```cql
 define "Antithrombotic Therapy Requested":
-  [MedicationRequest: "Antithrombotic Therapy"] MR
+  [USQualityCore.MedicationRequest: "Antithrombotic Therapy"] MR
     without [USQualityCore.TaskRejected] T
       such that T.focus.references(MR) and T.code ~ FHIRCommon."Fulfill"
     where MR.status = 'active'

@@ -50,7 +50,7 @@ define "Antithrombotics Administered":
   [USQualityCore.MedicationAdministration: "Antithrombotic Therapy"]
 ```
 
-Under derived ModelInfo, the retrievable type name is the computable name of the profile with the model prefix removed, so the `USQualityCoreMedicationAdministration` profile is retrieved as `MedicationAdministration`. When multiple models are included in a library, qualifying the name of the type with the model name is a best-practice, both because it makes the source of the type explicit and because some patterns need to reach types the guide does not profile, such as `[USCore.SmokingStatusProfile]`.
+Under derived ModelInfo, the retrievable type name is the computable name of the profile with the model prefix removed, so the `USQualityCoreMedicationAdministration` profile is retrieved as `USQualityCore.MedicationAdministration`. Type names SHALL be qualified with the model name; see [Model qualifiers](#model-qualifiers).
 
 As described under [Modifier elements](#modifier-elements), status elements must be considered whenever data is accessed. The various common libraries provide fluent functions for the common cases, in both a singleton predicate form (e.g. `Allergy.isActive()`, from FHIRCommon) and a list-filtering form (e.g. `Allergies.active()`, from FHIRCommon):
 
@@ -60,6 +60,44 @@ define "Active Confirmed Allergies and Intolerances":
 ```
 
 See [Accessing Data](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#accessing-data) in the 3.0.0 ballot of the Using CQL With FHIR IG for further discussion (this topic is new in 3.0.0 and is not part of the published 2.0.0 version).
+
+### Model qualifiers
+
+Measure libraries include three models &mdash; USQualityCore, USCore, and FHIR &mdash; and the same type name can appear in more than one of them. Type names SHALL be qualified with the model name (e.g. `USQualityCore.Encounter` or `FHIR.Encounter`, not `Encounter`). An unqualified type name is resolved against all the included models, and with the current model info files it resolves to the FHIR base type rather than the US Quality Core profile, with no diagnostic; see [Seemingly Ambiguous Type References Are Allowed](knownissues.html#seemingly-ambiguous-type-references-are-allowed).
+
+For example, CQMCommon declares `hospitalization()` against an unqualified `Encounter`, so its parameter is a `FHIR.Encounter`, while CQMElements declares `hospitalization()` against `USQualityCore.Encounter`. In a measure that includes both, an unqualified `[Encounter]` retrieve returns `FHIR.Encounter` values, which only the CQMCommon function accepts, so the call silently uses CQMCommon rather than CQMElements.
+
+#### Retrieve by profile
+
+Consider the following expression:
+
+```cql
+define "Has Heart Transplant":
+  exists (
+    [USQualityCore.Procedure: "Heart Transplant"] HeartTransplant
+      with "Heart Failure Outpatient Encounter with History of Moderate or Severe LVSD" ModerateOrSevereLVSDHFOutpatientEncounter
+        such that HeartTransplant.performed.toInterval() starts before end of ModerateOrSevereLVSDHFOutpatientEncounter.period
+      where HeartTransplant.status = 'completed'
+  )
+```
+
+The same logic could be expressed with a `[FHIR.Procedure: "Heart Transplant"]` retrieve, and would compile and give the same results on the same data: `code`, `status`, and `performed` are all base R4 elements, and nothing in the expression uses a US Cor or US Quality Core extension, slice, or constraint. The case for the profile is not that the logic needs it, but what the retrieve tells implementers, and how the measure fits with the shared libraries:
+
+* **The retrieve is the data contract.** The type in a retrieve becomes the measure's data requirements: the profile, the code filter, and the elements used. "This measure needs Procedures conforming to US Quality Core, coded from Heart Transplant" is something an implementer can map and test against; `[FHIR.Procedure]` says only "some Procedure", with no must-support, binding, or cardinality behind it.
+* **It ties the measure to USCDI+ Quality.** The US Quality Core profiles are the agreed set of quality data elements that systems are expected to produce. Expressing the logic in terms of them shows that the measure only uses data inside that set, which is the basis for the feasibility of the measure.
+* **Types carry profile semantics.** Where a profile adds something, it is typed in the model: extensions and slices are accessible through fluent functions, and narrowed choice types and bindings are known to the translator. Logic written against the profile can use these directly and is checked at compile time; logic written against base FHIR has to reach into `extension` by URL, and mistakes only surface at run time. For example, `USQualityCoreCommon.recorded()` is declared against `USQualityCore.Procedure`, because the extension it reads is defined in the US Quality Core Procedure profile, so it cannot be called on a `FHIR.Procedure`.
+* **Logic does not have to test constraints the profile expresses.** For example, the US Quality Core ProcedureNotDone profile fixes `status` to `not-done`, so a `[USQualityCore.ProcedureNotDone]` retrieve does not need to test the status.
+* **It is consistent with the shared libraries.** CQMConcepts, CQMElements, and CQMInferences are typed against US Quality Core, as in `"Hospitalization Encounters"(List<USQualityCore.Encounter>)` and `hospitalization(USQualityCore.Encounter)`. A profile type is a subtype of its FHIR base type, so profiled data can be passed to FHIR-typed functions, but base FHIR data cannot be passed to profile-typed functions. Measures that use profile retrieves can call both kinds of function; measures that use base FHIR retrieves can only call the FHIR-typed ones.
+
+As a result:
+
+* Retrieves in measure logic SHOULD use the US Quality Core profile, because the retrieve is where the data contract is stated. Where US Quality Core does not profile the data, retrieve the US Core profile (e.g. `[USCore.SmokingStatusProfile]`).
+* Reusable functions SHOULD be written against the most general type they need, usually the FHIR base type, as FHIRCommon does with `FHIR.Observation` and similar parameters. This keeps the functions portable, and still callable with profiled data. Use a profile type in a function signature only when the function relies on something the profile adds.
+
+Note that:
+
+* **A profile retrieve returns conforming data.** It is an expectation of CQL that a retrieve of a profile type returns only instances that conform to that profile. How an evaluation environment meets that expectation is an implementation detail, but from a conformance perspective, this is what allows logic to be written against the profile type, relying on the elements, constraints, and extensions the profile defines.
+* **Base FHIR is more portable.** Logic that only uses base elements runs unchanged on non-US data, or under other implementation guides. Where that portability matters for a particular artifact, base FHIR is a defensible choice.
 
 ### References
 

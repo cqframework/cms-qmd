@@ -154,7 +154,7 @@ With those caveats, within the clinical record, present-on-admission is represen
 
 ```cql
 define "Encounter With Asthma Present On Admission":
-  [Encounter] E
+  [USQualityCore.Encounter] E
     where exists (
       E.diagnosis D
         with [FHIR.Condition: "Asthma"] C
@@ -173,7 +173,7 @@ Principal diagnosis is primarily a term used in hospital coding and reporting. H
 
 ```cql
 define "Encounter With Principal Diagnosis Of Asthma":
-  [Encounter] E
+  [USQualityCore.Encounter] E
     where exists (
       E.diagnosis D
         with [FHIR.Condition: "Asthma"] C
@@ -193,7 +193,7 @@ Primary procedure is primarily a term used in hospital coding and reporting. How
 
 ```cql
 define "Encounter With Primary Procedure Of Appendectomy":
-  [Encounter] E
+  [USQualityCore.Encounter] E
     where exists (
       E.diagnosis D
         with [FHIR.Procedure: "Appendectomy"] P
@@ -213,7 +213,7 @@ In US Quality Core, discharge disposition on an encounter is represented as a cl
 
 ```cql
 define "Encounter With Discharge Disposition To Home":
-  [Encounter] E
+  [USQualityCore.Encounter] E
     where E.hospitalization.dischargeDisposition in "Home Discharge Disposition Codes"
 ```
 
@@ -227,7 +227,7 @@ In FHIR, admission source on an encounter is represented using the `Encounter.ho
 
 ```cql
 define "Encounter With Admission From Emergency Department":
-  [Encounter] E
+  [USQualityCore.Encounter] E
     where E.hospitalization.admitSource in "Emergency Department Admission Source Codes"
 ```
 

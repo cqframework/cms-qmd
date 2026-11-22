@@ -12,7 +12,7 @@ For AllergyIntolerance, see also [modifier elements]({{site.data.fhir.ver.uscql}
 
 See [Current allergies]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#current-allergies).
 
-Quality measures are evaluated retrospectively, against the data that exists at the time of evaluation rather than during the measurement period. Because `isActive()` tests the *current* `clinicalStatus`, it may not be able to be used to establish that an allergy was active during the measurement period. See [Onset, abatement, and prevalence period](#onset-abatement-and-prevalence-period) below.
+Quality measures are evaluated retrospectively, against the data that exists at the time of evaluation rather than during the measurement period. Because `FHIRCommon.isActive()` tests the *current* `clinicalStatus`, it may not be able to be used to establish that an allergy was active during the measurement period. See [Onset, abatement, and prevalence period](#onset-abatement-and-prevalence-period) below.
 
 ### Onset, abatement, and prevalence period
 
@@ -47,13 +47,13 @@ define "Egg Allergy During Measurement Period":
 Note the following about the boundaries of both functions:
 
 * An allergy/intolerance with no starting date (no onset for `prevalencePeriod()`; no onset, asserted, or recorded date for `relevantPeriod()`) has a closed null starting boundary, so it is treated as present from the beginning of time.
-* The ending boundary is determined by `isActive()`, which is false when `clinicalStatus` is missing. An allergy/intolerance with no abatement then has an unknown (open null) ending boundary, so comparisons such as `overlaps "Measurement Period"` may return null rather than true.
+* The ending boundary is determined by `FHIRCommon.isActive()`, which is false when `clinicalStatus` is missing. An allergy/intolerance with no abatement then has an unknown (open null) ending boundary, so comparisons such as `overlaps "Measurement Period"` may return null rather than true.
 
 ### No Known Allergies
 
 See [No known allergies]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#no-known-allergies).
 
-USCoreElements distinguishes `No Known Allergies (Confirmed)` from `No Known Allergies (Not Asked)`; a measure asserting that a patient has no known allergies should use the confirmed form. Both definitions test `isActive()`, so the retrospective consideration above applies to them.
+USCoreElements distinguishes `No Known Allergies (Confirmed)` from `No Known Allergies (Not Asked)`; a measure asserting that a patient has no known allergies should use the confirmed form. Both definitions test `FHIRCommon.isActive()`, so the retrospective consideration above applies to them.
 
 ### Verified Allergies
 

@@ -34,7 +34,7 @@ using USQualityCore version '0.5.0'
 
 The version is not optional. For quality measures, all CQL SHALL use FHIR-based data models, and the model declaration SHALL include a version &mdash; see [CQL Data Model](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html#data-model) in the Quality Measure IG.
 
-This differs from the [profile-informed authoring]({{site.data.fhir.ver.cql}}/patterns.html#profile-informed-authoring) approach used by QI-Core, which flattened profiles so that slices and extensions appeared as ordinary elements. Under derived ModelInfo, extension-backed data is reached through fluent functions rather than named elements &mdash; `Patient.race()` rather than `Patient.race`. For the full list of affected elements and the function to use for each, see the Extension Index in the [Refactored Index](refactored_index.html).
+This differs from the [profile-informed authoring]({{site.data.fhir.ver.cql}}/patterns.html#profile-informed-authoring) approach used by QI-Core, which flattened profiles so that slices and extensions appeared as ordinary elements. Under derived ModelInfo, extension-backed data is reached through fluent functions rather than named elements &mdash; `Patient.race()` (from USCoreCommon) rather than `Patient.race`. For the full list of affected elements and the function to use for each, see the Extension Index in the [Refactored Index](refactored_index.html).
 
 > NOTE: The Patterns page published in US Quality Core 0.5.0 describes primitives, extensions, and choice types in terms of profile-informed authoring, which does not match the derived ModelInfo that guide ships. It should not be referenced; use the guidance referred to here instead. That page has been removed for the next ballot publication of US Quality Core, and no further publication of the 0.5.0 branch is expected.
 
@@ -52,7 +52,7 @@ define "Antithrombotics Administered":
 
 Under derived ModelInfo, the retrievable type name is the computable name of the profile with the model prefix removed, so the `USQualityCoreMedicationAdministration` profile is retrieved as `MedicationAdministration`. When multiple models are included in a library, qualifying the name of the type with the model name is a best-practice, both because it makes the source of the type explicit and because some patterns need to reach types the guide does not profile, such as `[USCore.SmokingStatusProfile]`.
 
-As described under [Modifier elements](#modifier-elements), status elements must be considered whenever data is accessed. The various common libraries provide fluent functions for the common cases, in both a singleton predicate form (e.g. `Allergy.isActive()`) and a list-filtering form (e.g. `Allergies.active()`):
+As described under [Modifier elements](#modifier-elements), status elements must be considered whenever data is accessed. The various common libraries provide fluent functions for the common cases, in both a singleton predicate form (e.g. `Allergy.isActive()`, from FHIRCommon) and a list-filtering form (e.g. `Allergies.active()`, from FHIRCommon):
 
 ```cql
 define "Active Confirmed Allergies and Intolerances":
@@ -134,12 +134,12 @@ code "Venous foot pump, device (physical object)": '442023007' from "SNOMED CT"
 ```
 ### Terminology Functions
 
-FHIRCommon includes several functions to faclitate the use of terminology-valued elements in FHIR:
+FHIRCommon includes several functions to facilitate the use of terminology-valued elements in FHIR:
 
 * `.includesCode(code)` - Returns true if a list of CodeableConcepts contains the given code. This is the CQL 1.5 equivalent of the CQL 2.0 `~contains` operator.
 * `.codeOptions()` - Returns the codeOptions value set for a CodeableConcept, if present, null otherwise. See [Negation Patterns](pattern_negation.html) for more information.
-* `.toValueSet()` - Returns the CQL ValueSet representation for a canonical reference
-* `.toActivityExtent()` - Returns the _extent_ of an activity, either a CodeableConcept, or a ValueSet
+* `USQualityCoreCommon.toValueSet()` - Returns the CQL ValueSet representation for a canonical reference
+* `USQualityCoreCommon.toActivityExtent()` - Returns the _extent_ of an activity, either a CodeableConcept, or a ValueSet
 
 > NOTE: This section has been proposed for inclusion in the 3.0.0 ballot version of the Using CQL With FHIR IG: https://jira.hl7.org/browse/FHIR-59072
 
@@ -147,7 +147,7 @@ FHIRCommon includes several functions to faclitate the use of terminology-valued
 
 See [Interval Values](https://cql.hl7.org/02-authorsguide.html#interval-values) in the Clinical Quality Language Author's Guide for a discussion of intervals and the available operations in CQL generally.
 
-Within FHIR specifically, interval-valued elements are common, and the following helper functions are defined to facilitate access to time-valued elements as intervals and interval components, simplifying the use of FHIR resource elements in CQL timing phrases:
+Within FHIR specifically, interval-valued elements are common, and the following helper functions are defined in FHIRCommon to facilitate access to time-valued elements as intervals and interval components, simplifying the use of FHIR resource elements in CQL timing phrases:
 
 * `.toInterval()` - Converts a choice of FHIR timing types to an `Interval<DateTime>`
 * `.earliest()` - Converts a choice of FHIR timing types to the earliest `DateTime`

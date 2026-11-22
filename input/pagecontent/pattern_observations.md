@@ -60,7 +60,7 @@ Measures use the [US Quality Core Observation Screening Assessment](https://fhir
 
 See [Simple observations]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#simple-observations).
 
-Measures use the [US Quality Core Simple Observation](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-simple-observation.html) profile for observations not covered by a more specific profile, filtered by `code`. Because this profile does not fix a status, the status test matters more here than elsewhere &mdash; and where preliminary results are in scope, `isResulted()` is not sufficient:
+Measures use the [US Quality Core Simple Observation](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-simple-observation.html) profile for observations not covered by a more specific profile, filtered by `code`. Because this profile does not fix a status, the status test matters more here than elsewhere &mdash; and where preliminary results are in scope, `FHIRCommon.isResulted()` is not sufficient:
 
 ```cql
 define "Pap Test With Results":

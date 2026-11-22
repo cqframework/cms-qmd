@@ -23,10 +23,10 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, model-qualified type names, and the status functions to apply when accessing a resource. |
 | [References](pattern_fhir.html#references) | Best-practice for dealing with references in FHIR resources. |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
-| [Terminology Functions](pattern_fhir.html#terminology-functions) | Helper functions for dealing with terminology-valued elements in FHIR: `includesCode()`, `codeOptions()`, `toValueSet()`, and `toActivityExtent()` |
+| [Terminology Functions](pattern_fhir.html#terminology-functions) | Helper functions for dealing with terminology-valued elements in FHIR: `includesCode()`, `codeOptions()`, `USQualityCoreCommon.toValueSet()`, and `USQualityCoreCommon.toActivityExtent()` |
 | [Primitives]({{site.data.fhir.ver.cql}}/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
 | [Choices]({{site.data.fhir.ver.cql}}/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
-| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `systolic()` and `diastolic()`. |
+| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `USCoreCommon.systolic()` and `USCoreCommon.diastolic()`. |
 | [Extensions]({{site.data.fhir.ver.cql}}/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html). |
 | [Missing Information]({{site.data.fhir.ver.cql}}/patterns.html#missing-information) | Null propagation, the `is true` and `is not true` predicates, and the treatment of `unknown` status codes. |
 | [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Being explicit about comparison precision, typically `day of`. |
@@ -48,11 +48,11 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | Pattern | Description |
 |----|----|
 | [Patient age](pattern_patient.html#patient-age) | Age calculated as of a specific date, usually the start of the measurement period, and the precision pitfalls of the DateTime overloads. |
-| [Patient race and ethnicity](pattern_patient.html#patient-race-and-ethnicity) | Reading the US Core race and ethnicity extensions through the `race()` and `ethnicity()` fluent functions, and the tuple each returns. |
+| [Patient race and ethnicity](pattern_patient.html#patient-race-and-ethnicity) | Reading the US Core race and ethnicity extensions through the `USCoreCommon.race()` and `USCoreCommon.ethnicity()` fluent functions, and the tuple each returns. |
 | [Patient name]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-name) | Accessing a patient's name. |
 | [Patient birth date]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-birthdate) | Accessing the birth date directly rather than through an age calculation. |
 | [Patient gender]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-gender) | The administrative gender element and its required binding. |
-| [Patient sex]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-sex) | `birthSex()`, the deprecated `sex()`, and the forward-compatible `individualSex()`. |
+| [Patient sex]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-sex) | `USCoreCommon.birthSex()`, the deprecated `USCoreCommon.sex()`, and the forward-compatible `USCoreCommon.individualSex()`. |
 | [Patient deceased]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-deceased) | The deceased choice element, as either a boolean or a date and time. |
 {: .grid}
 
@@ -64,7 +64,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [No known allergies](pattern_allergies.html#no-known-allergies) | The confirmed and not-asked forms of a no-known-allergy assertion, and which one a measure should use. |
 | [Clinical and verification status](pattern_allergies.html#verified-allergies) | The FHIRCommon verification-status functions, in place of re-declaring them locally. |
 | [Onset, abatement, and prevalence period](pattern_allergies.html#onset-abatement-and-prevalence-period) | Computing a prevalence period from onset, abatement, and resolution age &mdash; the reliable way to establish that an allergy was active during a period. |
-| [Allergy date and relevant period](pattern_allergies.html#allergy-date-and-relevant-period) | `relevantDate()` (onset, falling back to asserted or recorded date) and `relevantPeriod()` functions. |
+| [Allergy date and relevant period](pattern_allergies.html#allergy-date-and-relevant-period) | `CQMConcepts.relevantDate()` (onset, falling back to asserted or recorded date) and `CQMConcepts.relevantPeriod()` functions. |
 | [Allergy examples]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#examples) | Worked examples for contrast dye, egg, and nut allergies. |
 {: .grid}
 
@@ -75,8 +75,8 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Active conditions](pattern_conditions.html#active-conditions) | Retrieving active conditions, the category functions that distinguish problem list items from encounter diagnoses, and the retrospective caveat on `isActive()`. |
 | [Verified conditions](pattern_conditions.html#verified-conditions) | Excluding refuted and entered-in-error conditions using the FHIRCommon verification-status functions. |
 | [History of a condition](pattern_conditions.html#history-of-a-condition) | Unioning the two condition profiles, since US Quality Core profiles problem list items and encounter diagnoses separately. |
-| [Onset, abatement, and prevalence period](pattern_conditions.html#onset-abatement-and-prevalence-period) | `prevalenceInterval()` and `abatementInterval()`, and why they are preferred over `clinicalStatus` for a question about a period; `prevalencePeriod()` as the workaround for the [prevalence interval known issue](knownissues.html#prevalence-interval-issue). |
-| [Diagnosis date and relevant period](pattern_conditions.html#diagnosis-date-and-relevant-period) | `relevantDate()` (i.e. diagnosis date) and `relevantPeriod()` functions. |
+| [Onset, abatement, and prevalence period](pattern_conditions.html#onset-abatement-and-prevalence-period) | `prevalenceInterval()` and `abatementInterval()`, and why they are preferred over `clinicalStatus` for a question about a period; `CQMConcepts.prevalencePeriod()` as the workaround for the [prevalence interval known issue](knownissues.html#prevalence-interval-issue). |
+| [Diagnosis date and relevant period](pattern_conditions.html#diagnosis-date-and-relevant-period) | `CQMConcepts.relevantDate()` (i.e. diagnosis date) and `CQMConcepts.relevantPeriod()` functions. |
 | [Diagnosis during an encounter](pattern_conditions.html#encounters-with-a-condition) | Establishing that a diagnosis was active during an encounter across `reasonCode`, `reasonReference`, and claim diagnoses. |
 | [Condition category]({{site.data.fhir.ver.uscql}}/en/patterns-condition.html#category) | Distinguishing problem list items, health concerns, and encounter diagnoses. |
 | [Relevant condition]({{site.data.fhir.ver.uscql}}/en/patterns-condition.html#relevant-condition) | Taking the condition from workflow context rather than searching for it. |
@@ -90,7 +90,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Encounters by direct-reference code](pattern_encounters.html#accessing-encounters-with-a-direct-reference-code) | Why a direct-reference code cannot filter the multi-cardinality `type` element in a retrieve, and the two workarounds. |
 | [Encounters by class](pattern_encounters.html#encounters-by-class) | Filtering by `class`, which is required in US Core and single-cardinality, and why it is the preferred first filter. |
 | [Completed encounters in a period](pattern_encounters.html#completed-encounters-in-a-period) | Filtering on `status` and `period` together. |
-| [Encounters of a certain length](pattern_encounters.html#encounters-with-a-certain-length) | `lengthInDays()` and direct duration calculations, and what an absent period end implies. |
+| [Encounters of a certain length](pattern_encounters.html#encounters-with-a-certain-length) | `CQMConcepts.lengthInDays()` and direct duration calculations, and what an absent period end implies. |
 | [Evidence of diagnosis during an encounter](pattern_encounters.html#evidence-of-diagnosis-during-an-encounter) | Establishing that a diagnosis was active during an encounter across `reasonCode`, `reasonReference` |
 | [Hospitalization](pattern_encounters.html#hospitalization) | The CQMElements and CQMInferences expressions and functions that treat an inpatient stay and any immediately prior emergency department, observation, or outpatient surgery encounters as a single hospitalization event. |
 | [Present on admission](pattern_encounters.html#present-on-admission) | The clinical representation, using the `presentOnAdmission` extension on `Encounter.diagnosis`. |
@@ -105,7 +105,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 
 | Pattern | Description |
 |----|----|
-| [Vital signs](pattern_observations.html#vital-signs) | Retrieving each US Core vital sign profile, and reading blood pressure components through `systolic()` and `diastolic()`. |
+| [Vital signs](pattern_observations.html#vital-signs) | Retrieving each US Core vital sign profile, and reading blood pressure components through `USCoreCommon.systolic()` and `USCoreCommon.diastolic()`. |
 | [Laboratory results](pattern_observations.html#laboratory-result) | The laboratory result profile, characterized by `code` with `category` fixed to laboratory. |
 | [Clinical results](pattern_observations.html#clinical-result) | Non-laboratory clinical test results, including measurements obtained from imaging. |
 | [Screening and assessment](pattern_observations.html#surveys-and-assessments) | Survey observations, including panels and multi-select answers. |
@@ -115,9 +115,9 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Smoking status](pattern_observations.html#smoking-status) | The US Core smoking status profile. |
 | [Non-patient observations](pattern_observations.html#observations-non-patient) | Observations about resource use and availability rather than a patient. |
 | [Observations not done](pattern_observations.html#observations-not-done) | Representing an observation that was not performed, as a rejected proposal. |
-| [Observation status]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#status) | `isResulted()` and the individual status predicates, in place of inline status lists. |
-| [Observation category]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#category) | The category functions, including `isLaboratory()`, `isVitalSign()`, and `isSurvey()`. |
-| [Interpretation]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#interpretation) | The `positive()` and `negative()` filters, and why the element cannot be relied on. |
+| [Observation status]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#status) | `FHIRCommon.isResulted()` and the individual status predicates, in place of inline status lists. |
+| [Observation category]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#category) | The category functions, including `FHIRCommon.isLaboratory()`, `FHIRCommon.isVitalSign()`, and `FHIRCommon.isSurvey()`. |
+| [Interpretation]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#interpretation) | The `USCoreCommon.positive()` and `USCoreCommon.negative()` filters, and why the element cannot be relied on. |
 | [Timings]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#timings) | Filtering and ordering observations by effective time, including specimen collection time. |
 | [Observation elements]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#observation-elements) | The elements common across the observation profiles. |
 | [Other observations]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#other-observations) | Observations outside the profiled categories. |
@@ -194,7 +194,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Explanation of Benefit items]({{site.data.fhir.ver.uscql}}/en/patterns-claim.html#eob-items) | Selecting the items of an adjudicated response; superseded by the ClaimElements definitions above. |
 | [Mammography claim]({{site.data.fhir.ver.uscql}}/en/patterns-claim.html#mammography-claim) | A worked example over claim and EoB items, built on the superseded item definitions. |
 | [Coverage status](pattern_coverage.html#coverage-status) | Restricting to active coverage, the only modifier element on the resource. |
-| [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `memberID()` and `policyNumber()`, and the invariant requiring one of them. |
+| [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `USCoreElements.memberID()` and `USCoreElements.policyNumber()`, and the invariant requiring one of them. |
 | [Payer](pattern_coverage.html#payer) | `SDE Payer` for supplemental data reporting, and the status filter it omits. |
 {: .grid}
 

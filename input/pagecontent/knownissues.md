@@ -94,7 +94,7 @@ The following vital-signs profiles in US Core 6.1.0 do not specify a primary cod
 
 ### Cannot Resolve Fluent Functions on Choices
 
-The fluent function `.prevalenceInterval()` can be invoked on `ConditionEncounterDiagnosis` and `ConditionProblemsHealthConcerns`, but it cannot be invoked on `Choice<ConditionEncounterDiagnosis, ConditionProblemsHealthConvers>`:
+The fluent function `FHIRCommon.prevalenceInterval()` can be invoked on `ConditionEncounterDiagnosis` and `ConditionProblemsHealthConcerns`, but it cannot be invoked on `Choice<ConditionEncounterDiagnosis, ConditionProblemsHealthConvers>`:
 
 ```cql
 define "Asthma Encounter Diagnosis Prevalent During Measurement Period":

@@ -92,7 +92,7 @@ define "Encounters With Diabetes As Reason For Visit":
       )
 ```
 
-Not all systems populate both `reasonCode` and `reasonReference`, so logic should allow for either. Where the prevalence period or onset of the condition is needed, `reasonReference` is required, because that information lives on the Condition resource rather than the Encounter. The `isReasonForVisit()` function can be used to test whether a given condition is referenced in the `reasonReference` element of the encounter:
+Not all systems populate both `reasonCode` and `reasonReference`, so logic should allow for either. Where the prevalence period or onset of the condition is needed, `reasonReference` is required, because that information lives on the Condition resource rather than the Encounter. The `CQMConcepts.isReasonForVisit()` function can be used to test whether a given condition is referenced in the `reasonReference` element of the encounter:
 
 ```cql
 define "Encounters With Diabetes As Reason For Visit":
@@ -270,9 +270,9 @@ The key function facilitating the treatment of a set of encounters as a hospital
 
 1. Determines the set of "hospitalization periods" that are represented (i.e. a series of encounters in which each encounter starts no more than 1 hour after the end of the previous encounter, or overlaps it).
 2. Returns the _last_ encounter (by start time) in each of these series as the "Hospitalization Encounter" for the series.
-3. Each "Hospitalization Encounter" lists the included encounters in the series, accessible via the `includedEncounters()` function.
+3. Each "Hospitalization Encounter" lists the included encounters in the series, accessible via the `CQMElements.includedEncounters()` function.
 
-Note that the "Hospitalization Encounter" keeps the elements of the last encounter, including its `period`, so `Encounter.period` is the period of the last encounter only. Use the `hospitalization()` function (below) for the interval of the hospitalization event as a whole.
+Note that the "Hospitalization Encounter" keeps the elements of the last encounter, including its `period`, so `Encounter.period` is the period of the last encounter only. Use the `CQMElements.hospitalization()` function (below) for the interval of the hospitalization event as a whole.
 
 The encounters passed to the function determine which encounters are grouped. Every series produces a result, including a series that does not end with an inpatient encounter (for example, an emergency department visit that was not followed by an admission), so logic concerned with inpatient hospitalizations should filter on the type of the result:
 
@@ -306,7 +306,7 @@ The remaining functions dealing with hospitalization data elements make use of t
 
 #### Included Encounters
 
-The `includedEncounters()` function returns the encounters in the hospitalization event, in order by start time, ending with the "Hospitalization Encounter" itself:
+The `CQMElements.includedEncounters()` function returns the encounters in the hospitalization event, in order by start time, ending with the "Hospitalization Encounter" itself:
 
 ```cql
 define "Included Encounters":
@@ -319,7 +319,7 @@ define "Included Encounters":
 
 #### Emergency Department Visit
 
-The `edVisit()` function takes a "Hospitalization Encounter" and returns the most recent `finished` Emergency Department encounter during the hospitalization event.
+The `CQMElements.edVisit()` function takes a "Hospitalization Encounter" and returns the most recent `finished` Emergency Department encounter during the hospitalization event.
 
 Note that the Emergency Department encounter must have been included in the call to `"Hospitalization Encounters"`; otherwise the `edVisit()` function will return `null` because the emergency department visit will not be in the included encounters for the "Hospitalization Encounter".
 
@@ -358,7 +358,7 @@ For comparison, see the [QICore Version](https://github.com/cqframework/dqm-cont
 
 #### Observation and Outpatient Surgery Services
 
-The `observationVisit()` and `outpatientSurgeryVisit()` functions take a "Hospitalization Encounter" and return the most recent `finished` Observation or Outpatient Surgery Services encounter during the hospitalization event, respectively.
+The `CQMElements.observationVisit()` and `CQMElements.outpatientSurgeryVisit()` functions take a "Hospitalization Encounter" and return the most recent `finished` Observation or Outpatient Surgery Services encounter during the hospitalization event, respectively.
 
 As with the `edVisit()` function, the observation and outpatient surgery service encounters must have been included for consideration in the "Hospitalization Encounter" determination; otherwise, these functions will result in `null` because the "Hospitalization Encounter" will not have them in its included encounters list.
 
@@ -380,9 +380,9 @@ define "Hospitalization Including Outpatient Surgery":
 
 #### Hospitalization Period and Length Of Stay
 
-The `hospitalization()` function returns the total interval from admission to discharge for the given encounter, from the start of the first included encounter to the end of the last included encounter in the hospitalization event.
+The `CQMElements.hospitalization()` function returns the total interval from admission to discharge for the given encounter, from the start of the first included encounter to the end of the last included encounter in the hospitalization event.
 
-The `hospitalizationLengthOfStay()` function returns the length of that interval in days, calculated with the `lengthInDays()` function (i.e. the difference in calendar days between the start and end of the interval):
+The `CQMElements.hospitalizationLengthOfStay()` function returns the length of that interval in days, calculated with the `CQMConcepts.lengthInDays()` function (i.e. the difference in calendar days between the start and end of the interval):
 
 ```cql
 define "Hospitalization Over 120 Days":
@@ -392,11 +392,11 @@ define "Hospitalization Over 120 Days":
 
 #### Admission and Discharge Time
 
-The `hospitalAdmissionTime()` and `hospitalDischargeTime()` functions return the beginning and ending of a hospitalization event, respectively. The admission time is the start of `hospitalization()`, i.e. the start of the first included encounter, and the discharge time is the end of the period of the "Hospitalization Encounter" itself.
+The `CQMElements.hospitalAdmissionTime()` and `CQMElements.hospitalDischargeTime()` functions return the beginning and ending of a hospitalization event, respectively. The admission time is the start of `hospitalization()`, i.e. the start of the first included encounter, and the discharge time is the end of the period of the "Hospitalization Encounter" itself.
 
 #### Hospitalization Locations
 
-The `hospitalizationLocations()` function returns all the `location` elements from all included encounters in a hospitalization event. This set is the basis for determining facility- and location-specific elements such as arrival and departure time.
+The `CQMElements.hospitalizationLocations()` function returns all the `location` elements from all included encounters in a hospitalization event. This set is the basis for determining facility- and location-specific elements such as arrival and departure time.
 
 The following functions return the same information as tuples across a list of "Hospitalization Encounters", which is useful when the logic needs to work with the locations directly:
 
@@ -419,13 +419,13 @@ define "First Emergency Department Arrival":
 
 #### Arrival and Departure Time
 
-The `hospitalArrivalTime()` and `hospitalDepartureTime()` functions determine the earliest arrival and latest departure times for any location within any included encounter in a hospitalization event. Location entries are ordered by the start of their period, so the arrival time is the start of the first location entry and the departure time is the end of the last.
+The `CQMElements.hospitalArrivalTime()` and `CQMElements.hospitalDepartureTime()` functions determine the earliest arrival and latest departure times for any location within any included encounter in a hospitalization event. Location entries are ordered by the start of their period, so the arrival time is the start of the first location entry and the departure time is the end of the last.
 
-In addition, the `emergencyDepartmentArrivalTime()` function determines the earliest arrival to an emergency department location within a hospitalization event. This function resolves the location references against the available Location resources, and considers a location to be an emergency department if its type is an emergency room or emergency trauma unit (the `ER` and `ETU` codes from the v3 RoleCode code system), so Location resources must be available to the evaluation.
+In addition, the `CQMElements.emergencyDepartmentArrivalTime()` function determines the earliest arrival to an emergency department location within a hospitalization event. This function resolves the location references against the available Location resources, and considers a location to be an emergency department if its type is an emergency room or emergency trauma unit (the `ER` and `ETU` codes from the v3 RoleCode code system), so Location resources must be available to the evaluation.
 
 #### Intensive Care Unit
 
-The `firstInpatientIntensiveCareUnit()` function returns the first location entry of the given encounter whose Location type is in the Intensive Care Unit value set and whose period is during the period of the encounter. Unlike the other functions in this section, it considers only the locations of the given encounter itself, not those of any included encounters, so it can be used with any encounter. Like `emergencyDepartmentArrivalTime()`, it requires Location resources to be available to the evaluation.
+The `CQMElements.firstInpatientIntensiveCareUnit()` function returns the first location entry of the given encounter whose Location type is in the Intensive Care Unit value set and whose period is during the period of the encounter. Unlike the other functions in this section, it considers only the locations of the given encounter itself, not those of any included encounters, so it can be used with any encounter. Like `emergencyDepartmentArrivalTime()`, it requires Location resources to be available to the evaluation.
 
 ```cql
 define "Hospitalization With Intensive Care Unit Stay":
@@ -437,7 +437,7 @@ define "Hospitalization With Intensive Care Unit Stay":
 
 > NOTE: Normalized encounters are a draft feature being considered to help simplify hospitalization logic. The current best-practice approach is the `"Hospitalization Encounters"` function.
 
-The `"Normalize Encounters"` function determines the same hospitalization periods as `"Hospitalization Encounters"`, but returns a new "normalized" encounter for each one, rather than the last encounter in the series. The normalized encounter has:
+The CQMElements `"Normalize Encounters"` function determines the same hospitalization periods as `"Hospitalization Encounters"`, but returns a new "normalized" encounter for each one, rather than the last encounter in the series. The normalized encounter has:
 
 * An `id` equal to the `id` of the last included encounter plus `-primary`
 * The same `status`, `class`, `type`, and `subject` as the last included encounter

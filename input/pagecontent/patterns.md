@@ -30,7 +30,7 @@ For guidance on authoring CQL against FHIR generally, and US Core and US Quality
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
 | [Primitives]({{site.data.fhir.ver.cql}}/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
 | [Choices]({{site.data.fhir.ver.cql}}/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
-| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `systolic()` and `diastolic()`. |
+| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `USCoreCommon.systolic()` and `USCoreCommon.diastolic()`. |
 | [Extensions]({{site.data.fhir.ver.cql}}/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html). |
 | [Missing Information]({{site.data.fhir.ver.cql}}/patterns.html#missing-information) | Null propagation, the `is true` and `is not true` predicates, and the treatment of `unknown` status codes. |
 | [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Being explicit about comparison precision, typically `day of`. |

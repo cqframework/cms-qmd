@@ -91,7 +91,7 @@ define "Diabetes During Measurement Period":
 Note the following about the boundaries of both functions:
 
 * A condition with no starting date (no onset for `prevalencePeriod()`; no onset, asserted, or recorded date for `relevantPeriod()`) has a closed null starting boundary, so it is treated as present from the beginning of time.
-* The ending boundary is determined by `isActive()`, which is false when `clinicalStatus` is missing. A condition with no abatement then has an unknown (open null) ending boundary, so comparisons such as `overlaps "Measurement Period"` may return null rather than true. This is particularly relevant for encounter diagnoses, which often have no `clinicalStatus`.
+* The ending boundary is determined by `FHIRCommon.isActive()`, which is false when `clinicalStatus` is missing. A condition with no abatement then has an unknown (open null) ending boundary, so comparisons such as `overlaps "Measurement Period"` may return null rather than true. This is particularly relevant for encounter diagnoses, which often have no `clinicalStatus`.
 
 ### Conditions present on admission and principal diagnoses
 

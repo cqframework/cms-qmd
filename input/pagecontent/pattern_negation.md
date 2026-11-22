@@ -33,7 +33,7 @@ Independently of which use case applies, a negation statement may be made at eit
 * **A specific activity** &mdash; the activity element carries a code, drawn from the codes the measure expects.
 * **An entire value set** &mdash; the activity element carries the `notDoneValueSet` extension referencing a value set, stating that *none* of its members were performed.
 
-All ten negation profiles support both, so logic that only handles one extent will miss conforming data. Where the terminology can be supplied on the retrieve, the fluent accessors handle both forms; otherwise, filter outside the retrieve using the accessor for the activity element (`medication()`, `code()`, `topic()`, `vaccineCode()`) as shown in the US Quality Core negation topic, or union the two expressions.
+All ten negation profiles support both, so logic that only handles one extent will miss conforming data. Where the terminology can be supplied on the retrieve, the fluent accessors handle both forms; otherwise, filter outside the retrieve using the USQualityCoreCommon accessor for the activity element (`medication()`, `code()`, `topic()`, `vaccineCode()`) as shown in the US Quality Core negation topic, or union the two expressions.
 
 > NOTE: The Using CQL With FHIR IG describes this same dimension as [Activity Extent]({{site.data.fhir.ver.cql}}/patterns.html#activity-extent) and uses the general-purpose `codeOptions` extension. US Quality Core uses `notDoneValueSet` for the negated case.
 

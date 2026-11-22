@@ -55,7 +55,7 @@ Each status, use, and type predicate has a list-filtering counterpart without th
 
 > NOTE: ClaimCommon and ClaimElements are released in MADiE, so measures can include them directly. Development happens in the [dqm-content-cms-2026](https://github.com/cqframework/dqm-content-cms-2026) repository, and the copies in this guide are convenience copies. The intent is to promote ClaimElements to the Using CQL with FHIR implementation guide, generalized to all claims: its retrieves would become `[FHIR.Claim]` rather than `[USQualityCore.Claim]`. Nothing in the logic depends on the US Quality Core profile.
 
-> NOTE: The status, use, and type predicates are typed to the Claim and ExplanationOfBenefit resources. Each `Claim Item` element carries the claim it came from in a `claim` element, so those predicates apply to the elements as well &mdash; `D.claim.isActive()` &mdash; along with `dischargeStatus()` and `pointOfOrigin()`, which the flattened fields do not carry.
+> NOTE: The ClaimCommon status, use, and type predicates are typed to the Claim and ExplanationOfBenefit resources. Each `Claim Item` element carries the claim it came from in a `claim` element, so those predicates apply to the elements as well &mdash; `D.claim.isActive()` &mdash; along with `dischargeStatus()` and `pointOfOrigin()`, which the flattened fields do not carry.
 
 > NOTE: `Claim.diagnosis.diagnosis[x]` and `Claim.procedure.procedure[x]` are choices of a CodeableConcept or a Reference, so logic should handle both if there is an expectation that both will be present in the source data.
 
@@ -275,7 +275,7 @@ This definition is one of the allowable exclusions for the measure, directly imp
 
 ### Discharge Disposition
 
-Within a claim, discharge disposition is represented with the `discharge-status` supporting information. The `dischargeStatus()` fluent function returns the discharge status for a given claim:
+Within a claim, discharge disposition is represented with the `discharge-status` supporting information. The `ClaimCommon.dischargeStatus()` fluent function returns the discharge status for a given claim:
 
 ```cql
 define "Encounter With Allowable Discharge Disposition":
@@ -295,7 +295,7 @@ For the clinical representation, see [Discharge Disposition](pattern_encounters.
 
 ### Admission Source
 
-Within a claim, admission source is represented with the `pointoforigin` supporting information. The `pointOfOrigin()` fluent function returns the point of origin for a given claim:
+Within a claim, admission source is represented with the `pointoforigin` supporting information. The `ClaimCommon.pointOfOrigin()` fluent function returns the point of origin for a given claim:
 
 ```cql
 define "Encounter With Hospice Admission Source":

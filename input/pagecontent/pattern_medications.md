@@ -23,7 +23,7 @@ FHIRCommon defines status functions for observations, conditions, and allergies,
 
 `isOrderIntent()` covers `order`, `original-order`, `reflex-order`, `filler-order`, and `instance-order`, which is the set used by the `Active Medication Orders` expression in USCoreElements; it distinguishes an actual order from a proposal, plan, or option.
 
-The category functions use the [medicationrequest-category](http://terminology.hl7.org/CodeSystem/medicationrequest-category) and [medication-admin-category](http://terminology.hl7.org/CodeSystem/medication-admin-category) code systems respectively. The two are distinct, so the MedicationRequest `inpatient` code does not match a MedicationAdministration category, and MedicationAdministration has no `discharge` category. `MedicationRequest.category` is a list, and a request has a category if any of its categories matches; `MedicationAdministration.category` has at most one value. `mostRecent()` sorts by `authoredOn`, so a request with no `authoredOn` is only returned if none of the requests has one.
+The category functions use the [medicationrequest-category](http://terminology.hl7.org/CodeSystem/medicationrequest-category) and [medication-admin-category](http://terminology.hl7.org/CodeSystem/medication-admin-category) code systems respectively. The two are distinct, so the MedicationRequest `inpatient` code does not match a MedicationAdministration category, and MedicationAdministration has no `discharge` category. `MedicationRequest.category` is a list, and a request has a category if any of its categories matches; `MedicationAdministration.category` has at most one value. `MedicationCommon.mostRecent()` sorts by `authoredOn`, so a request with no `authoredOn` is only returned if none of the requests has one.
 
 > NOTE: MedicationCommon is released in MADiE, so measures can include it directly. Development happens in the [dqm-content-cms-2026](https://github.com/cqframework/dqm-content-cms-2026) repository, and the copy in this guide is a convenience copy. Nothing in it is US-specific, so the intent is to promote the library as a whole to the Using CQL with FHIR implementation guide ([FHIR-58912](https://jira.hl7.org/browse/FHIR-58912)), alongside FHIRCommon, as the home for medication-specific functions.
 
@@ -96,7 +96,7 @@ define "Antithrombotic Therapy Administration":
       and VTEMedication.isInpatient()
 ```
 
-`isInpatient()` here is the MedicationAdministration overload, which tests the `inpatient` code from the medication-admin-category code system. FHIRCommon's `"Inpatient"` code is from the medicationrequest-category code system, so comparing an administration's category to it does not match.
+`MedicationCommon.isInpatient()` here is the MedicationAdministration overload, which tests the `inpatient` code from the medication-admin-category code system. FHIRCommon's `"Inpatient"` code is from the medicationrequest-category code system, so comparing an administration's category to it does not match.
 
 ### Medication not administered
 
@@ -145,7 +145,7 @@ define "Antithrombotic Therapy Active":
     where Antithrombotic.isActive()
 ```
 
-USCoreElements defines an equivalent `Active Medication Orders`, which additionally constrains `intent` to the order intents. Where a measure needs that narrowing, add `and Antithrombotic.isOrderIntent()`.
+USCoreElements defines an equivalent `Active Medication Orders`, which additionally constrains `intent` to the order intents. Where a measure needs that narrowing, add `and Antithrombotic.isOrderIntent()` (MedicationCommon).
 
 #### Self-administered OTCs
 
@@ -159,4 +159,4 @@ define "Cold OTC At Home":
       and CoughCold.isPlan()
 ```
 
-`isCommunity()` reflects the MedicationRequest category indicating that the setting in which the medication is taken, or expected to be taken, is community.
+`MedicationCommon.isCommunity()` reflects the MedicationRequest category indicating that the setting in which the medication is taken, or expected to be taken, is community.

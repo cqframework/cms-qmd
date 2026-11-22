@@ -1,4 +1,4 @@
-Whether logic should make use of a particular element of a profile depends wholly on the intent of the measure or rule. Nonetheless, some general guidelines should be followed to ensure correct expression and evaluation of CQL. The considerations most often encountered in these patterns are summarized here; see [Element Considerations](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#element-considerations) in the Using CQL With FHIR IG for the complete treatment. The guidance in that IG is informative. Where a requirement is normative for quality measures, it is stated in the [Using CQL](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html) topic of the Quality Measure IG, which carries the conformance requirements; those are called out below where they apply.
+Whether logic should make use of a particular element of a profile depends wholly on the intent of the measure or rule. Nonetheless, some general guidelines should be followed to ensure correct expression and evaluation of CQL. The considerations most often encountered in these patterns are summarized here; see [Element Considerations](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#element-considerations) in the 3.0.0 ballot of the Using CQL With FHIR IG for the complete treatment (this topic is new in 3.0.0 and is not part of the published 2.0.0 version this guide depends on). The guidance in that IG is informative. Where a requirement is normative for quality measures, it is stated in the [Using CQL](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html) topic of the Quality Measure IG, which carries the conformance requirements; those are called out below where they apply.
 
 ### Element cardinality
 
@@ -34,7 +34,7 @@ using USQualityCore version '0.5.0'
 
 The version is not optional. For quality measures, all CQL SHALL use FHIR-based data models, and the model declaration SHALL include a version &mdash; see [CQL Data Model](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html#data-model) in the Quality Measure IG.
 
-This differs from the [profile-informed authoring](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#profile-informed-authoring) approach used by QI-Core, which flattened profiles so that slices and extensions appeared as ordinary elements. Under derived ModelInfo, extension-backed data is reached through fluent functions rather than named elements &mdash; `Patient.race()` rather than `Patient.race`. For the full list of affected elements and the function to use for each, see the Extension Index in the [Refactored Index](refactored_index.html).
+This differs from the [profile-informed authoring]({{site.data.fhir.ver.cql}}/patterns.html#profile-informed-authoring) approach used by QI-Core, which flattened profiles so that slices and extensions appeared as ordinary elements. Under derived ModelInfo, extension-backed data is reached through fluent functions rather than named elements &mdash; `Patient.race()` rather than `Patient.race`. For the full list of affected elements and the function to use for each, see the Extension Index in the [Refactored Index](refactored_index.html).
 
 > NOTE: The Patterns page published in US Quality Core 0.5.0 describes primitives, extensions, and choice types in terms of profile-informed authoring, which does not match the derived ModelInfo that guide ships. It should not be referenced; use the guidance referred to here instead. That page has been removed for the next ballot publication of US Quality Core, and no further publication of the 0.5.0 branch is expected.
 
@@ -59,7 +59,7 @@ define "Active Confirmed Allergies and Intolerances":
   "All Allergies and Intolerances".active().confirmed()
 ```
 
-See [Accessing Data](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#accessing-data) for further discussion.
+See [Accessing Data](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#accessing-data) in the 3.0.0 ballot of the Using CQL With FHIR IG for further discussion (this topic is new in 3.0.0 and is not part of the published 2.0.0 version).
 
 ### References
 
@@ -120,7 +120,7 @@ FHIR terminology-valued elements are compared in CQL using the equal (`=`), equi
 * Use the `in` operator when comparing to a value set.
 * Use the equal operator (`=`) only with code-valued elements that have a required binding.
 
-Note that `contains` has no terminological overload in the current version of CQL and should not be used with terminology-valued elements; use `includesCode()` from [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) instead.
+Note that `contains` has no terminological overload in the current version of CQL and should not be used with terminology-valued elements; use `includesCode()` from [FHIRCommon]({{site.data.fhir.ver.cql}}/Library-FHIRCommon.html) instead.
 
 For quality measures, the first two rules above are backed by conformance requirements rather than style preferences:
 
@@ -141,7 +141,7 @@ FHIRCommon includes several functions to faclitate the use of terminology-valued
 * `.toValueSet()` - Returns the CQL ValueSet representation for a canonical reference
 * `.toActivityExtent()` - Returns the _extent_ of an activity, either a CodeableConcept, or a ValueSet
 
-> NOTE: This section is proposed for inclusion in the Using CQL With FHIR ballot: https://jira.hl7.org/browse/FHIR-59072
+> NOTE: This section has been proposed for inclusion in the 3.0.0 ballot version of the Using CQL With FHIR IG: https://jira.hl7.org/browse/FHIR-59072
 
 ### Interval Calculations
 
@@ -159,17 +159,17 @@ Within FHIR specifically, interval-valued elements are common, and the following
 
 ### Further considerations
 
-The following topics in the Using CQL With FHIR IG apply throughout these patterns and are not repeated here:
+The following topics in the Using CQL With FHIR IG (version 2.0.0, except where marked) apply throughout these patterns and are not repeated here:
 
 | Topic | Applies to |
 |----|----|
-| [Primitives](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types (`Patient.birthDate` is `FHIR.date`), with FHIRHelpers supplying the conversions |
-| [Choices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`; the `toInterval()`, `abatementInterval()`, `prevalenceInterval()`, `earliest()`, and `latest()` helpers in FHIRCommon |
-| [Slices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#slices) | Accessing sliced elements, such as blood pressure components via the `systolic()` and `diastolic()` fluent functions in USCoreCommon |
-| [Extensions](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html) |
-| [Missing Information](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#missing-information) | Null propagation, the `is true`/`is not true` predicates, and the treatment of `unknown` status codes |
-| [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) | Being explicit about comparison precision, typically `day of` |
-| [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) | Day-boundary calculations such as "on hospital day 2" |
-| [Time-Valued Quantities](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`) |
-| [Use of Terminologies](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#use-of-terminologies) | Comparing `code`, `Coding`, and `CodeableConcept` elements, including multi-cardinality and direct-reference code cases |
+| [Primitives]({{site.data.fhir.ver.cql}}/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types (`Patient.birthDate` is `FHIR.date`), with FHIRHelpers supplying the conversions |
+| [Choices]({{site.data.fhir.ver.cql}}/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`; the `toInterval()`, `abatementInterval()`, `prevalenceInterval()`, `earliest()`, and `latest()` helpers in FHIRCommon |
+| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components via the `systolic()` and `diastolic()` fluent functions in USCoreCommon |
+| [Extensions]({{site.data.fhir.ver.cql}}/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html) |
+| [Missing Information]({{site.data.fhir.ver.cql}}/patterns.html#missing-information) | Null propagation, the `is true`/`is not true` predicates, and the treatment of `unknown` status codes |
+| [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Being explicit about comparison precision, typically `day of` |
+| [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Day-boundary calculations such as "on hospital day 2" |
+| [Time-Valued Quantities]({{site.data.fhir.ver.cql}}/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`) |
+| [Use of Terminologies]({{site.data.fhir.ver.cql}}/patterns.html#use-of-terminologies) | Comparing `code`, `Coding`, and `CodeableConcept` elements, including multi-cardinality and direct-reference code cases |
 {: .grid}

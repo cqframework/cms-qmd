@@ -1,14 +1,14 @@
 FHIR defines several resources to represent the proposal, planning, ordering, and performance of services and procedures for a patient.
 
-[Service](https://hl7.org/fhir/us/cql/en/patterns-service.html) in the US CQL implementation guide covers [requested services](https://hl7.org/fhir/us/cql/en/patterns-service.html#requested-services), [procedures performed](https://hl7.org/fhir/us/cql/en/patterns-service.html#procedures-performed), [imaging procedures](https://hl7.org/fhir/us/cql/en/patterns-service.html#imaging-procedures), and [mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography). The patterns below add the US Quality Core profiles and the negated forms; see the [Pattern Index](pattern_index.html) for the full list.
+[Service]({{site.data.fhir.ver.uscql}}/en/patterns-service.html) in the US CQL implementation guide covers [requested services]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#requested-services), [procedures performed]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#procedures-performed), [imaging procedures]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#imaging-procedures), and [mammography]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#mammography). The patterns below add the US Quality Core profiles and the negated forms; see the [Pattern Index](pattern_index.html) for the full list.
 
-For ServiceRequest and Procedure, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-service.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-service.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-service.html#cross-version-considerations) in that guide.
+For ServiceRequest and Procedure, see also [modifier elements]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#modifier-elements), [search parameters]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#search-parameters), and [cross-version considerations]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#cross-version-considerations) in that guide.
 
 Neither the Procedure nor the ServiceRequest profile fixes `status`, so expressions must account for every value relevant to measure intent.
 
 ### Procedure performed
 
-See [Procedures performed](https://hl7.org/fhir/us/cql/en/patterns-service.html#procedures-performed).
+See [Procedures performed]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#procedures-performed).
 
 Measures use the [US Quality Core Procedure](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-procedure.html) profile, characterized by `code`.
 
@@ -31,7 +31,7 @@ define "Intermittent Pneumatic Compression Devices Not Applied":
 
 ### Procedure ordered
 
-See [Requested services](https://hl7.org/fhir/us/cql/en/patterns-service.html#requested-services).
+See [Requested services]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#requested-services).
 
 Measures use the [US Quality Core ServiceRequest](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-servicerequest.html) profile, characterized by `code`.
 
@@ -75,7 +75,7 @@ define "Intermittent Pneumatic Compression Devices Order Rejected for Reason":
 
 ### Imaging Procedures
 
-See [Imaging procedures](https://hl7.org/fhir/us/cql/en/patterns-service.html#imaging-procedures), which describes how an imaging procedure may be spread across ServiceRequest, Procedure, ImagingStudy, DiagnosticReport, Observation, Claim, and ExplanationOfBenefit, and why not every resource is present for every procedure.
+See [Imaging procedures]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#imaging-procedures), which describes how an imaging procedure may be spread across ServiceRequest, Procedure, ImagingStudy, DiagnosticReport, Observation, Claim, and ExplanationOfBenefit, and why not every resource is present for every procedure.
 
 For measures, the practical question is how far to look. If intent is only that the scan was performed, the order and the procedure may suffice:
 

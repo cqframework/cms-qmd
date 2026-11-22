@@ -5,7 +5,7 @@ Guidance for measure developers related to CMS dQM development and maintenance w
 
 ###  CMS FHIR-based CQL Style Guide
 
-This style guide covers how CQL used in CMS dQMs is written. It draws on two sources: the [Using CQL](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html) topic of the Quality Measure IG, which defines the conformance requirements a measure's CQL must meet, and the [Naming Best-Practices](https://hl7.org/fhir/us/cql/en/patterns-overall.html#naming-best-practices) in the US CQL IG, which are informative recommendations for naming declarations in shared libraries.
+This style guide covers how CQL used in CMS dQMs is written. It draws on two sources: the [Using CQL](https://build.fhir.org/ig/HL7/fhir-cqm/en/using-cql.html) topic of the Quality Measure IG, which defines the conformance requirements a measure's CQL must meet, and the [Naming Best-Practices]({{site.data.fhir.ver.uscql}}/en/patterns-overall.html#naming-best-practices) in the US CQL IG, which are informative recommendations for naming declarations in shared libraries.
 
 For guidance on authoring the query logic itself, see the [Patterns](patterns.html) topic. For conformance requirements on how CQL is packaged and referenced from a Measure, see [Measure Profiles](measure_profile.html).
 

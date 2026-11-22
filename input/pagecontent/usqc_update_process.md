@@ -1,7 +1,7 @@
 This topic describes a process for refactoring [FHIR-based 2025 AU draft CMS measures](http://github.com/cqframework/dqm-content-qicore-2025) expressed using QI Core version 6.0.0 to:
 
 1. Use the [US Quality Core Implementation Guide](http://fhir.org/guides/onc/us-quality-core) as the model
-2. Make use of shared artifacts in the [Using CQL With FHIR](https://hl7.org/fhir/uv/cql) and [Common CQL Artifacts for FHIR (US-Based)](https://hl7.org/fhir/us/cql) implementation guides.
+2. Make use of shared artifacts in the [Using CQL With FHIR]({{site.data.fhir.ver.cql}}/) and [Common CQL Artifacts for FHIR (US-Based)]({{site.data.fhir.ver.uscql}}/en/) implementation guides.
 
 > NOTE: Throughout this discussion, we use the version `0.1.0-cibuild` for the US Quality Core references. This is because the content here is under freeze while we complete discrepancy testing between the QICore and USQualityCore versions of the measures. This will be updated to the 0.5.0 published version once that discrepancy testing completes.
 

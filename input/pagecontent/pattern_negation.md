@@ -1,4 +1,4 @@
-Negation in these patterns follows the guidance in [Negation in FHIR](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#negation-in-fhir) from the Using CQL With FHIR IG, realized by the profiles described in [US Quality Core Negation](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/negation.html). This section summarizes how those two topics apply to the patterns on the following pages; refer to them for the underlying rationale and for complete examples.
+Negation in these patterns follows the guidance in [Negation in FHIR]({{site.data.fhir.ver.cql}}/patterns.html#negation-in-fhir) from the Using CQL With FHIR IG, realized by the profiles described in [US Quality Core Negation](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/negation.html). This section summarizes how those two topics apply to the patterns on the following pages; refer to them for the underlying rationale and for complete examples.
 
 ### Choosing a negation pattern
 
@@ -35,7 +35,7 @@ Independently of which use case applies, a negation statement may be made at eit
 
 All ten negation profiles support both, so logic that only handles one extent will miss conforming data. Where the terminology can be supplied on the retrieve, the fluent accessors handle both forms; otherwise, filter outside the retrieve using the accessor for the activity element (`medication()`, `code()`, `topic()`, `vaccineCode()`) as shown in the US Quality Core negation topic, or union the two expressions.
 
-> NOTE: The Using CQL With FHIR IG describes this same dimension as [Activity Extent](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#activity-extent) and uses the general-purpose `codeOptions` extension. US Quality Core uses `notDoneValueSet` for the negated case.
+> NOTE: The Using CQL With FHIR IG describes this same dimension as [Activity Extent]({{site.data.fhir.ver.cql}}/patterns.html#activity-extent) and uses the general-purpose `codeOptions` extension. US Quality Core uses `notDoneValueSet` for the negated case.
 
 > NOTE: The two extents must not contradict each other. An assertion that no medication in a value set was administered should not appear alongside an administration of a member of that same value set.
 
@@ -50,7 +50,7 @@ For that reason, logic that tests `doNotPerform` against an unconstrained reques
   where MR.doNotPerform is not true
 ```
 
-See [Missing Information](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#missing-information) for the general treatment of absent values.
+See [Missing Information]({{site.data.fhir.ver.cql}}/patterns.html#missing-information) for the general treatment of absent values.
 
 ### Positive requests and rejected proposals
 

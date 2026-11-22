@@ -21,7 +21,7 @@ define "Lab Results Communicated":
 
 The profile does not fix `status`, so the expression must account for every value relevant to measure intent.
 
-`topic` and `reasonCode` above are compared against direct-reference codes rather than value sets, so the equivalent operator is used; see [Use of terminologies](pattern_fhir.html#use-of-terminologies) and the [Codes](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/using-cql.html#codes) topic in the Using CQL With FHIR IG.
+`topic` and `reasonCode` above are compared against direct-reference codes rather than value sets, so the equivalent operator is used; see [Use of terminologies](pattern_fhir.html#use-of-terminologies) and the [Codes]({{site.data.fhir.ver.cql}}/using-cql.html#codes) topic in the Using CQL With FHIR IG.
 
 ### Communication Not Done
 

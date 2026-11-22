@@ -2,7 +2,7 @@
 
 {: #Pattern-Index}
 
-This page indexes the data elements and authoring patterns available to CMS dQM developers, across both this guide and the [US CQL](https://hl7.org/fhir/us/cql/en/patterns.html) implementation guide. It is intended as the single starting point for locating guidance on a given data element.
+This page indexes the data elements and authoring patterns available to CMS dQM developers, across both this guide and the [US CQL]({{site.data.fhir.ver.uscql}}/en/patterns.html) implementation guide. It is intended as the single starting point for locating guidance on a given data element.
 
 Each pattern is listed once. Where this guide documents a pattern, the link goes here, and that page links on to the underlying US CQL guidance where it exists. Where a pattern is documented only in the US CQL guide, the link goes there directly.
 
@@ -24,18 +24,18 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [References](pattern_fhir.html#references) | Best-practice for dealing with references in FHIR resources. |
 | [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
 | [Terminology Functions](pattern_fhir.html#terminology-functions) | Helper functions for dealing with terminology-valued elements in FHIR: `includesCode()`, `codeOptions()`, `toValueSet()`, and `toActivityExtent()` |
-| [Primitives](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
-| [Choices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
-| [Slices](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `systolic()` and `diastolic()`. |
-| [Extensions](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html). |
-| [Missing Information](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#missing-information) | Null propagation, the `is true` and `is not true` predicates, and the treatment of `unknown` status codes. |
-| [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) | Being explicit about comparison precision, typically `day of`. |
-| [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) | Day-boundary calculations such as "on hospital day 2". |
-| [Time-Valued Quantities](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`). |
+| [Primitives]({{site.data.fhir.ver.cql}}/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
+| [Choices]({{site.data.fhir.ver.cql}}/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
+| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `systolic()` and `diastolic()`. |
+| [Extensions]({{site.data.fhir.ver.cql}}/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html). |
+| [Missing Information]({{site.data.fhir.ver.cql}}/patterns.html#missing-information) | Null propagation, the `is true` and `is not true` predicates, and the treatment of `unknown` status codes. |
+| [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Being explicit about comparison precision, typically `day of`. |
+| [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Day-boundary calculations such as "on hospital day 2". |
+| [Time-Valued Quantities]({{site.data.fhir.ver.cql}}/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`). |
 | [Interval Calculation](pattern_fhir.html#interval-calculations) | Helper functions for dealing with interval-valued elements in FHIR, including `toInterval()`, `earliest()`, `latest()`, `hasStart()` and `hasEnd()` |
 | [Organizing Logic Using Layers](pattern_layers.html) | Guidance for organizing logic into layers: Concepts &lt;- Elements &lt;- Inferences &lt;- Criteria |
 | [Fluent Function Guidance](pattern_layers.html#fluent-function-guidance) | When and how to define fluent functions |
-| [Naming Best-Practices](https://hl7.org/fhir/us/cql/en/patterns-overall.html#naming-best-practices) | Conventions and best-practices for naming declarations |
+| [Naming Best-Practices]({{site.data.fhir.ver.uscql}}/en/patterns-overall.html#naming-best-practices) | Conventions and best-practices for naming declarations |
 | [Choosing a negation pattern](pattern_negation.html#choosing-a-negation-pattern) | Absence of evidence versus negation rationale, and when a negation profile is not the right choice. |
 | [Use cases for negation rationale](pattern_negation.html#use-cases-for-negation-rationale) | The three use cases and the ten US Quality Core negation profiles that realize them. |
 | [Extent of negation](pattern_negation.html#extent-of-negation) | Negating a specific activity versus an entire value set, through the `notDoneValueSet` extension. |
@@ -49,11 +49,11 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 |----|----|
 | [Patient age](pattern_patient.html#patient-age) | Age calculated as of a specific date, usually the start of the measurement period, and the precision pitfalls of the DateTime overloads. |
 | [Patient race and ethnicity](pattern_patient.html#patient-race-and-ethnicity) | Reading the US Core race and ethnicity extensions through the `race()` and `ethnicity()` fluent functions, and the tuple each returns. |
-| [Patient name](https://hl7.org/fhir/us/cql/en/patterns-patient.html#patient-name) | Accessing a patient's name. |
-| [Patient birth date](https://hl7.org/fhir/us/cql/en/patterns-patient.html#patient-birthdate) | Accessing the birth date directly rather than through an age calculation. |
-| [Patient gender](https://hl7.org/fhir/us/cql/en/patterns-patient.html#patient-gender) | The administrative gender element and its required binding. |
-| [Patient sex](https://hl7.org/fhir/us/cql/en/patterns-patient.html#patient-sex) | `birthSex()`, the deprecated `sex()`, and the forward-compatible `individualSex()`. |
-| [Patient deceased](https://hl7.org/fhir/us/cql/en/patterns-patient.html#patient-deceased) | The deceased choice element, as either a boolean or a date and time. |
+| [Patient name]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-name) | Accessing a patient's name. |
+| [Patient birth date]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-birthdate) | Accessing the birth date directly rather than through an age calculation. |
+| [Patient gender]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-gender) | The administrative gender element and its required binding. |
+| [Patient sex]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-sex) | `birthSex()`, the deprecated `sex()`, and the forward-compatible `individualSex()`. |
+| [Patient deceased]({{site.data.fhir.ver.uscql}}/en/patterns-patient.html#patient-deceased) | The deceased choice element, as either a boolean or a date and time. |
 {: .grid}
 
 ### Allergies and intolerances
@@ -65,7 +65,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Clinical and verification status](pattern_allergies.html#verified-allergies) | The FHIRCommon verification-status functions, in place of re-declaring them locally. |
 | [Onset, abatement, and prevalence period](pattern_allergies.html#onset-abatement-and-prevalence-period) | Computing a prevalence period from onset, abatement, and resolution age &mdash; the reliable way to establish that an allergy was active during a period. |
 | [Allergy date and relevant period](pattern_allergies.html#allergy-date-and-relevant-period) | `relevantDate()` (onset, falling back to asserted or recorded date) and `relevantPeriod()` functions. |
-| [Allergy examples](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#examples) | Worked examples for contrast dye, egg, and nut allergies. |
+| [Allergy examples]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#examples) | Worked examples for contrast dye, egg, and nut allergies. |
 {: .grid}
 
 ### Conditions
@@ -78,8 +78,8 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Onset, abatement, and prevalence period](pattern_conditions.html#onset-abatement-and-prevalence-period) | `prevalenceInterval()` and `abatementInterval()`, and why they are preferred over `clinicalStatus` for a question about a period; `prevalencePeriod()` as the workaround for the [prevalence interval known issue](knownissues.html#prevalence-interval-issue). |
 | [Diagnosis date and relevant period](pattern_conditions.html#diagnosis-date-and-relevant-period) | `relevantDate()` (i.e. diagnosis date) and `relevantPeriod()` functions. |
 | [Diagnosis during an encounter](pattern_conditions.html#encounters-with-a-condition) | Establishing that a diagnosis was active during an encounter across `reasonCode`, `reasonReference`, and claim diagnoses. |
-| [Condition category](https://hl7.org/fhir/us/cql/en/patterns-condition.html#category) | Distinguishing problem list items, health concerns, and encounter diagnoses. |
-| [Relevant condition](https://hl7.org/fhir/us/cql/en/patterns-condition.html#relevant-condition) | Taking the condition from workflow context rather than searching for it. |
+| [Condition category]({{site.data.fhir.ver.uscql}}/en/patterns-condition.html#category) | Distinguishing problem list items, health concerns, and encounter diagnoses. |
+| [Relevant condition]({{site.data.fhir.ver.uscql}}/en/patterns-condition.html#relevant-condition) | Taking the condition from workflow context rather than searching for it. |
 {: .grid}
 
 ### Encounters
@@ -115,12 +115,12 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Smoking status](pattern_observations.html#smoking-status) | The US Core smoking status profile. |
 | [Non-patient observations](pattern_observations.html#observations-non-patient) | Observations about resource use and availability rather than a patient. |
 | [Observations not done](pattern_observations.html#observations-not-done) | Representing an observation that was not performed, as a rejected proposal. |
-| [Observation status](https://hl7.org/fhir/us/cql/en/patterns-observation.html#status) | `isResulted()` and the individual status predicates, in place of inline status lists. |
-| [Observation category](https://hl7.org/fhir/us/cql/en/patterns-observation.html#category) | The category functions, including `isLaboratory()`, `isVitalSign()`, and `isSurvey()`. |
-| [Interpretation](https://hl7.org/fhir/us/cql/en/patterns-observation.html#interpretation) | The `positive()` and `negative()` filters, and why the element cannot be relied on. |
-| [Timings](https://hl7.org/fhir/us/cql/en/patterns-observation.html#timings) | Filtering and ordering observations by effective time, including specimen collection time. |
-| [Observation elements](https://hl7.org/fhir/us/cql/en/patterns-observation.html#observation-elements) | The elements common across the observation profiles. |
-| [Other observations](https://hl7.org/fhir/us/cql/en/patterns-observation.html#other-observations) | Observations outside the profiled categories. |
+| [Observation status]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#status) | `isResulted()` and the individual status predicates, in place of inline status lists. |
+| [Observation category]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#category) | The category functions, including `isLaboratory()`, `isVitalSign()`, and `isSurvey()`. |
+| [Interpretation]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#interpretation) | The `positive()` and `negative()` filters, and why the element cannot be relied on. |
+| [Timings]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#timings) | Filtering and ordering observations by effective time, including specimen collection time. |
+| [Observation elements]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#observation-elements) | The elements common across the observation profiles. |
+| [Other observations]({{site.data.fhir.ver.uscql}}/en/patterns-observation.html#other-observations) | Observations outside the profiled categories. |
 {: .grid}
 
 ### Services and procedures
@@ -132,7 +132,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Procedure not done](pattern_procedures.html#procedure-not-done) | Documenting the reason a procedure was not performed. |
 | [Procedure not ordered](pattern_procedures.html#procedure-not-ordered) | Distinguishing a prohibition from the rejection of a proposal. |
 | [Imaging procedures](pattern_procedures.html#imaging-procedures) | How far to look for evidence of an imaging procedure across order, procedure, report, and study. |
-| [Mammography](https://hl7.org/fhir/us/cql/en/patterns-service.html#mammography) | A worked example spanning the resources that may record a mammogram. |
+| [Mammography]({{site.data.fhir.ver.uscql}}/en/patterns-service.html#mammography) | A worked example spanning the resources that may record a mammogram. |
 | [Nutrition orders](pattern_procedures.html#nutrition-orders) | Documentation of nutrition orders for a patient. |
 | [Procedure or order priority](pattern_procedures.html#procedcure-priority) | The priority of an order or procedure (e.g. routine, urgent, emergent, etc.) |
 {: .grid}
@@ -150,7 +150,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Medication not ordered](pattern_medications.html#medication-not-ordered) | A documented prohibition, and how it differs from a rejected proposal. |
 | [Medication not administered](pattern_medications.html#medication-not-administered) | Documenting the reason an administration did not occur. |
 | [Medication not dispensed](pattern_medications.html#medication-not-dispensed) | Documenting the reason a dispense did not occur. |
-| [Electronically transmitted prescriptions](https://hl7.org/fhir/us/cql/en/patterns-medication.html#electronically-transmitted-prescriptions) | Identifying the transmission method of a prescription through the PDMP extension. |
+| [Electronically transmitted prescriptions]({{site.data.fhir.ver.uscql}}/en/patterns-medication.html#electronically-transmitted-prescriptions) | Identifying the transmission method of a prescription through the PDMP extension. |
 {: .grid}
 
 ### Devices
@@ -190,9 +190,9 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Discharge disposition](pattern_claim.html#discharge-disposition) | The claim representation, reached with `dischargeStatus()` over `Claim.supportingInfo`. |
 | [Admission source](pattern_claim.html#admission-source) | The claim representation, reached with `pointOfOrigin()` over `Claim.supportingInfo`. |
 | [Claim status, use, and type](pattern_claim.html#claim-elements-used-by-measures) | The ClaimCommon predicates that select active professional or institutional claims and explanations of benefit. |
-| [Claim items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#claim-items) | Selecting the items of a claim; superseded by the ClaimElements definitions above. |
-| [Explanation of Benefit items](https://hl7.org/fhir/us/cql/en/patterns-claim.html#eob-items) | Selecting the items of an adjudicated response; superseded by the ClaimElements definitions above. |
-| [Mammography claim](https://hl7.org/fhir/us/cql/en/patterns-claim.html#mammography-claim) | A worked example over claim and EoB items, built on the superseded item definitions. |
+| [Claim items]({{site.data.fhir.ver.uscql}}/en/patterns-claim.html#claim-items) | Selecting the items of a claim; superseded by the ClaimElements definitions above. |
+| [Explanation of Benefit items]({{site.data.fhir.ver.uscql}}/en/patterns-claim.html#eob-items) | Selecting the items of an adjudicated response; superseded by the ClaimElements definitions above. |
+| [Mammography claim]({{site.data.fhir.ver.uscql}}/en/patterns-claim.html#mammography-claim) | A worked example over claim and EoB items, built on the superseded item definitions. |
 | [Coverage status](pattern_coverage.html#coverage-status) | Restricting to active coverage, the only modifier element on the resource. |
 | [Member or subscriber ID](pattern_coverage.html#member-or-subscriber-id) | `memberID()` and `policyNumber()`, and the invariant requiring one of them. |
 | [Payer](pattern_coverage.html#payer) | `SDE Payer` for supplemental data reporting, and the status filter it omits. |

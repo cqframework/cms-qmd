@@ -294,7 +294,7 @@ MADiE establishes the namespace for authored and exported content by assigning c
 
 At this time, MADiE supports a single namespace for authored and exported content and does not support organization-specific namespaces. As support for additional organizations and publication environments evolves, namespace conventions may be expanded to ensure artifacts developed independently remain uniquely identifiable.
 
-For additional information about CQL library namespaces and their relationship to FHIR artifacts, see the Using CQL with FHIR Implementation Guide, [Library Namespaces section](https://hl7.org/fhir/uv/cql/using-cql.html#library-namespaces).
+For additional information about CQL library namespaces and their relationship to FHIR artifacts, see the Using CQL with FHIR Implementation Guide, [Library Namespaces section]({{site.data.fhir.ver.cql}}/using-cql.html#library-namespaces).
 
 ### dQM Export Naming Conventions
 

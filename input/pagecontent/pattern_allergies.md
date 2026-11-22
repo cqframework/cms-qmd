@@ -1,22 +1,22 @@
 FHIR defines the [AllergyIntolerance](https://hl7.org/fhir/R4/allergyintolerance.html) resource to represent allergies and intolerances for a patient. US Quality Core defines the [US Quality Core AllergyIntolerance](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-allergyintolerance.html) profile, which derives from US Core AllergyIntolerance, requires `patient`, and adds the `resolutionAge` extension.
 
-Authoring patterns for allergies and intolerances are documented in [AllergyIntolerance](https://hl7.org/fhir/us/cql/en/patterns-allergy.html) in the US CQL implementation guide, covering onset and abatement, along with worked examples for contrast dye, egg, and nut allergies. This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
+Authoring patterns for allergies and intolerances are documented in [AllergyIntolerance]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html) in the US CQL implementation guide, covering onset and abatement, along with worked examples for contrast dye, egg, and nut allergies. This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
 
-For AllergyIntolerance, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#cross-version-considerations) in that guide.
+For AllergyIntolerance, see also [modifier elements]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#modifier-elements), [search parameters]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#search-parameters), and [cross-version considerations]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#cross-version-considerations) in that guide.
 
-> NOTE: Retrieves in the US CQL patterns are written against the US Core model (`[USCore.AllergyIntolerance]`). In CMS dQMs they are written against US Quality Core (`[USQualityCore.AllergyIntolerance]`). The element-level guidance is otherwise the same. The shared definitions in [USCoreElements](https://hl7.org/fhir/us/cql/Library-USCoreElements.html) &mdash; `All Allergies and Intolerances`, `Active Confirmed Allergies and Intolerances`, and their variants &mdash; retrieve US Core-conformant instances, so measures requiring US Quality Core conformance should retrieve against US Quality Core directly.
+> NOTE: Retrieves in the US CQL patterns are written against the US Core model (`[USCore.AllergyIntolerance]`). In CMS dQMs they are written against US Quality Core (`[USQualityCore.AllergyIntolerance]`). The element-level guidance is otherwise the same. The shared definitions in [USCoreElements]({{site.data.fhir.ver.uscql}}/en/Library-USCoreElements.html) &mdash; `All Allergies and Intolerances`, `Active Confirmed Allergies and Intolerances`, and their variants &mdash; retrieve US Core-conformant instances, so measures requiring US Quality Core conformance should retrieve against US Quality Core directly.
 
 > NOTE: In addition, some systems capture "noted", as when the allergy/intolerance was first noted. An extension has been proposed to capture this information: https://jira.hl7.org/browse/FHIR-59668
 
 ### Current Allergies
 
-See [Current allergies](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#current-allergies).
+See [Current allergies]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#current-allergies).
 
 Quality measures are evaluated retrospectively, against the data that exists at the time of evaluation rather than during the measurement period. Because `isActive()` tests the *current* `clinicalStatus`, it may not be able to be used to establish that an allergy was active during the measurement period. See [Onset, abatement, and prevalence period](#onset-abatement-and-prevalence-period) below.
 
 ### Onset, abatement, and prevalence period
 
-See [Onset, abatement, and prevalence interval](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#onset-abatement-and-prevalence-interval).
+See [Onset, abatement, and prevalence interval]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#onset-abatement-and-prevalence-interval).
 
 `abatementInterval()` and `prevalenceInterval()` are defined in FHIRCommon; they were previously in QICoreCommon. For AllergyIntolerance, `abatementInterval()` accounts for the `resolutionAge` extension as well as `abatement`. `prevalenceInterval()` returns the interval from onset to abatement, closed at the end when the allergy/intolerance is active (a `clinicalStatus` of `active`) and open otherwise. Because `isActive()` tests the [*current* clinicalStatus](#current-allergies), the prevalence interval is the more reliable way to determine historical status when onset and abatement are available.
 
@@ -51,12 +51,12 @@ Note the following about the boundaries of both functions:
 
 ### No Known Allergies
 
-See [No known allergies](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#no-known-allergies).
+See [No known allergies]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#no-known-allergies).
 
 USCoreElements distinguishes `No Known Allergies (Confirmed)` from `No Known Allergies (Not Asked)`; a measure asserting that a patient has no known allergies should use the confirmed form. Both definitions test `isActive()`, so the retrospective consideration above applies to them.
 
 ### Verified Allergies
 
-See [Clinical and verification status](https://hl7.org/fhir/us/cql/en/patterns-allergy.html#clinical-and-verification-status).
+See [Clinical and verification status]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#clinical-and-verification-status).
 
-Measure logic should use the verification-status functions defined in [FHIRCommon](https://hl7.org/fhir/uv/cql/Library-FHIRCommon.html) &mdash; `isVerified()` and `verified()`, along with `isConfirmed()`, `isUnconfirmed()`, `isRefuted()`, and their list-valued forms &mdash; rather than re-declaring them locally. QICoreCommon's `verified()` is deprecated in favor of the FHIRCommon function; see the [Refactored Index](refactored_index.html).
+Measure logic should use the verification-status functions defined in [FHIRCommon]({{site.data.fhir.ver.cql}}/Library-FHIRCommon.html) &mdash; `isVerified()` and `verified()`, along with `isConfirmed()`, `isUnconfirmed()`, `isRefuted()`, and their list-valued forms &mdash; rather than re-declaring them locally. QICoreCommon's `verified()` is deprecated in favor of the FHIRCommon function; see the [Refactored Index](refactored_index.html).

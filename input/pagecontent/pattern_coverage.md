@@ -1,8 +1,8 @@
 FHIR uses the [Coverage](https://hl7.org/fhir/R4/coverage.html) resource to represent a patient's insurance or payment agreement. US Quality Core defines a [US Quality Core Coverage](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/StructureDefinition-us-quality-core-coverage.html) profile derived from US Core Coverage.
 
-[Coverage](https://hl7.org/fhir/us/cql/en/patterns-coverage.html) in the US CQL implementation guide covers [member or subscriber ID](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#member-or-subscriber-id). This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
+[Coverage]({{site.data.fhir.ver.uscql}}/en/patterns-coverage.html) in the US CQL implementation guide covers [member or subscriber ID]({{site.data.fhir.ver.uscql}}/en/patterns-coverage.html#member-or-subscriber-id). This page records only what differs for quality measurement; see the [Pattern Index](pattern_index.html) for the full list of available patterns.
 
-For this resource, see also [modifier elements](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#modifier-elements), [search parameters](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#search-parameters), and [cross-version considerations](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#cross-version-considerations) in that guide.
+For this resource, see also [modifier elements]({{site.data.fhir.ver.uscql}}/en/patterns-coverage.html#modifier-elements), [search parameters]({{site.data.fhir.ver.uscql}}/en/patterns-coverage.html#search-parameters), and [cross-version considerations]({{site.data.fhir.ver.uscql}}/en/patterns-coverage.html#cross-version-considerations) in that guide.
 
 ### Coverage status
 
@@ -16,7 +16,7 @@ define "Active Coverage":
 
 ### Member or subscriber ID
 
-See [Member or subscriber ID](https://hl7.org/fhir/us/cql/en/patterns-coverage.html#member-or-subscriber-id).
+See [Member or subscriber ID]({{site.data.fhir.ver.uscql}}/en/patterns-coverage.html#member-or-subscriber-id).
 
 The US Core Coverage profile slices `identifier` for the member ID, and USCoreElements provides `memberID()` for it along with `policyNumber()` for the subscriber ID. The profile also carries an invariant requiring either the member ID slice or `subscriberId` to be present, so logic reading one should be prepared for the other.
 

@@ -17,27 +17,7 @@ In the United States, the [US Core](https://hl7.org/fhir/us/core/STU6.1/) Implem
 
 The information in this guide specifically uses the [v0.5.0](https://fhir.org/guides/onc/us-quality-core/0.5.0/en/) version of US Quality Core, which depends on the [6.1.0](https://hl7.org/fhir/us/core/STU6.1/) version of USCore, both of which are based on the [R4](https://hl7.org/fhir/R4) version 4.0.1 of FHIR.
 
-For guidance on authoring CQL against FHIR generally, and US Core and US Quality Core specifically &mdash; element considerations, accessing data, use of terminologies, and similar considerations &mdash; see the [FHIR Patterns](pattern_fhir.html) topic in this guide, containing the topics listed below.
-
-| Pattern | Description |
-|----|----|
-| [Element cardinality](pattern_fhir.html#element-cardinality) | What cardinality does and does not tell an author about whether an element will be present. |
-| [Must support elements](pattern_fhir.html#must-support-elements) | Restricting logic to elements an implementation is required to provide when it has them. |
-| [Modifier elements](pattern_fhir.html#modifier-elements) | Elements whose value changes the meaning of the resource, including modifier extensions and `implicitRules`. |
-| [Authoring against the US Quality Core model](pattern_fhir.html#authoring-against-the-us-quality-core-model) | Derived ModelInfo, the required version on the `using` declaration, and why extensions are reached through fluent functions. |
-| [Accessing data](pattern_fhir.html#accessing-data) | The retrieve expression, and the status functions to apply when accessing a resource. |
-| [Model qualifiers](pattern_fhir.html#model-qualifiers) | Qualifying type names with their model, retrieving by profile, and typing reusable functions against the most general type they need. |
-| [Logic Layers](pattern_layers.html) | Organizing logic using four layers: Concepts &lt;- Elements &lt;- Inferences &lt;- Criteria |
-| [Use of terminologies](pattern_fhir.html#use-of-terminologies) | When to use `=`, `~`, and `in`, the prohibition on string-based membership testing, and direct-reference code requirements. |
-| [Primitives]({{site.data.fhir.ver.cql}}/patterns.html#primitives) | Whether a `.value` accessor is required; under derived ModelInfo elements carry FHIR types, with FHIRHelpers supplying the conversions. |
-| [Choices]({{site.data.fhir.ver.cql}}/patterns.html#choices) | Elements that may take several types, such as `Condition.onset`, and the FHIRCommon interval helpers over them. |
-| [Slices]({{site.data.fhir.ver.cql}}/patterns.html#slices) | Accessing sliced elements, such as blood pressure components through `USCoreCommon.systolic()` and `USCoreCommon.diastolic()`. |
-| [Extensions]({{site.data.fhir.ver.cql}}/patterns.html#extensions) | Reading extension values where no fluent accessor is defined; see also the Extension Index in the [Refactored Index](refactored_index.html). |
-| [Missing Information]({{site.data.fhir.ver.cql}}/patterns.html#missing-information) | Null propagation, the `is true` and `is not true` predicates, and the treatment of `unknown` status codes. |
-| [Date, Time, and DateTime Values](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#date-time-and-datetime-values) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Being explicit about comparison precision, typically `day of`. |
-| [Timezone and Timezone Offset Handling](https://hl7.org/fhir/uv/cql/3.0.0-202609-ballot/en/patterns.html#timezone-and-timezone-offset-handling) _(Using CQL With FHIR 3.0.0 ballot; not in 2.0.0)_ | Day-boundary calculations such as "on hospital day 2". |
-| [Time-Valued Quantities]({{site.data.fhir.ver.cql}}/patterns.html#time-valued-quantities) | Calendar durations (`year`, `month`) versus UCUM definite durations (`'a'`, `'mo'`). |
-{: .grid}
+For guidance on authoring CQL against FHIR generally, and US Core and US Quality Core specifically &mdash; element considerations, accessing data, use of terminologies, and similar considerations &mdash; see the [FHIR Patterns](pattern_fhir.html) topic in this guide. The [Pattern Index](pattern_index.html#overall) lists each of these topics individually.
 
 ### Pattern Overview
 

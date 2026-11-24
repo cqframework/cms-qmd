@@ -157,7 +157,7 @@ The QICore-based [CQMCommon 4.1.000](https://github.com/cqframework/dqm-content-
 | hasPrincipalDiagnosisOf() | Replaced by `"Claim Item Diagnosis"` (ClaimElements) with `isPrincipalDiagnosis()` (ClaimCommon), testing the diagnosis against the value set; see the [Principal Diagnosis](pattern_billingrelated.html#principal-diagnosis) pattern |
 | isDiagnosisPresentOnAdmission() | Replaced by `presentOnAdmission()` (USQualityCoreCommon) and the claim `onAdmission` element; see the [Present on Admission](pattern_billingrelated.html#present-on-admission) pattern |
 | "GetLocation" / getLocation() | Removed; use a retrieve (or an element expression that contains one, such as `"All Encounter Locations"` in CQMElements) with `references()` (FHIRCommon) |
-| "GetMedicationCode" / getMedicationCode() | Removed; use a retrieve (or an element expression that contains one) with `references()` (FHIRCommon) |
+| "GetMedicationCode" / getMedicationCode() | Removed; use the terminology filter of the retrieve on the `medication` element; see [Accessing medications with terminology](pattern_medications.html#accessing-medications-with-terminology) |
 | principalProcedure() | Replaced by `"Claim Item Procedure"` (ClaimElements) with `isPrimaryProcedure()` (ClaimCommon); see the [Primary Procedure](pattern_billingrelated.html#primary-procedure) pattern |
 {: .grid}
 

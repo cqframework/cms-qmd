@@ -142,6 +142,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 
 | Pattern | Description |
 |----|----|
+| [Accessing medications with terminology](pattern_medications.html#accessing-medications-with-terminology) | Filtering on the `medication` element in the retrieve, and what that expects of a reference to a Medication resource. |
 | [Medication status, intent, and category](pattern_medications.html#medication-status-intent-and-category) | The status, intent, and category functions in MedicationCommon, in place of inline code lists. |
 | [Medication ordered](pattern_medications.html#medication-ordered) | Retrieving a medication order, including the guard against a rejected proposal. |
 | [Medication administered](pattern_medications.html#medication-administered) | Retrieving a completed administration. |

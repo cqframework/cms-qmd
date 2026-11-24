@@ -98,4 +98,4 @@ define "Hemodialysis Machine Availability":
     where Hemo.value ~ "Equipment type available"
 ```
 
-The referenced Device is resolved with a retrieve and the `references()` function from FHIRCommon. The reference-resolving functions in the QICore-based CQMCommon (`getCondition()`, `getLocation()`, and `getMedicationCode()`) have been removed in favor of this approach; see the [Function Index](refactored_index.html#cqmcommon-function-locations).
+The referenced Device is resolved with a retrieve and the `references()` function from FHIRCommon. The reference-resolving functions `getCondition()` and `getLocation()` in the QICore-based CQMCommon have been removed in favor of this approach; `getMedicationCode()` has also been removed, in favor of a terminology filter in the retrieve (see [Accessing medications with terminology](pattern_medications.html#accessing-medications-with-terminology)). See the [Function Index](refactored_index.html#cqmcommon-function-locations).

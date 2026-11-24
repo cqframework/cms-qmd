@@ -4,7 +4,22 @@ FHIR defines several medication-related resources, profiled for use in quality i
 
 For MedicationRequest, MedicationAdministration, and MedicationDispense, see also [modifier elements]({{site.data.fhir.ver.uscql}}/en/patterns-medication.html#modifier-elements), [search parameters]({{site.data.fhir.ver.uscql}}/en/patterns-medication.html#search-parameters), and [cross-version considerations]({{site.data.fhir.ver.uscql}}/en/patterns-medication.html#cross-version-considerations) in that guide.
 
-Two considerations apply throughout. `status`, `intent`, and `doNotPerform` are all modifier elements on MedicationRequest, and where a profile does not fix them the expression must account for every value they may take. And each medication profile is characterized by the `medication` element, which may be a code or a reference. The status, intent, and category functions used in the examples below are defined in the `MedicationCommon` library.
+Two considerations apply throughout. `status`, `intent`, and `doNotPerform` are all modifier elements on MedicationRequest, and where a profile does not fix them the expression must account for every value they may take. And each medication profile is characterized by the `medication` element, which may be a code or a reference; see [Accessing medications with terminology](#accessing-medications-with-terminology). The status, intent, and category functions used in the examples below are defined in the `MedicationCommon` library.
+
+### Accessing medications with terminology
+
+Each medication profile identifies the medication through the `medication` element, which is the primary code path for the retrieve. In FHIR R4, `medication` is a choice of a CodeableConcept or a Reference to a Medication resource. When it is a reference, the code is in the `code` element of the referenced Medication resource, not in the resource being retrieved, so there is no direct path from that resource to the code for a terminology filter to use.
+
+Expressions should filter medication-related resources with the terminology filter of the retrieve, rather than resolving the referenced Medication in logic. This keeps the medication value sets in the data requirements of the measure, so a submitting system knows exactly which medications the measure needs. In turn, the approach relies on the submitting system transforming a medication-related resource that uses a reference, so that its `medication` element carries the CodeableConcept from the `code` element of the referenced Medication. This is guidance only; this guide does not set conformance requirements on submitting systems beyond conformance to the underlying implementation guides, such as US Quality Core and US Core. For example:
+
+```cql
+define "Dipyridamole Orders":
+  [USQualityCore.MedicationRequest: "Dipyridamole Medications"] Dipyridamole
+    where Dipyridamole.isActive()
+      and Dipyridamole.isOrder()
+```
+
+`isActive()` and `isOrder()` are defined in MedicationCommon; see [Medication status, intent, and category](#medication-status-intent-and-category). The patterns on this page all access medications this way. The QICore-based CQMCommon `getMedicationCode()` function, which resolved the reference in logic, has been removed in favor of this approach.
 
 ### Medication status, intent, and category
 

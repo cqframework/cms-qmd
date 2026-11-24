@@ -290,3 +290,20 @@ This change corrects the logic, and will be included in the next release of Usin
 
 This is a known issue with the `prevalenceInterval` function in FHIRCommon 2.0.0. See: https://jira.hl7.org/browse/FHIR-59708 
 
+### Allergy lastOccurrence Incorrectly Mapped
+
+In QDM, the period during which an allergy or intolerance is present is its `prevalencePeriod`. The Quality Data Model (QDM) to QI-Core mapping in QI-Core [4.0.0](https://hl7.org/fhir/us/qicore/STU4/qdm-to-qicore.html#allergyintolerance), [4.1.1](https://hl7.org/fhir/us/qicore/STU4.1.1/qdm-to-qicore.html#allergyintolerance), and [5.0.0](https://hl7.org/fhir/us/qicore/STU5/qdm-to-qicore.html#allergyintolerance) maps the start of `prevalencePeriod` to `AllergyIntolerance.onset[x]` and its end to the `resolutionAge` extension. Between those two rows, it lists `AllergyIntolerance.lastOccurrence` with no QDM attribute and no comment. Measure logic converted from QDM has read that row as a mapping of the end of `prevalencePeriod`, and uses `lastOccurrence` as the end of the period during which the allergy or intolerance is present. For example, `overlapsAfterHeartFailureOutpatientEncounter()` in [AHAOverall](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/AHAOverall.cql):
+
+```cql
+where Interval[start of AllergyIntolerance.prevalenceInterval ( ), AllergyIntolerance.lastOccurrence]overlaps after day of ModerateOrSevereLVSDHFOutpatientEncounter.period
+  and AllergyIntolerance.isVerified ( )
+```
+
+This is not correct. `lastOccurrence` is the date and time of the [last known occurrence of a reaction](https://hl7.org/fhir/R4/allergyintolerance-definitions.html#AllergyIntolerance.lastOccurrence), and a reaction having last occurred on a date does not imply that the allergy or intolerance is no longer present. The end of the period is given by abatement, through `abatementInterval()` in FHIRCommon. The QDM to QI-Core mapping in [QI-Core 6.0.0](https://hl7.org/fhir/us/qicore/STU6/qdm-to-qicore.html#allergyintolerance) and later no longer lists `lastOccurrence`.
+
+Instead, use the period appropriate to the measure intent: `CQMConcepts.prevalencePeriod()` when only a clinically recorded onset should be considered (see [Onset, abatement, and prevalence period](pattern_allergies.html#onset-abatement-and-prevalence-period)), or `CQMConcepts.relevantPeriod()` when the asserted or recorded date should be used where there is no onset (see [Allergy date and relevant period](pattern_allergies.html#allergy-date-and-relevant-period)). For example:
+
+```cql
+where AllergyIntolerance.prevalencePeriod() overlaps after day of ModerateOrSevereLVSDHFOutpatientEncounter.period
+  and AllergyIntolerance.isVerified()
+```

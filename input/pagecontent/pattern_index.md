@@ -64,7 +64,7 @@ Guidance that applies across all resources, from [FHIR Patterns](pattern_fhir.ht
 | [Current allergies](pattern_allergies.html#current-allergies) | Retrieving allergies to a substance, and why `isActive()` is unsafe for the retrospective evaluation a measure performs. |
 | [No known allergies](pattern_allergies.html#no-known-allergies) | The confirmed and not-asked forms of a no-known-allergy assertion, and which one a measure should use. |
 | [Clinical and verification status](pattern_allergies.html#verified-allergies) | The FHIRCommon verification-status functions, in place of re-declaring them locally. |
-| [Onset, abatement, and prevalence period](pattern_allergies.html#onset-abatement-and-prevalence-period) | Computing a prevalence period from onset, abatement, and resolution age &mdash; the reliable way to establish that an allergy was active during a period. |
+| [Onset, abatement, and prevalence period](pattern_allergies.html#onset-abatement-and-prevalence-period) | Computing a prevalence period from onset, abatement, and resolution age &mdash; the reliable way to establish that an allergy was active during a period; why `lastOccurrence` is not the end of that period ([known issue](knownissues.html#allergy-lastoccurrence-incorrectly-mapped)). |
 | [Allergy date and relevant period](pattern_allergies.html#allergy-date-and-relevant-period) | `CQMConcepts.relevantDate()` (onset, falling back to asserted or recorded date) and `CQMConcepts.relevantPeriod()` functions. |
 | [Allergy examples]({{site.data.fhir.ver.uscql}}/en/patterns-allergy.html#examples) | Worked examples for contrast dye, egg, and nut allergies. |
 {: .grid}

@@ -24,6 +24,8 @@ However, if onset, abatement, or resolution are not available, which is often th
 
 > KNOWN ISSUE: There is a known issue with the `prevalenceInterval` function for AllergyIntolerance; strongly consider the use of `prevalencePeriod` in CQMConcepts 0.4.000. See [Prevalence Interval Issue](knownissues.html#prevalence-interval-issue).
 
+> KNOWN ISSUE: `lastOccurrence` is the date of the last known reaction, not the end of the period during which an allergy/intolerance is present, so it should not be used as the end of a prevalence period. Logic converted from QDM has done so, following an unannotated row in earlier QDM to QI-Core mappings. See [Allergy lastOccurrence Incorrectly Mapped](knownissues.html#allergy-lastoccurrence-incorrectly-mapped).
+
 ### Allergy date and relevant period
 
 Similar to the condition resource, given that many systems do not track onset and abatement information for an allergy/intolerance, clinicalStatus may be the most reliable indicator, even for historical purposes (assuming the allergy/intolerance is not expected to abate). However, to support consistent handling and allow for usage of data if it is available, CQMConcepts 0.4.000 defines a `relevantDate()` function for AllergyIntolerance that returns the first available of:

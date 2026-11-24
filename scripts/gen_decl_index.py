@@ -11,6 +11,11 @@ Sources:
 
 Usage: python scripts/gen_decl_index.py [--packages <path to the FHIR package cache>]
 
+The Description column is the @description of each declaration. Where there is none, a summary is taken
+from scripts/declaration_summaries.json (keyed 'Library|name'), or, for terminology and parameter
+declarations, made from the declaration itself; summaries are shown in italics. The script lists any
+declaration with neither, and any summary whose declaration no longer exists.
+
 When a library changes version, or a library is added, update LIBS (and PACKAGES) below and the
 Shared Library Index table on the page.
 """
@@ -143,7 +148,8 @@ def parse(text):
                           access=m.group(1) or 'public', description=description_before(m.start())))
     for m in OTHER_RE.finditer(clean):
         decls.append(dict(name=m.group(3), kind=KINDS[m.group(2)], line=line_of(m.start()), types=None,
-                          access=m.group(1) or 'public', description=description_before(m.start())))
+                          access=m.group(1) or 'public', description=description_before(m.start()),
+                          source=' '.join(clean[m.start():clean.find('\n', m.start())].split())))
     decls.sort(key=lambda d: d['line'])
     return decls
 
@@ -206,6 +212,52 @@ AFFINITY = {
 
 COLLAPSE = 4  # more overloads than this in one library are summarized as a count
 
+# Summaries for declarations with no @description, keyed 'Library|name'
+SUMMARIES = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'declaration_summaries.json'),
+                           encoding='utf-8'))
+
+
+def terminology_summary(d):
+    """A summary of a code system, value set, code, concept, or parameter, from its declaration."""
+    src = d.get('source', '')
+    if d['kind'] == 'Code':
+        m = re.search(r""":\s*'([^']*)'\s+from\s+("[^"]+"|\w+)(?:\s+display\s+'([^']*)')?""", src)
+        if m:
+            text = f'Code `{m.group(1)}` from {m.group(2)}'
+            return text + (f' ({m.group(3)})' if m.group(3) else '') + '.'
+    if d['kind'] in ('Code system', 'Value set'):
+        m = re.search(r":\s*'([^']*)'(?:\s+version\s+'([^']*)')?", src)
+        if m:
+            return f'{d["kind"]} `{m.group(1)}`' + (f', version `{m.group(2)}`' if m.group(2) else '') + '.'
+    if d['kind'] == 'Parameter':
+        m = re.match(r'parameter\s+(?:"[^"]+"|\w+)\s*(.*?)(?:\s+default\s+(.*))?$', src)
+        if m:
+            text = f'Parameter of type `{m.group(1)}`' if m.group(1) else 'Parameter'
+            return text + (f', defaulting to `{m.group(2)}`' if m.group(2) else '') + '.'
+    if d['kind'] == 'Concept' and ':' in src:
+        return 'Concept made up of ' + src.split(':', 1)[1].strip() + '.'
+    return ''
+
+
+def cell(text):
+    """Escape text for a markdown table cell, leaving code spans alone."""
+    parts = text.split('`')
+    for i in range(0, len(parts), 2):
+        parts[i] = parts[i].replace('<', '&lt;').replace('>', '&gt;')
+    return '`'.join(parts).replace('|', '\\|')
+
+
+def description(lib, name, ds):
+    """The @description of the declaration, otherwise a summary in italics."""
+    descs = []
+    for d in (ds if len(ds) <= COLLAPSE else ds[:1]):
+        if d['description'] and d['description'] not in descs:
+            descs.append(d['description'])
+    if descs:
+        return '<br/>'.join(cell(x) for x in descs)
+    summary = SUMMARIES.get(f'{lib}|{name}') or terminology_summary(ds[0])
+    return f'_{cell(summary)}_' if summary else ''
+
 
 def kramdown_id(text, seen):
     text = re.sub(r'\[([^\]]*)\]\([^)]*\)', r'\1', text)
@@ -237,7 +289,7 @@ def sections():
             m = None if in_code else re.match(r'^(#{2,5})\s+(.*?)\s*(\{#([\w-]+)\})?\s*$', line)
             if m:
                 yield page, title, heading, anchor, ''.join(buf)
-                heading = re.sub(r'\[([^\]]*)\]\([^)]*\)', r'\1', m.group(2)).replace('`', '')
+                heading = re.sub(r'\[([^\]]*)\]\([^)]*\)', r'\1', m.group(2)).replace('`', '').rstrip(':')
                 anchor = m.group(4) or kramdown_id(m.group(2).replace('`', ''), seen)
                 buf = []
             else:
@@ -288,7 +340,7 @@ def main():
                     if preferred:
                         found.add(preferred[0])
                         continue
-                    counts = {l: len(re.findall(r'' + l + r'', text)) for l in libs & mentioned}
+                    counts = {l: len(re.findall(r'\b' + l + r'\b', text)) for l in libs & mentioned}
                     if counts:  # the library the section names most often
                         top = max(counts.values())
                         found |= {l for l, c in counts.items() if c == top}
@@ -306,15 +358,15 @@ def main():
         initial = k[0].strip('"')[0].upper()
         groups[initial if initial.isalpha() else '#'].append(k)
 
-    out = []
+    out, missing = [], []
     letters = sorted(groups)
     out.append(' | '.join(f'[{c}](#declarations-{c.lower()})' for c in letters))
     out.append('')
     for c in letters:
         out.append(f'#### {c} {{#declarations-{c.lower()}}}')
         out.append('')
-        out.append('| Declaration | Kind | Library | Discussed in |')
-        out.append('|----|----|----|----|')
+        out.append('| Declaration | Kind | Library | Description | Discussed in |')
+        out.append('|----|----|----|----|----|')
         for k in groups[c]:
             name, lib = k
             ds = decls[k]
@@ -332,8 +384,11 @@ def main():
             decl = decl.replace('|', '\\|')
             if any(d['description'].startswith('TESTING SUPPORT') for d in ds) or name.startswith('"TESTING SUPPORT'):
                 kind += ' (testing support)'
-            used = ', '.join(f'[{html.escape(lbl, quote=False)}]({lnk})' for lbl, lnk in usage.get(k, []))
-            out.append(f'| {decl} | {kind} | {lib} | {used} |')
+            used = '<br/>'.join(f'[{html.escape(lbl, quote=False)}]({lnk})' for lbl, lnk in usage.get(k, []))
+            desc = description(lib, name, ds)
+            if not desc:
+                missing.append(f'{lib}|{name}')
+            out.append(f'| {decl} | {kind} | {lib} | {desc} | {used} |')
         out.append('{: .grid}')
         out.append('')
 
@@ -345,6 +400,11 @@ def main():
     open(page, 'w', encoding='utf-8', newline='\n').write(s)
     total = sum(len(v) for v in decls.values())
     print(f'{total} declarations, {len(decls)} rows, {sum(1 for k in decls if usage.get(k))} with usage links')
+    unused = sorted(set(SUMMARIES) - {f'{lib}|{name}' for name, lib in decls})
+    if missing:
+        print('No @description or summary (add to declaration_summaries.json):', *missing, sep='\n  ')
+    if unused:
+        print('Summaries for declarations that no longer exist:', *unused, sep='\n  ')
 
 
 if __name__ == '__main__':

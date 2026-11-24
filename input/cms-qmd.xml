@@ -104,6 +104,13 @@
           <generation value="markdown"/>
         </page>
 
+        <!--4.0b: Shared Library Reference-->
+        <page>
+          <nameUrl value="reference.html"/>
+          <title value="Shared Library Reference"/>
+          <generation value="markdown"/>
+        </page>
+
         <!--4.1: Patient (Authoring Pattern)-->
         <page>
           <nameUrl value="pattern_patient.html"/>

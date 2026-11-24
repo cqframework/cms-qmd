@@ -3,6 +3,7 @@ This section provides guidance and best-practice recommendations for authoring C
 * [**Measure Guidance**](measure_guidance.html) - Style and naming conventions used in measure logic
 * [**Measure Profile**](measure_profile.html) - Conformance requirements for measure specifications and logic
 * [**Pattern Index**](pattern_index.html) - A complete listing of all available data elements and patterns in this guide, as well as the US CQL and Using CQL implementation guides.
+* [**Shared Library Reference**](reference.html) - The shared libraries used by US Quality Core measures, and an index of every declaration they define
 * [**US Quality Core Update Process**](usqc_update_process.html) - Guidance on refactoring QICore-based measures to use US Quality Core
 * [**Refactored Index**](refactored_index.html) - An index of where QI Core constructs are in the US Quality Core refactored shared content
 * [**Known Issues**](knownissues.html) - A listing of known issues impacting the expression of US Quality Core measures

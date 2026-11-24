@@ -1,4 +1,4 @@
-This topic provides an index of the shared libraries used in QICore and USQualityCore, and where refactored content from those shared libraries can be found in the refactored versions.
+This topic provides an index of the shared libraries used in QICore and USQualityCore, and where refactored content from those shared libraries can be found in the refactored versions. For the current shared libraries and their declarations, see the [Shared Library Reference](reference.html).
 
 ### Library Index
 
@@ -43,7 +43,7 @@ Per discussions with measure developers the week of 10/19, 0.3.000 is the curren
 | PCMaternal | [5.25.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/PCMaternal.cql) | [6.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/PCMaternal.cql) | [5.28.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/PCMaternal.cql) |
 | QICoreCommon - _refactored into FHIRCommon, USCoreCommon, and [USQualityCoreCommon](https://fhir.org/guides/onc/us-quality-core/Library-USQualityCoreCommon.html)_ | [4.0.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/QICoreCommon.cql) | N/A | N/A |
 | Status | [1.15.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/Status.cql) | [2.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/Status.cql) | 2.1.000 |
-| SupplementalDataElements | [5.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/SupplementalDataElements.cql) | [6.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/SupplementalDataElements.cql) | [6.1.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/SupplementalDataElements.cql) |
+| SupplementalDataElements | [5.1.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/SupplementalDataElements.cql) | [6.2.000](https://github.com/cqframework/cms-qmd/blob/main/input/cql/SupplementalDataElements.cql) | [6.1.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/SupplementalDataElements.cql) |
 | TJCOverall | [8.25.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/TJCOverall.cql) | [9.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/TJCOverall.cql) | [JCCommon 8.34.000](https://github.com/cqframework/dqm-content-cms-2026/blob/in-madie/input/cql/JCCommon.cql) |
 | VTE | [8.18.000](https://github.com/cqframework/dqm-content-qicore-2025/blob/master/input/cql/VTE.cql) | [9.2.000](https://github.com/cqframework/dqm-content-cms-2026/blob/main/input/cql/VTE.cql) | - |
 | USCoreCommon | - | - | [`hl7.fhir.us.cql.USCoreCommon version '2.0.0'`]({{site.data.fhir.ver.uscql}}/en/Library-USCoreCommon.html) |
